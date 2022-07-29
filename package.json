@@ -1,0 +1,40 @@
+{
+  "name": "@ml/nuxt-umami",
+  "type": "module",
+  "version": "0.0.1",
+  "license": "unlicense",
+  "private": false,
+  "author": "ML <me.mlaure@gmail.com>",
+  "description": "Embed the Umami analytics library into Nuxt",
+  "repository": "https://github.com/ijkml/nuxt-umami",
+  "exports": {
+    ".": {
+      "require": "./dist/module.cjs",
+      "import": "./dist/module.mjs"
+    }
+  },
+  "main": "./dist/module.cjs",
+  "types": "./dist/types.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepack": "nuxt-module-build",
+    "dev": "nuxi dev playground",
+    "dev:build": "nuxi build playground",
+    "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "postinstall": "npm run dev:prepare"
+  },
+  "dependencies": {
+    "@nuxt/kit": "^3.0.0-rc.6"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config-ts": "^0.25.2",
+    "@nuxt/module-builder": "latest",
+    "@nuxtjs/eslint-config-typescript": "latest",
+    "eslint": "latest",
+    "nuxt": "^3.0.0-rc.6"
+  }
+}
