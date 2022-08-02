@@ -1,5 +1,5 @@
 {
-  "name": "@ml/nuxt-umami",
+  "name": "@ijkml/nuxt-umami",
   "type": "module",
   "version": "0.0.1",
   "license": "unlicense",
@@ -33,7 +33,8 @@
     "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "postinstall": "npm run dev:prepare"
+    "postinstall": "npm run dev:prepare",
+    "release": "bumpp --commit --push --tag && npm publish --access public"
   },
   "dependencies": {
     "@nuxt/kit": "^3.0.0-rc.6"
@@ -43,6 +44,7 @@
     "@nuxt/module-builder": "latest",
     "@nuxtjs/eslint-config-typescript": "latest",
     "eslint": "latest",
+    "bumpp": "^8.2.1",
     "nuxt": "^3.0.0-rc.6"
   }
 }
