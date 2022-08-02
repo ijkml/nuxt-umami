@@ -6,6 +6,14 @@
   "private": false,
   "author": "ML <me.mlaure@gmail.com>",
   "description": "Embed the Umami analytics library into Nuxt",
+  "keywords": [
+    "nuxt",
+    "umami",
+    "umami analytics",
+    "analytics",
+    "tracking",
+    "nuxt module"
+  ],
   "repository": "https://github.com/ijkml/nuxt-umami",
   "exports": {
     ".": {
