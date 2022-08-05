@@ -83,7 +83,7 @@ onMounted(() => {
 const { data } = await useAsyncData(
   'mountains',
   (nuxtApp) => {
-    const { $umami } = useNuxtApp();
+    const { $umami } = nuxtApp();
     // do something, return something
   },
 );

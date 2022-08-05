@@ -3,6 +3,8 @@ import { fileURLToPath } from 'url';
 import { addPlugin, defineNuxtModule } from '@nuxt/kit';
 import type { ModuleOptions } from './types';
 
+export type { ModuleOptions } from './types';
+
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: '@ml/nuxt-umami',
@@ -59,5 +61,3 @@ export default defineNuxtModule<ModuleOptions>({
     addPlugin({ src: resolve(runtimeDir, 'plugin'), mode: 'client' });
   },
 });
-
-export { ModuleOptions };
