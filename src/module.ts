@@ -1,6 +1,6 @@
 import { resolve } from 'path';
 import { fileURLToPath } from 'url';
-import { addPlugin, defineNuxtModule } from '@nuxt/kit';
+import { addPlugin, defineNuxtModule, isNuxt3 } from '@nuxt/kit';
 import type { ModuleOptions } from './types';
 
 export type { ModuleOptions } from './types';
@@ -10,7 +10,8 @@ export default defineNuxtModule<ModuleOptions>({
     name: '@ml/nuxt-umami',
     configKey: 'umami',
     compatibility: {
-      nuxt: '^3.0.0',
+      nuxt: '^3.0.0 || ^2.16.0',
+      bridge: true,
     },
   },
   defaults: {
@@ -56,7 +57,11 @@ export default defineNuxtModule<ModuleOptions>({
     const runtimeDir = fileURLToPath(new URL('./runtime', import.meta.url));
     nuxt.options.build.transpile.push(runtimeDir);
 
-    nuxt.options.runtimeConfig.public.umami = resolvedOptions as any;
+    if (isNuxt3()) {
+      nuxt.options.runtimeConfig.public.umami = resolvedOptions as any;
+    } else {
+      nuxt.options.publicRuntimeConfig.umami = resolvedOptions as any;
+    }
 
     addPlugin({ src: resolve(runtimeDir, 'plugin'), mode: 'client' });
   },
