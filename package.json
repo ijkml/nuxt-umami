@@ -1,7 +1,7 @@
 {
   "name": "nuxt-umami",
   "type": "module",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "license": "unlicense",
   "private": false,
   "author": "ML <me.mlaure@gmail.com>",
@@ -33,7 +33,6 @@
     "dev:prepare": "nuxt-module-build --stub && nuxi prepare playground",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "postinstall": "npm run dev:prepare",
     "release": "bumpp --commit --push --tag && npm publish --access public"
   },
   "dependencies": {
