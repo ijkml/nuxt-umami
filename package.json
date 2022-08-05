@@ -1,7 +1,7 @@
 {
   "name": "nuxt-umami",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "unlicense",
   "private": false,
   "author": "ML <me.mlaure@gmail.com>",
@@ -34,7 +34,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "postinstall": "npm run dev:prepare",
-    "release": "bumpp --commit --push --tag && npm publish --access public"
+    "release": "bumpp --commit --push --tag && npm publish --access public",
+    "frelease": "bumpp && npm publish --access public"
   },
   "dependencies": {
     "@nuxt/kit": "^3.0.0-rc.6"
