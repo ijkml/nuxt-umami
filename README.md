@@ -1,5 +1,4 @@
 # Nuxt Umami Module
-<br>
 
 ## Features
 
@@ -11,7 +10,6 @@
 <br>
 
 ## Installation
-<br>
 
 With pnpm
 
@@ -88,6 +86,11 @@ const { data } = await useAsyncData(
   },
 );
 ```
+
+<br>
+
+## Available Functions
+> For a list of all available functions, see [Umami Tracker Functions](https://umami.is/docs/tracker-functions)
 
 <br>
 
