@@ -52,7 +52,7 @@ Add the module to `nuxt.config`:
 }
 ```
 
-Only `websiteId` and `scriptUrl` are mandatory. See the [Umami docs](https://umami.is/docs/tracker-config) for more explanation of these options.
+Only `websiteId` and `scriptUrl` are mandatory. See the [Umami docs](https://umami.is/docs/tracker-configuration) for more explanation of these options.
 
 <br>
 
