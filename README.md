@@ -97,4 +97,11 @@ const { data } = await useAsyncData(
 ## Credits
 
 - [VueUse](https://github.com/vueuse/vueuse) - for `useScriptTag` composable.
-- [Joe Pritchard](https://github.com/joe-pritchard/nuxt-umami-module) - author of the nuxt-umami-module for Nuxt 2.
+- [Joe Pritchard](https://github.com/joe-pritchard/nuxt-umami-module) - author of nuxt-umami-module (compatible only with Nuxt 2).
+
+## Issues, Support...
+
+If you find a bug or have any trouble using the module, please open an issue. I'm available to work on it and help you out.
+<br>
+
+Using the module in your app? Consider giving it a star 🌟. It'd mean the world to me.
