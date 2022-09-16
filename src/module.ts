@@ -7,10 +7,10 @@ export type { ModuleOptions } from './types';
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: '@ml/nuxt-umami',
+    name: 'nuxt-umami',
     configKey: 'umami',
     compatibility: {
-      nuxt: '^3.0.0 || ^2.16.0',
+      nuxt: '^2.0.0 || ^3.0.0-rc.9',
       bridge: true,
     },
   },
