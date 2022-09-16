@@ -73,8 +73,6 @@ export interface Umami {
    * @param websiteId
    */
   trackEvent(eventValue: string, eventType: string, url?: string, websiteId?: string): void
-  addEvents(): void
-  removeEvents(): void
 }
 
 declare module '#app' {
