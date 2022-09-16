@@ -62,7 +62,7 @@ export default defineNuxtModule<ModuleOptions>({
     } else {
       nuxt.options.publicRuntimeConfig.umami = resolvedOptions as any;
     }
-
-    addPlugin({ src: resolve(runtimeDir, 'plugin'), mode: 'client' });
+    //
+    addPlugin({ src: resolve(runtimeDir, 'plugin.client'), mode: 'client' });
   },
 });
