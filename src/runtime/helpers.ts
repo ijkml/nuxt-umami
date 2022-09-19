@@ -28,16 +28,18 @@ export function loadScript(
   src: string,
   attrs: Record<string, string>,
 ) {
+  type LoadScriptPromiseType = Promise<HTMLScriptElement | false>;
+
   const document = (typeof window !== 'undefined') ? window.document : undefined;
   const _attrs = attrs || {};
-  let _promise: Promise<HTMLScriptElement | boolean> | null = null;
+  let _promise: null | LoadScriptPromiseType = null;
 
   /**
    * Load the script specified via `src`.
    *
    * @returns Promise<HTMLScriptElement>
    */
-  const loadScript = (): Promise<HTMLScriptElement | boolean> => new Promise((resolve, reject) => {
+  const loadScript = (): LoadScriptPromiseType => new Promise((resolve, reject) => {
     // Some little closure for resolving the Promise.
     const resolveWithElement = (el: HTMLScriptElement) => {
       resolve(el);
@@ -92,7 +94,7 @@ export function loadScript(
    *
    * @returns Promise<HTMLScriptElement>
    */
-  const load = (): Promise<HTMLScriptElement | boolean> => {
+  const load = (): LoadScriptPromiseType => {
     if (!_promise) {
       _promise = loadScript();
     }
