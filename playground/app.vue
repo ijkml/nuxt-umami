@@ -1,11 +1,9 @@
 <script setup>
 const { $umami, provide } = useNuxtApp();
 
-console.info($umami);
 $umami('test-run-on-setup');
 
 onMounted(() => {
-  // console.info($umami);
   $umami('test-onMounted');
 });
 

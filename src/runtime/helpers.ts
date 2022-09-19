@@ -1,12 +1,30 @@
-import { defineNuxtPlugin } from '#app';
-import type { ModuleOptions } from '../types';
+import type { Umami } from '../types';
+
+const isDev = process.env.NODE_ENV !== 'production';
+
+function warnMock() {
+  if (isDev) {
+    console.warn('You are using Umami before it is ready. $umami is only available `onMounted`');
+  }
+}
+
+export function useMock() {
+  const trackEvent = (eventValue: string, eventType?: string, url?: string, websiteId?: string) => warnMock();
+  const trackView = (url: string, referer?: string, websiteId?: string) => warnMock();
+
+  const umami: Umami = (eventValue: string) => trackEvent(eventValue);
+  umami.trackView = trackView;
+  umami.trackEvent = trackEvent;
+
+  return umami;
+}
 
 /**
  * [Over-]simplified version of VueUse useScriptTag
  * @param src
  * @param attrs
  */
-function loadScript(
+export function loadScript(
   src: string,
   attrs: Record<string, string>,
 ) {
@@ -84,45 +102,3 @@ function loadScript(
 
   return { load };
 }
-
-export default defineNuxtPlugin(async (nuxtApp) => {
-  const options: ModuleOptions = { ...nuxtApp.payload.config.public.umami };
-
-  const { scriptUrl, websiteId, autoTrack, cache, doNotTrack, domains } = options;
-
-  const attrs = {
-    'data-website-id': websiteId,
-  };
-
-  // typecheck to strip unneeded attrs
-
-  if (typeof autoTrack === 'boolean') {
-    attrs['data-auto-track'] = autoTrack;
-  }
-
-  if (typeof cache === 'boolean') {
-    attrs['data-cache'] = cache;
-  }
-
-  if (typeof doNotTrack === 'boolean') {
-    attrs['data-do-not-track'] = doNotTrack;
-  }
-
-  if (typeof domains === 'string') {
-    attrs['data-domains'] = domains;
-  }
-
-  const { load } = loadScript(scriptUrl, attrs);
-
-  await load().catch((err) => {
-    throw new Error('An error occured, could not load Umami', { cause: err });
-  });
-
-  const umami = window.umami;
-
-  return {
-    provide: {
-      umami,
-    },
-  };
-});
