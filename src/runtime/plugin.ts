@@ -32,23 +32,23 @@ export default defineNuxtPlugin(async (nuxtApp) => {
   const mockUmami = useMock();
   let umami: Umami = mockUmami;
 
-  const { load } = loadScript(scriptUrl, attrs);
-
-  await load()
-    .then((resolved) => {
+  if (process.client) {
+    await loadScript(scriptUrl, attrs)
+      .load()
+      .then((resolved) => {
       // register on successful load,
-      if (resolved !== false) {
+        if (resolved !== false) {
         // use mock in the unlikely case that window.umami is undefined
-        umami = window.umami ?? mockUmami;
-      }
-    })
-    .catch((err) => {
+          umami = window.umami ?? mockUmami;
+        }
+      })
+      .catch((err) => {
       // throwing an error results in a crash during development,
       // could be a real bugger if script is not always available
-      // throw new Error('An error occured', { cause: err });
       // instead, fail almost silently
-      console.error('An error occured, could not load Umami', err);
-    });
+        console.error('An error occured, could not load Umami', err);
+      });
+  }
 
   return {
     provide: {
