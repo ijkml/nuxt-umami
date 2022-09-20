@@ -1,9 +1,7 @@
 import type { Umami } from '../types';
 
-const isDev = process.env.NODE_ENV !== 'production';
-
 function warnMock() {
-  if (isDev) {
+  if (process.client) {
     console.warn('You are using Umami before it is ready. $umami is only available `onMounted`');
   }
 }
