@@ -10,6 +10,7 @@ export function useMock() {
   const trackEvent = (eventValue: string, eventType?: string, url?: string, websiteId?: string) => warnMock();
   const trackView = (url: string, referer?: string, websiteId?: string) => warnMock();
 
+  // mock the structure and style of Umami
   const umami: Umami = (eventValue: string) => trackEvent(eventValue);
   umami.trackView = trackView;
   umami.trackEvent = trackEvent;

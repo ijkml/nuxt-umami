@@ -29,7 +29,6 @@ export default defineNuxtModule<ModuleOptions>({
     function isValidString(str: any) {
       return typeof str === 'string' && str !== '';
     }
-
     function isBoolean(bool: any) {
       return typeof bool === 'boolean';
     }
@@ -62,7 +61,7 @@ export default defineNuxtModule<ModuleOptions>({
     } else {
       nuxt.options.publicRuntimeConfig.umami = resolvedOptions as any;
     }
-    //
+
     addPlugin({ src: resolve(runtimeDir, 'plugin') });
   },
 });
