@@ -1,89 +1,6 @@
 import { defineNuxtPlugin } from '#app';
-import type { ModuleOptions } from '../types';
-
-/**
- * [Over-]simplified version of VueUse useScriptTag
- * @param src
- * @param attrs
- */
-function loadScript(
-  src: string,
-  attrs: Record<string, string>,
-) {
-  const document = (typeof window !== 'undefined') ? window.document : undefined;
-  const _attrs = attrs || {};
-  let _promise: Promise<HTMLScriptElement | boolean> | null = null;
-
-  /**
-   * Load the script specified via `src`.
-   *
-   * @returns Promise<HTMLScriptElement>
-   */
-  const loadScript = (): Promise<HTMLScriptElement | boolean> => new Promise((resolve, reject) => {
-    // Some little closure for resolving the Promise.
-    const resolveWithElement = (el: HTMLScriptElement) => {
-      resolve(el);
-      return el;
-    };
-
-    // Check if document actually exists, otherwise resolve the Promise (SSR Support).
-    if (!document) {
-      resolve(false);
-      return;
-    }
-
-    // Local variable defining if the <script> tag should be appended or not.
-    let shouldAppend = false;
-
-    let el = document.querySelector<HTMLScriptElement>(`script[src="${src}"]`);
-
-    // Script tag not found, preparing the element for appending
-    if (!el) {
-      el = document.createElement('script');
-      el.type = 'text/javascript';
-      el.async = true;
-      el.defer = true;
-      el.src = src;
-
-      Object.entries(_attrs).forEach(([name, value]) => el?.setAttribute(name, value));
-
-      // Enables shouldAppend
-      shouldAppend = true;
-    } else if (el.hasAttribute('data-loaded')) {
-      // Script tag already exists, resolve the loading Promise with it.
-      resolveWithElement(el);
-    }
-
-    // Event listeners
-    el.addEventListener('error', event => reject(event));
-    el.addEventListener('abort', event => reject(event));
-    el.addEventListener('load', () => {
-      el!.setAttribute('data-loaded', 'true');
-
-      resolveWithElement(el!);
-    });
-
-    // Append the <script> tag to head.
-    if (shouldAppend) {
-      el = document.head.appendChild(el);
-    }
-  });
-
-  /**
-   * Exposed singleton wrapper for `loadScript`, avoiding calling it twice.
-   *
-   * @returns Promise<HTMLScriptElement>
-   */
-  const load = (): Promise<HTMLScriptElement | boolean> => {
-    if (!_promise) {
-      _promise = loadScript();
-    }
-
-    return _promise;
-  };
-
-  return { load };
-}
+import type { ModuleOptions, Umami } from '../types';
+import { loadScript, useMock } from './helpers';
 
 export default defineNuxtPlugin(async (nuxtApp) => {
   const options: ModuleOptions = { ...nuxtApp.payload.config.public.umami };
@@ -112,13 +29,26 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     attrs['data-domains'] = domains;
   }
 
-  const { load } = loadScript(scriptUrl, attrs);
+  const mockUmami = useMock();
+  let umami: Umami = mockUmami;
 
-  await load().catch((err) => {
-    throw new Error('An error occured, could not load Umami', { cause: err });
-  });
-
-  const umami = window.umami;
+  if (process.client) {
+    await loadScript(scriptUrl, attrs)
+      .load()
+      .then((resolved) => {
+      // register on successful load,
+        if (resolved !== false) {
+        // use mock in the unlikely case that window.umami is undefined
+          umami = window.umami ?? mockUmami;
+        }
+      })
+      .catch((err) => {
+      // throwing an error results in a crash during development,
+      // could be a real bugger if script is not always available
+      // instead, fail almost silently
+        console.error('An error occured, could not load Umami', err);
+      });
+  }
 
   return {
     provide: {
