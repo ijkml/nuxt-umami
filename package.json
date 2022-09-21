@@ -1,7 +1,7 @@
 {
   "name": "nuxt-umami",
   "type": "module",
-  "version": "0.1.5",
+  "version": "1.0.0",
   "license": "unlicense",
   "private": false,
   "author": "ML <me.mlaure@gmail.com>",
