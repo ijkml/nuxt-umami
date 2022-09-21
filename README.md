@@ -25,9 +25,10 @@ Or, with npm
 
 Or, with yarn
 
-```bash 
+```bash
   yarn add nuxt-umami
 ```
+
 <br>
 
 ### Configuration
@@ -56,7 +57,7 @@ Only `websiteId` and `scriptUrl` are mandatory. See the [Umami docs](https://uma
 
 ## Usage
 
->  You can use `$umami` anywhere you have access to `NuxtApp` or the `useNuxtApp` composable (middleware, asyncData, etc).
+> You can use `$umami` anywhere you have access to `NuxtApp` or the `useNuxtApp` composable (middleware, asyncData, etc).
 
 > Note: $umami is only available `onMounted`.
 
@@ -70,7 +71,7 @@ const { $umami } = useNuxtApp();
 
 onMounted(() => {
   // Sends an event with an event type of custom.
-  $umami('Signup button click')
+  $umami("Signup button click");
 });
 </script>
 ```
@@ -78,18 +79,16 @@ onMounted(() => {
 ### In middleware, asyncData, etc
 
 ```javascript
-const { data } = await useAsyncData(
-  'mountains',
-  (nuxtApp) => {
-    const { $umami } = nuxtApp();
-    // do something, return something
-  },
-);
+const { data } = await useAsyncData("mountains", (nuxtApp) => {
+  const { $umami } = nuxtApp();
+  // do something, return something
+});
 ```
 
 <br>
 
 ## Available Functions
+
 > For a list of all available functions, see [Umami Tracker Functions](https://umami.is/docs/tracker-functions)
 
 <br>
