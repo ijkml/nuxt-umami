@@ -11,28 +11,24 @@
 
 ## Installation
 
-With pnpm
-
+With `pnpm`
 ```bash
-  pnpm add nuxt-umami
+pnpm add nuxt-umami
 ```
 
-Or, with npm
-
+Or, with `npm`
 ```bash
-  npm install nuxt-umami
+npm install nuxt-umami
 ```
 
-Or, with yarn
-
+Or, with `yarn`
 ```bash
-  yarn add nuxt-umami
+yarn add nuxt-umami
 ```
 
 <br>
 
 ### Configuration
-
 Add the module to `nuxt.config`:
 
 ```javascript
@@ -51,15 +47,22 @@ Add the module to `nuxt.config`:
 }
 ```
 
-Only `websiteId` and `scriptUrl` are mandatory. See the [Umami docs](https://umami.is/docs/tracker-configuration) for more explanation of these options.
+Only `websiteId` and `scriptUrl` are mandatory. [See the Umami docs](https://umami.is/docs/tracker-configuration) for more explanation of these options.
+
+<br>
+
+### Environment Variables
+If you want, you can set up and use environment variables in `.env` files. But that is not really necessary as the module config does not require any "sensitive" data. Every part of the configuration can be viewed in the script in `<head>` after the page is loaded.
 
 <br>
 
 ## Usage
 
+> **Note**
 > You can use `$umami` anywhere you have access to `NuxtApp` or the `useNuxtApp` composable (middleware, asyncData, etc).
 
-> Note: $umami is only available `onMounted`.
+> **Warning**
+> $umami is only available `onMounted`.
 
 <br>
 
