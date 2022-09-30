@@ -36,15 +36,15 @@
     "release": "bumpp --commit --push --tag && npm publish --access public"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.0.0-rc.10"
+    "@nuxt/kit": "^3.0.0-rc.11"
   },
   "devDependencies": {
-    "@antfu/eslint-config-ts": "^0.25.2",
+    "@antfu/eslint-config-ts": "^0.27.0",
     "@nuxt/module-builder": "latest",
+    "@nuxt/schema": "^3.0.0-rc.11",
     "@nuxtjs/eslint-config-typescript": "latest",
-    "eslint": "latest",
     "bumpp": "^8.2.1",
-    "@nuxt/schema": "^3.0.0-rc.10",
-    "nuxt": "^3.0.0-rc.10"
+    "eslint": "latest",
+    "nuxt": "3.0.0-rc.11"
   }
 }
