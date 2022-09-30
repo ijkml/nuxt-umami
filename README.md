@@ -139,7 +139,7 @@ If you find a bug or have any trouble using the module, please open an issue. I'
 
 Using the module in your app? Consider giving it a star 🌟. It'd mean the world to me.
 
-# 🔥 Contributions
+## 🔥 Contributions
 
 <a href="https://github.com/ijkml/nuxt-umami/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=ijkml/nuxt-umami" />
