@@ -2,10 +2,11 @@
   "name": "nuxt-umami",
   "type": "module",
   "version": "1.0.1",
-  "license": "unlicense",
   "private": false,
-  "author": "ML <me.mlaure@gmail.com>",
   "description": "Embed the Umami analytics library into Nuxt",
+  "author": "ML <me.mlaure@gmail.com>",
+  "license": "unlicense",
+  "repository": "https://github.com/ijkml/nuxt-umami",
   "keywords": [
     "nuxt",
     "umami",
@@ -14,7 +15,6 @@
     "tracking",
     "nuxt module"
   ],
-  "repository": "https://github.com/ijkml/nuxt-umami",
   "exports": {
     ".": {
       "require": "./dist/module.cjs",
