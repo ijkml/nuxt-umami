@@ -1,0 +1,9 @@
+{
+  "name": "nuxt-umami",
+  "configKey": "umami",
+  "compatibility": {
+    "nuxt": "^2.0.0 || ^3.0.0-rc.9",
+    "bridge": false
+  },
+  "version": "1.0.2"
+}
