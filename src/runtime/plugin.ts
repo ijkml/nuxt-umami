@@ -37,9 +37,8 @@ export default defineNuxtPlugin(async (nuxtApp) => {
       .load()
       .then((resolved) => {
       // register on successful load,
-        if (resolved !== false) {
-        // use mock in the unlikely case that window.umami is undefined
-          umami = window.umami ?? mockUmami;
+        if (resolved !== false && window.umami) {
+          umami = window.umami;
         }
       })
       .catch((err) => {
