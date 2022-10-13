@@ -1,9 +1,9 @@
-import { defineNuxtPlugin } from '#app';
-import type { ModuleOptions, Umami } from '../types';
+import type { Plugin } from '@nuxt/types';
+import type { ModuleOptions, Umami } from '../types/main';
 import { loadScript, useMock } from './helpers';
 
-export default defineNuxtPlugin(async (nuxtApp) => {
-  const options: ModuleOptions = { ...nuxtApp.payload.config.public.umami };
+const UmamiPlugin: Plugin = async (context, inject) => {
+  const options: ModuleOptions = context.$config.umami || {};
 
   const { scriptUrl, websiteId, autoTrack, cache, doNotTrack, domains } = options;
 
@@ -37,9 +37,8 @@ export default defineNuxtPlugin(async (nuxtApp) => {
       .load()
       .then((resolved) => {
       // register on successful load,
-        if (resolved !== false) {
-        // use mock in the unlikely case that window.umami is undefined
-          umami = window.umami ?? mockUmami;
+        if (resolved !== false && window.umami) {
+          umami = window.umami;
         }
       })
       .catch((err) => {
@@ -50,9 +49,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
       });
   }
 
-  return {
-    provide: {
-      umami,
-    },
-  };
-});
+  inject('umami', umami);
+};
+
+export default UmamiPlugin;

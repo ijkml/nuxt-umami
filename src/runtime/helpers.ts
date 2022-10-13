@@ -1,8 +1,8 @@
-import type { Umami } from '../types';
+import type { Umami } from '../types/main';
 
 function warnMock() {
   if (process.client && process.env.NODE_ENV !== 'production') {
-    console.warn('You are using Umami before it is ready. $umami is only available `onMounted`');
+    console.warn('Umami is not ready. Maybe there was an error loading the script or you are using it before `onMounted`.');
   }
 }
 
@@ -64,7 +64,7 @@ export function loadScript(
       el.defer = true;
       el.src = src;
 
-      Object.entries(_attrs).forEach(([name, value]) => el?.setAttribute(name, value));
+      Object.entries(_attrs).forEach(([name, value]) => el.setAttribute(name, value));
 
       // Enables shouldAppend
       shouldAppend = true;

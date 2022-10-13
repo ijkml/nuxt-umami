@@ -4,6 +4,17 @@ declare global {
   }
 }
 
+declare module '#app' {
+  interface NuxtApp {
+    $umami: Umami
+  }
+}
+
+declare module '@vue/runtime-core' {
+  interface ComponentCustomProperties {
+    $umami: Umami
+  }
+}
 export interface ModuleOptions {
   /**
    * Url to the tracking script provided by your Umami setup
@@ -73,16 +84,4 @@ export interface Umami {
    * @param websiteId
    */
   trackEvent(eventValue: string, eventType: string, url?: string, websiteId?: string): void
-}
-
-declare module '#app' {
-  interface NuxtApp {
-    $umami: Umami
-  }
-}
-
-declare module '@vue/runtime-core' {
-  interface ComponentCustomProperties {
-    $umami: Umami
-  }
 }
