@@ -134,12 +134,12 @@ const { data } = await useAsyncData("mountains", (nuxtApp) => {
 ## Author
 
 Hey, I'm [ML](https://github.com/ijkml/), when I'm not trying to break into open source,
-I'm busy trying to break into [shit-posting on Twitter](https://twitter.com/ijk_ml) <br>
+I'm busy trying to break into [sh-posting on Twitter](https://twitter.com/ijk_ml) <br>
 If you find a bug or have any trouble using the module, please open an issue. I'm available to work on it and help you out.
 
 Using the module in your app? Consider giving it a star 🌟. It'd mean the world to me.
 
-## 🔥 Contributions
+## Contributions
 
 <a href="https://github.com/ijkml/nuxt-umami/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=ijkml/nuxt-umami" />
