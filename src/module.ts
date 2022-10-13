@@ -55,12 +55,15 @@ export default defineNuxtModule<ModuleOptions>({
     const runtimeDir = fileURLToPath(new URL('./runtime', import.meta.url));
     nuxt.options.build.transpile.push(runtimeDir);
 
+    const v2Plugin = resolve(runtimeDir, 'plugin-2');
+    const v3Plugin = resolve(runtimeDir, 'plugin-3');
+
     if (isNuxt3()) {
       nuxt.options.runtimeConfig.public.umami = resolvedOptions as any;
+      addPlugin({ src: v3Plugin });
     } else {
       nuxt.options.publicRuntimeConfig.umami = resolvedOptions as any;
+      addPlugin({ src: v2Plugin });
     }
-
-    addPlugin({ src: resolve(runtimeDir, 'plugin') });
   },
 });
