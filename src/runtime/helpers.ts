@@ -2,7 +2,7 @@ import type { Umami } from '../types';
 
 function warnMock() {
   if (process.client && process.env.NODE_ENV !== 'production') {
-    console.warn('You are using Umami before it is ready. $umami is only available `onMounted`');
+    console.warn('Umami is not ready. Maybe there was an error loading the script or you are using it before `onMounted`.');
   }
 }
 
