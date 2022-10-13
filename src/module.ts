@@ -2,6 +2,7 @@ import { resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { addPlugin, defineNuxtModule, isNuxt3 } from '@nuxt/kit';
 import type { ModuleOptions } from './types/main';
+import './types/index.d.ts';
 
 export type { ModuleOptions } from './types/main';
 
