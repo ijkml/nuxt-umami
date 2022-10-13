@@ -1,5 +1,5 @@
 import { defineNuxtPlugin } from '#app';
-import type { ModuleOptions, Umami } from '../types';
+import type { ModuleOptions, Umami } from '../types/main';
 import { loadScript, useMock } from './helpers';
 
 export default defineNuxtPlugin(async (nuxtApp) => {

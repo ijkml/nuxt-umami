@@ -1,9 +1,3 @@
-declare global {
-  interface Window {
-    umami: Umami
-  }
-}
-
 export interface ModuleOptions {
   /**
    * Url to the tracking script provided by your Umami setup
@@ -75,6 +69,12 @@ export interface Umami {
   trackEvent(eventValue: string, eventType: string, url?: string, websiteId?: string): void
 }
 
+declare global {
+  interface Window {
+    umami: Umami
+  }
+}
+
 declare module '#app' {
   interface NuxtApp {
     $umami: Umami
@@ -86,3 +86,33 @@ declare module '@vue/runtime-core' {
     $umami: Umami
   }
 }
+
+declare module 'vue/types/vue' {
+  interface Vue {
+    $umami: Umami
+  }
+}
+
+declare module '@nuxt/types' {
+  // $umami inside fetch, plugins, middleware, etc
+  interface NuxtAppOptions {
+    $umami: Umami
+  }
+
+  // module configuration in nuxt.config.ts
+  interface NuxtOptions {
+    umami?: ModuleOptions
+  }
+
+  interface Context {
+    $umami: Umami
+  }
+}
+
+declare module 'vuex/types/index' {
+  // $umami inside Vuex stores
+  interface Store<S> {
+    readonly $umami: ReturnType<Umami>
+  }
+}
+

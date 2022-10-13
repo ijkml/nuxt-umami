@@ -1,9 +1,9 @@
 import { resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { addPlugin, defineNuxtModule, isNuxt3 } from '@nuxt/kit';
-import type { ModuleOptions } from './types';
+import type { ModuleOptions } from './types/main';
 
-export type { ModuleOptions } from './types';
+export type { ModuleOptions } from './types/main';
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {

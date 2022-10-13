@@ -1,4 +1,4 @@
-import type { Umami } from '../types';
+import type { Umami } from '../types/main';
 
 function warnMock() {
   if (process.client && process.env.NODE_ENV !== 'production') {
@@ -64,7 +64,7 @@ export function loadScript(
       el.defer = true;
       el.src = src;
 
-      Object.entries(_attrs).forEach(([name, value]) => el?.setAttribute(name, value));
+      Object.entries(_attrs).forEach(([name, value]) => el.setAttribute(name, value));
 
       // Enables shouldAppend
       shouldAppend = true;

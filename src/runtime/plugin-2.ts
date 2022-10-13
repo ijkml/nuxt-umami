@@ -1,5 +1,5 @@
 import type { Plugin } from '@nuxt/types';
-import type { ModuleOptions, Umami } from '../types';
+import type { ModuleOptions, Umami } from '../types/main';
 import { loadScript, useMock } from './helpers';
 
 const UmamiPlugin: Plugin = async (context, inject) => {
