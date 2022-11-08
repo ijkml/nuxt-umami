@@ -29,3 +29,4 @@ declare module 'vuex/types/index' {
   }
 }
 
+export {}

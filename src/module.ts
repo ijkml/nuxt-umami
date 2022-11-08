@@ -1,10 +1,22 @@
 import { resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { addPlugin, defineNuxtModule, isNuxt3 } from '@nuxt/kit';
-import type { ModuleOptions } from './types/main';
+import type { ModuleOptions, Umami } from './types/main';
 import './types/index.d.ts';
 
 export type { ModuleOptions } from './types/main';
+
+declare module '#app' {
+  interface NuxtApp {
+    $umami: Umami
+  }
+}
+
+declare module '@vue/runtime-core' {
+  interface ComponentCustomProperties {
+    $umami: Umami
+  }
+}
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -19,8 +31,8 @@ export default defineNuxtModule<ModuleOptions>({
     doNotTrack: undefined,
     cache: undefined,
     domains: undefined,
-    websiteId: undefined,
-    scriptUrl: undefined,
+    websiteId: '',
+    scriptUrl: '',
     hostUrl: undefined,
   },
   setup(options, nuxt) {
