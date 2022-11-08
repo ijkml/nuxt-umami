@@ -36,12 +36,12 @@
     "release": "bumpp --commit --push --tag && npm publish --access public"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.0.0-rc.11"
+    "@nuxt/kit": "^3.0.0-rc.13"
   },
   "devDependencies": {
     "@antfu/eslint-config-ts": "^0.29.4",
     "@nuxt/module-builder": "latest",
-    "@nuxt/schema": "^3.0.0-rc.11",
+    "@nuxt/schema": "^3.0.0-rc.13",
     "@nuxt/types": "^2.15.8",
     "@nuxtjs/eslint-config-typescript": "latest",
     "bumpp": "^8.2.1",
