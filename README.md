@@ -21,17 +21,17 @@ This is a fully featured nuxt module that makes implementing [**Umami Analytics*
 
 With `pnpm`
 ```bash
-pnpm add nuxt-umami
+pnpm add -D nuxt-umami
 ```
 
 Or, with `npm`
 ```bash
-npm install nuxt-umami
+npm install -D nuxt-umami
 ```
 
 Or, with `yarn`
 ```bash
-yarn add nuxt-umami
+yarn add -D nuxt-umami
 ```
 
 ### Setup
