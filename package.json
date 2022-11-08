@@ -1,7 +1,7 @@
 {
   "name": "nuxt-umami",
   "type": "module",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": false,
   "description": "Embed the Umami analytics library into Nuxt",
   "author": "ML <me.mlaure@gmail.com>",
