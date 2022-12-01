@@ -7,8 +7,6 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
   const { scriptUrl, websiteId, autoTrack, cache, doNotTrack, domains, enable } = options;
 
-  if (!enable) return;
-
   const attrs = {
     'data-website-id': websiteId,
   };
@@ -38,7 +36,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
   const mockUmami = useMock();
   let umami: Umami = mockUmami;
 
-  if (process.client) {
+  if (process.client && enable) {
     await loadScript(scriptUrl, attrs)
       .load()
       .then((resolved) => {
