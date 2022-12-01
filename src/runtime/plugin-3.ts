@@ -31,6 +31,10 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     attrs['data-domains'] = domains;
   }
 
+  if (typeof hostUrl === 'string') {
+    attrs['data-host-url'] = hostUrl;
+  }
+
   const mockUmami = useMock();
   let umami: Umami = mockUmami;
 
