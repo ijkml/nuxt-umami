@@ -5,9 +5,13 @@ import { loadScript, useMock } from './helpers';
 export default defineNuxtPlugin(async (nuxtApp) => {
   const options: ModuleOptions = { ...nuxtApp.payload.config.public.umami };
 
+<<<<<<< HEAD
   const { scriptUrl, websiteId, autoTrack, cache, doNotTrack, domains, enable } = options;
 
   if (!enable) return;
+=======
+  const { scriptUrl, websiteId, autoTrack, cache, doNotTrack, domains, hostUrl } = options;
+>>>>>>> 2a5d4d082e2ed035e85d83d7a00af5f5e795233f
 
   const attrs = {
     'data-website-id': websiteId,
