@@ -39,8 +39,6 @@ export default defineNuxtModule<ModuleOptions>({
   setup(options, nuxt) {
     const { autoTrack, cache, doNotTrack, scriptUrl, websiteId, hostUrl, domains, enable } = options;
     
-    if (!enable) return;
-
     function isValidString(str: any) {
       return typeof str === 'string' && str !== '';
     }

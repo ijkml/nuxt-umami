@@ -5,7 +5,9 @@ import { loadScript, useMock } from './helpers';
 const UmamiPlugin: Plugin = async (context, inject) => {
   const options: ModuleOptions = context.$config.umami || {};
 
-  const { scriptUrl, websiteId, autoTrack, cache, doNotTrack, domains } = options;
+  const { scriptUrl, websiteId, autoTrack, cache, doNotTrack, domains, enable } = options;
+
+  if (!enable) return;
 
   const attrs = {
     'data-website-id': websiteId,
