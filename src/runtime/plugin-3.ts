@@ -5,7 +5,7 @@ import { loadScript, useMock } from './helpers';
 export default defineNuxtPlugin(async (nuxtApp) => {
   const options: ModuleOptions = { ...nuxtApp.payload.config.public.umami };
 
-  const { scriptUrl, websiteId, autoTrack, cache, doNotTrack, domains, enable } = options;
+  const { scriptUrl, websiteId, autoTrack, cache, doNotTrack, domains, enable, hostUrl } = options;
 
   const attrs = {
     'data-website-id': websiteId,
@@ -36,7 +36,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
   const mockUmami = useMock();
   let umami: Umami = mockUmami;
 
-  if (process.client && enable) {
+  if (enable && process.client) {
     await loadScript(scriptUrl, attrs)
       .load()
       .then((resolved) => {
