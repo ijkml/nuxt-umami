@@ -33,10 +33,13 @@ export default defineNuxtModule<ModuleOptions>({
     domains: undefined,
     websiteId: '',
     scriptUrl: '',
+    enable: true,
     hostUrl: undefined,
   },
   setup(options, nuxt) {
-    const { autoTrack, cache, doNotTrack, scriptUrl, websiteId, hostUrl, domains } = options;
+    const { autoTrack, cache, doNotTrack, scriptUrl, websiteId, hostUrl, domains, enable } = options;
+    
+    if (!enable) return;
 
     function isValidString(str: any) {
       return typeof str === 'string' && str !== '';
@@ -63,6 +66,7 @@ export default defineNuxtModule<ModuleOptions>({
       doNotTrack: isBoolean(doNotTrack) ? doNotTrack : undefined,
       cache: isBoolean(cache) ? cache : undefined,
       autoTrack: isBoolean(autoTrack) ? autoTrack : undefined,
+      enable: isBoolean(enable) ? enable : undefined,
     };
 
     const runtimeDir = fileURLToPath(new URL('./runtime', import.meta.url));

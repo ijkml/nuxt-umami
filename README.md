@@ -46,6 +46,7 @@ export default defineNuxtConfig({
     autoTrack: true,
     doNotTrack: false,
     cache: false,
+    enable: true,
     domains: 'mywebsite.com,mywebsite2.com',
     websiteId: 'your-website-id',
     scriptUrl: 'https://path.to.umami.js',
