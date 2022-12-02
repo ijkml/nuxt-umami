@@ -1,4 +1,4 @@
-import type { Umami } from '../types/main';
+import type { ModuleOptions, Umami } from '../types/main';
 
 function warnMock() {
   if (process.client && process.env.NODE_ENV !== 'production') {
@@ -25,7 +25,7 @@ export function useMock() {
  */
 export function loadScript(
   src: string,
-  attrs: Record<string, string>,
+  attrs: Record<string, string | boolean>,
 ) {
   type LoadScriptPromiseType = Promise<HTMLScriptElement | false>;
 
@@ -64,7 +64,7 @@ export function loadScript(
       el.defer = true;
       el.src = src;
 
-      Object.entries(_attrs).forEach(([name, value]) => el.setAttribute(name, value));
+      Object.entries(_attrs).forEach(([name, value]) => el.setAttribute(name, value.toString()));
 
       // Enables shouldAppend
       shouldAppend = true;
@@ -102,4 +102,22 @@ export function loadScript(
   };
 
   return { load };
+}
+
+type ScriptAttributes = Omit<ModuleOptions, 'scriptUrl' | 'enable'>;
+
+/**
+ * strip undefined attrs
+ * @param attrs
+ */
+export function stripAttrs({ websiteId, autoTrack, cache, doNotTrack, domains, hostUrl }: ScriptAttributes) {
+  return {
+    'data-website-id': websiteId,
+    // strip unneeded/undefined attrs
+    ...autoTrack !== undefined && { 'data-auto-track': autoTrack },
+    ...doNotTrack !== undefined && { 'data-do-not-track': doNotTrack },
+    ...cache !== undefined && { 'data-cache': cache },
+    ...domains !== undefined && { 'data-domains': domains },
+    ...hostUrl !== undefined && { 'data-host-url': hostUrl },
+  };
 }

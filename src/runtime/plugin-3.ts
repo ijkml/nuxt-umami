@@ -1,37 +1,13 @@
 import { defineNuxtPlugin } from '#app';
 import type { ModuleOptions, Umami } from '../types/main';
-import { loadScript, useMock } from './helpers';
+import { loadScript, stripAttrs, useMock } from './helpers';
 
 export default defineNuxtPlugin(async (nuxtApp) => {
   const options: ModuleOptions = { ...nuxtApp.payload.config.public.umami };
 
-  const { scriptUrl, websiteId, autoTrack, cache, doNotTrack, domains, enable, hostUrl } = options;
+  const { scriptUrl, enable, ...attrOpts } = options;
 
-  const attrs = {
-    'data-website-id': websiteId,
-  };
-
-  // typecheck to strip unneeded attrs
-
-  if (typeof autoTrack === 'boolean') {
-    attrs['data-auto-track'] = autoTrack;
-  }
-
-  if (typeof cache === 'boolean') {
-    attrs['data-cache'] = cache;
-  }
-
-  if (typeof doNotTrack === 'boolean') {
-    attrs['data-do-not-track'] = doNotTrack;
-  }
-
-  if (typeof domains === 'string') {
-    attrs['data-domains'] = domains;
-  }
-
-  if (typeof hostUrl === 'string') {
-    attrs['data-host-url'] = hostUrl;
-  }
+  const attrs = stripAttrs(attrOpts);
 
   const mockUmami = useMock();
   let umami: Umami = mockUmami;
