@@ -44,6 +44,13 @@ export interface ModuleOptions {
    * located. You can override this to send data to another location.
    */
   hostUrl?: string
+
+  /**
+   * Enable or disable the module
+   * @default true
+   */
+
+  enable?: boolean
 }
 
 export interface Umami {
