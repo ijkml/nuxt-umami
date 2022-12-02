@@ -9,7 +9,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
   const attrs = stripAttrs(attrOpts);
 
-  const mockUmami = useMock();
+  const mockUmami = useMock(enable);
   let umami: Umami = mockUmami;
 
   if (enable && process.client) {

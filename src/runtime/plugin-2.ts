@@ -9,7 +9,7 @@ const UmamiPlugin: Plugin = async (context, inject) => {
 
   const attrs = stripAttrs(attrOpts);
 
-  const mockUmami = useMock();
+  const mockUmami = useMock(enable);
   let umami: Umami = mockUmami;
 
   if (enable && process.client) {

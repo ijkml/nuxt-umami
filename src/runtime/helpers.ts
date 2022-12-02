@@ -1,14 +1,23 @@
 import type { ModuleOptions, Umami } from '../types/main';
 
-function warnMock() {
-  if (process.client && process.env.NODE_ENV !== 'production') {
+function warnMock(enabled: boolean): void {
+  if (!process.client) {
+    return;
+  }
+
+  if (!enabled) {
+    return console.warn(`The Umami module has been disabled.
+To enable, set \`enable\` to true in the module options.`);
+  }
+
+  if (process.env.NODE_ENV !== 'production') {
     console.warn('Umami is not ready. Maybe there was an error loading the script or you are using it before `onMounted`.');
   }
 }
 
-export function useMock() {
-  const trackEvent = (eventValue: string, eventType?: string, url?: string, websiteId?: string) => warnMock();
-  const trackView = (url: string, referer?: string, websiteId?: string) => warnMock();
+export function useMock(enabled = true): Umami {
+  const trackEvent = (eventValue: string, eventType?: string, url?: string, websiteId?: string) => warnMock(enabled);
+  const trackView = (url: string, referer?: string, websiteId?: string) => warnMock(enabled);
 
   // mock the structure and style of Umami
   const umami: Umami = (eventValue: string) => trackEvent(eventValue);
@@ -63,7 +72,7 @@ export function loadScript(
       el.async = true;
       el.defer = true;
       el.src = src;
-
+      // @ts-expect-error --> el should not be null
       Object.entries(_attrs).forEach(([name, value]) => el.setAttribute(name, value.toString()));
 
       // Enables shouldAppend
