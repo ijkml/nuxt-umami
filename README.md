@@ -43,10 +43,10 @@ Add the module to `nuxt.config`:
 export default defineNuxtConfig({
   modules: ['nuxt-umami'],
   umami: {
+    enable: true, // enable the module? true by default
     autoTrack: true,
     doNotTrack: false,
     cache: false,
-    enable: true,
     domains: 'mywebsite.com,mywebsite2.com',
     websiteId: 'your-website-id',
     scriptUrl: 'https://path.to.umami.js',
@@ -88,6 +88,10 @@ export default {
 ```
 
 Only `websiteId` and `scriptUrl` are mandatory. [See the Umami docs](https://umami.is/docs/tracker-configuration) for more explanation of these options.
+
+> **New**:
+> You can use the `enable` option to temporarily disable the module.
+
 
 ### Environment Variables
 If you want, you can set up and use environment variables in `.env` files. But that is not really necessary as the module config does not require any "sensitive" data. Every part of the configuration can be viewed in the script in `<head>` after the page is loaded.
