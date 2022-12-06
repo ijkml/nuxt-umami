@@ -90,7 +90,7 @@ export default {
 Only `websiteId` and `scriptUrl` are mandatory. [See the Umami docs](https://umami.is/docs/tracker-configuration) for more explanation of these options.
 
 > **New**:
-> You can use the `enable` option to temporarily disable the module.
+> Set the `enable` option to `false` to disable the module (temporarily).
 
 
 ### Environment Variables
