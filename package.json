@@ -39,7 +39,7 @@
     "@nuxt/kit": "^3.0.0-rc.13"
   },
   "devDependencies": {
-    "@antfu/eslint-config-ts": "^0.34.0",
+    "@antfu/eslint-config-ts": "^0.35.1",
     "@nuxt/module-builder": "latest",
     "@nuxt/schema": "^3.0.0-rc.13",
     "@nuxt/types": "^2.15.8",
