@@ -138,9 +138,7 @@ const { data } = await useAsyncData("mountains", (nuxtApp) => {
 
 ## Author
 
-Hey, I'm [ML](https://github.com/ijkml/), when I'm not trying to break into open source,
-I'm busy trying to break into [sh-posting on Twitter](https://twitter.com/ijk_ml) <br>
-If you find a bug or have any trouble using the module, please open an issue. I'm available to work on it and help you out.
+Hi, I'm [ML](https://github.com/ijkml/). I'm dedicated to contributing to open source and sharing my insights on [Twitter](https://twitter.com/ijk_ml). If you encounter any issues with my module, don't hesitate to open an issue. I'm always available to help and resolve any bugs.
 
 Using the module in your app? Consider giving it a star 🌟. It'd mean the world to me.
 
