@@ -93,12 +93,22 @@ Only `websiteId` and `scriptUrl` are mandatory. [See the Umami docs](https://uma
 > Set the `enable` option to `false` to disable the module (temporarily).
 
 
+#### Type not working?
+
+It's a bit of a hack, but adding 
+```ts
+import {} from 'nuxt-umami';
+```
+to the top of your config might fix that.
+
 ### Environment Variables
+
 If you want, you can set up and use environment variables in `.env` files. But that is not really necessary as the module config does not require any "sensitive" data. Every part of the configuration can be viewed in the script in `<head>` after the page is loaded.
 
 <br>
 
 ## Usage
+
 > **Note**:
 > You can use `$umami` anywhere you have access to `NuxtApp` or the `useNuxtApp` composable (middleware, asyncData, etc).
 
