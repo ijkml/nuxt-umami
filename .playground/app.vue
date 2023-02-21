@@ -2,12 +2,10 @@
 // onMounted(() => {});
 
 function testView() {
-  trackView();
-  // testOptions();
+  umTrackView();
 }
 function testEvent() {
-  // testOptions();
-  trackEvent('event-test-1', 1);
+  umTrackEvent('event-test-1', { type: 'click', position: 'left' });
 }
 </script>
 
