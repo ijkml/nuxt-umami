@@ -1,9 +1,11 @@
 import type {
-  BasicPayload,
   GetPayloadReturn,
+  PartialPayload,
   PreflightArgs,
   PreflightResult,
-} from './types';
+  ServerPayload,
+} from '../internal/types';
+import { helloDebugger } from '../internal/debug';
 
 function isValidString(str: unknown): str is string {
   return typeof str === 'string' && str.trim() !== '';
@@ -11,19 +13,41 @@ function isValidString(str: unknown): str is string {
 
 function assert(value: unknown): asserts value {}
 
-function preflight({ websiteId, ignoreDnt, domains }: PreflightArgs): PreflightResult {
+function isInvalidHost(host: unknown): host is string {
+  try {
+    if (typeof host !== 'string') {
+      return false;
+    }
+    const url = new URL(host);
+    return !(isValidString(url.host) && ['http:', 'https:'].includes(url.protocol));
+  } catch (error) {
+    return true;
+  }
+}
+
+function preflight(
+  { ignoreDnt, domains, id, host, local }: PreflightArgs,
+): PreflightResult {
   if (typeof window === 'undefined') {
     return 'ssr';
   }
 
-  if (!isValidString(websiteId)) {
+  if (!isValidString(id)) {
     return 'id';
+  }
+
+  if (isInvalidHost(host)) {
+    return 'host';
   }
 
   const {
     location: { hostname },
     navigator,
   } = window;
+
+  if (local && hostname === 'localhost') {
+    return 'local';
+  }
 
   const domainList = isValidString(domains)
     ? domains.split(',').map(d => d.trim())
@@ -46,7 +70,7 @@ function preflight({ websiteId, ignoreDnt, domains }: PreflightArgs): PreflightR
   return true;
 }
 
-function getPayload(websiteId: string): GetPayloadReturn {
+function getPayload(): GetPayloadReturn {
   const {
     location: { hostname, pathname, search, hash },
     screen: { width, height },
@@ -56,12 +80,11 @@ function getPayload(websiteId: string): GetPayloadReturn {
 
   const pageUrl = pathname + search + hash;
 
-  const payload: BasicPayload = {
+  const payload: PartialPayload = {
     screen: `${width}x${height}`,
     language: navigator.language,
     hostname,
     url: pageUrl,
-    website: websiteId,
   };
 
   return {
@@ -71,4 +94,21 @@ function getPayload(websiteId: string): GetPayloadReturn {
   };
 }
 
-export { preflight, getPayload, assert };
+async function collect(load: ServerPayload) {
+  const { umami: { host } } = useAppConfig();
+  const root = new URL(host);
+  const endpoint = `${`${root.protocol}//${root.host}`}/api/collect`;
+
+  fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(load),
+  })
+    .catch((err) => {
+      helloDebugger('err-collect', err);
+    });
+}
+
+export { preflight, getPayload, assert, collect };

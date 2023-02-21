@@ -1,6 +1,6 @@
 interface BasicPayload {
-  website: string
   url: string
+  website: string
   hostname: string
   screen: string
   language: string
@@ -15,13 +15,16 @@ interface EventPayload extends BasicPayload {
   event_data: unknown
 }
 
+type PartialPayload = Omit<BasicPayload, 'website'>;
 type PayloadType = 'pageview' | 'event';
-type PreflightResult = 'ssr' | 'id' | 'domain' | 'dnt' | true;
+type PreflightResult = 'ssr' | 'id' | 'host' | 'domain' | 'dnt' | 'local' | true;
 
 interface PreflightArgs {
-  websiteId?: string
   ignoreDnt?: boolean
   domains?: string
+  id?: string
+  host?: string
+  local?: boolean
 }
 
 interface ServerPayload {
@@ -30,13 +33,13 @@ interface ServerPayload {
 }
 
 interface GetPayloadReturn {
-  payload: BasicPayload
+  payload: PartialPayload
   pageUrl: string
   pageReferrer: string
 }
 
 export {
-  BasicPayload,
+  PartialPayload,
   EventPayload,
   ViewPayload,
   PayloadType,

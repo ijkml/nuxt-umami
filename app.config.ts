@@ -1,9 +1,11 @@
 export default defineAppConfig({
   umami: {
-    endpoint: '',
-    websiteId: '',
-    ignoreDnt: true,
+    id: 'ba4c9424-c4b7-48df-b66d-4213730673e5',
+    host: 'https://ml-umami.netlify.app/umami.js',
     domains: undefined,
+    autoTrack: false,
+    ignoreDnt: true,
+    ignoreLocalhost: false,
   },
 });
 
@@ -16,17 +18,26 @@ declare module '@nuxt/schema' {
        *
        * For example...
        *
-       * script url: `http://ijkml.xyz/umami.js` <br />
+       * script url: `http://ijkml.xyz/umami.js`
        *
        * endpoint: `http://ijkml.xyz/`
        */
-      endpoint: string
+      host: string
       /**
        * Unique identifier provided by Umami
        *
        * Example `3c255b6d-678a-42dd-8074-272ee5b78484`
        */
-      websiteId: string
+      id: string
+      /**
+       * Configure the tracker to only run on specific domains.
+       * Provide a comma delimited list of domains (without 'http').
+       * Leave as `undefined` to run on all domains.
+       *
+       * Example: `mywebsite.com, mywebsite2.com`
+       * @default undefined
+       */
+      domains?: string
       /**
        * Whether to ignore users' Do Not Track setting.
        *
@@ -36,23 +47,28 @@ declare module '@nuxt/schema' {
        */
       ignoreDnt?: boolean
       /**
-       * Configure the tracker to only run on specific domains.
-       * Provide a comma delimited list of domains (without 'http').
-       * Leave as `undefined` to run on all domains
+       * Whether or not to automatically track page views.
        *
-       * Example: `mywebsite.com, mywebsite2.com`
-       * @default undefined
+       * @default true
        */
-      domains?: string
+      autoTrack?: boolean
+      /**
+       * Whether or not to track during development (localhost).
+       *
+       * @default false
+       */
+      ignoreLocalhost?: boolean
     }
   }
 
   interface AppConfig {
     umami: {
-      endpoint: string
-      websiteId: string
-      ignoreDnt?: boolean
+      host: string
+      id: string
+      autoTrack?: boolean
       domains?: string
+      ignoreDnt?: boolean
+      ignoreLocalhost?: boolean
     }
   }
 }

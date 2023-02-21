@@ -1,21 +1,6 @@
-import { assert, getPayload, preflight } from '../internal/utils';
-import type { EventPayload, ServerPayload, ViewPayload } from '../internal/types';
+import { assert, collect, getPayload, preflight } from '../internal/utils';
+import type { EventPayload, ViewPayload } from '../internal/types';
 import { helloDebugger } from '../internal/debug';
-
-async function collect(load: ServerPayload) {
-  $fetch('/api/umami', {
-    method: 'POST',
-    body: load,
-  })
-    .then(() => {
-      // eslint-disable-next-line no-console
-      console.info('SUCCESS');
-    })
-    .catch(() => {
-      // helloDebugger('collect-error');
-      console.error('Collect error');
-    });
-}
 
 /**
  * Track page views
@@ -24,10 +9,16 @@ async function collect(load: ServerPayload) {
  * @param url page being tracked, eg `/about`, `/contact?by=phone#office`
  * @param referer page referrer, `document.referrer`
  */
-function trackView(url: string, referrer: string): void {
-  const { umami: { websiteId, domains, ignoreDnt = false } = {} } = useAppConfig();
+function trackView(url?: string, referrer?: string): void {
+  const {
+    umami: {
+      id, host, domains,
+      ignoreDnt = false,
+      ignoreLocalhost: local = false,
+    } = {},
+  } = useAppConfig();
 
-  const check = preflight({ domains, ignoreDnt, websiteId });
+  const check = preflight({ domains, ignoreDnt, id, host, local });
 
   if (check === 'ssr') {
     return;
@@ -38,15 +29,16 @@ function trackView(url: string, referrer: string): void {
     return;
   }
 
-  assert(typeof websiteId === 'string');
+  assert(typeof id === 'string');
 
-  const { pageReferrer, pageUrl, payload } = getPayload(websiteId);
+  const { pageReferrer, pageUrl, payload } = getPayload();
 
   void collect(
     {
       type: 'pageview',
       payload: {
         ...payload,
+        website: id,
         url: url || pageUrl,
         referrer: referrer || pageReferrer,
       } satisfies ViewPayload,
@@ -61,9 +53,15 @@ function trackView(url: string, referrer: string): void {
  * @param eventData additional data for the event, could be `string`/`object`/`array`
  */
 function trackEvent(eventName: string, eventData?: string | number | object) {
-  const { umami: { websiteId, domains, ignoreDnt = false } = {} } = useAppConfig();
+  const {
+    umami: {
+      id, host, domains,
+      ignoreDnt = false,
+      ignoreLocalhost: local = false,
+    } = {},
+  } = useAppConfig();
 
-  const check = preflight({ domains, ignoreDnt, websiteId });
+  const check = preflight({ domains, ignoreDnt, host, id, local });
 
   if (check === 'ssr') {
     return;
@@ -74,9 +72,9 @@ function trackEvent(eventName: string, eventData?: string | number | object) {
     return;
   }
 
-  assert(typeof websiteId === 'string');
+  assert(typeof id === 'string');
 
-  const { payload } = getPayload(websiteId);
+  const { payload } = getPayload();
   const name = eventName || '#unknown-event';
   let data;
 
@@ -90,10 +88,11 @@ function trackEvent(eventName: string, eventData?: string | number | object) {
     type: 'event',
     payload: {
       ...payload,
+      website: id,
       event_name: name,
       event_data: data,
     } satisfies EventPayload,
   });
 }
 
-export { trackEvent, trackView };
+export { trackEvent as umTrackEvent, trackView as umTrackView };
