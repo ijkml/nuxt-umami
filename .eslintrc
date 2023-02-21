@@ -1,9 +1,0 @@
-{
-  "extends": ["@nuxtjs/eslint-config-typescript", "@antfu/eslint-config-ts"],
-  "rules": {
-    "@typescript-eslint/no-unused-vars": ["off"],
-    "@typescript-eslint/semi": ["error", "always"],
-    "@typescript-eslint/brace-style": ["error", "1tbs"],
-    "curly": ["error", "all"]
-  }
-}
