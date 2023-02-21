@@ -1,0 +1,21 @@
+{
+  "name": "nuxt-umami-next",
+  "type": "module",
+  "version": "0.0.1",
+  "main": "./nuxt.config.ts",
+  "scripts": {
+    "dev": "nuxi prepare & nuxi dev .playground",
+    "build": "nuxi build .playground",
+    "generate": "nuxi generate .playground",
+    "preview": "nuxi preview .playground",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.35.2",
+    "@types/node": "^18.14.0",
+    "eslint": "^8.28.0",
+    "eslint-plugin-vue": "^9.9.0",
+    "nuxt": "^3.0.0",
+    "typescript": "^4.9.3"
+  }
+}
