@@ -1,8 +1,8 @@
 # Nuxt Umami <sup>@next<sup>
 
-[![npm](https://img.shields.io/npm/v/nuxt-umami.svg?style=flat-square)](https://www.npmjs.com/package/nuxt-umami)
+[![npm](https://img.shields.io/npm/v/nuxt-umami/next?style=flat-square)](https://www.npmjs.com/package/nuxt-umami/v/next)
 [![Downloads](https://img.shields.io/npm/dt/nuxt-umami.svg?style=flat-square)](https://www.npmjs.com/package/nuxt-umami)
-[![License](https://img.shields.io/npm/l/nuxt-umami.svg?style=flat-square)](/LICENSE)
+[![License](https://img.shields.io/npm/l/nuxt-umami/?style=flat-square)](/LICENSE)
 
 Deeply integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites / applications.
 
@@ -100,6 +100,30 @@ Use it?
 
 ## Usage
 
-...coming soon.
+Two functions are auto-imported, `umTrackView()` and `umTrackEvent()`. Use them however and wherever you like.
+
+### Available Methods
+
+- `umTrackView(url, referrer)`
+  - `url`: the path being tracked, eg `/about`, `/contact?by=phone#office`. *Most times*, this can be correctly inferred. Equivalent of `router.fullPath`.
+  - `referrer`: the page referrer. *Most times*, this can be correctly inferred. Equivalent of `document.referrer`.
+
+- `umTrackEvent(eventName, eventData)`
+  - `eventName`: a string type text
+  - `eventData`: could be string, number, array or object
+
+
+Reference: [Umami Tracker Functions](https://umami.is/docs/tracker-functions).
+
+
+## Issues, Bugs, Ideas?
+
+Open an issue, fire a PR. Contributions are welcome! If you encounter any issues, don't hesitate to open an issue. I'm always available to help and resolve any bugs.
+
+## Contributors
+
+<a href="https://github.com/ijkml/nuxt-umami/graphs/contributors">
+  <img alt="Nuxt Umami contributors" src="https://contrib.rocks/image?repo=ijkml/nuxt-umami" />
+</a>
 
 [MIT](./LICENSE) License © 2023 [ML](https://github.com/ijkml/)
