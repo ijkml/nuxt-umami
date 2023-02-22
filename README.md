@@ -22,7 +22,9 @@ Deeply integrate [**Umami Analytics**](https://umami.is/) into your Nuxt website
 
 ## Setup
 
-### Step 1: Installation
+### Step 1: Installation and add to Nuxt
+
+Install using your favorite package manager...
 
 ```bash
 pnpm add nuxt-umami@next #pnpm
@@ -32,9 +34,7 @@ pnpm add nuxt-umami@next #pnpm
 npm install nuxt-umami@next #npm
 ```
 
-### Step 2: Add to Nuxt
-
-Add `nuxt-umami` to your `extends` array in `nuxt.config`:
+Then add `nuxt-umami` to your `extends` array in `nuxt.config`:
 
 ```ts
 defineNuxtConfig({
@@ -50,7 +50,7 @@ defineNuxtConfig({
 });
 ```
 
-### Step 3: Configure Umami
+### Step 2: Configure Umami
 
 You can provide configuration options using the `app.config.ts` file or `appConfig` property of the Nuxt config.
 
