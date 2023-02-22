@@ -23,7 +23,7 @@
     "generate": "nuxi generate .playground",
     "preview": "nuxi preview .playground",
     "lint": "eslint .",
-    "release": "bumpp --commit --push --tag && npm publish --access public"
+    "release": "bumpp --commit --push --tag && npm publish --access public --tag next"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.35.2",
