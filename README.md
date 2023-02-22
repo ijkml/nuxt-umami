@@ -1,4 +1,4 @@
-# Nuxt Umami (@next)
+# Nuxt Umami <sup>@next<sup>
 
 [![npm](https://img.shields.io/npm/v/nuxt-umami.svg?style=flat-square)](https://www.npmjs.com/package/nuxt-umami)
 [![Downloads](https://img.shields.io/npm/dt/nuxt-umami.svg?style=flat-square)](https://www.npmjs.com/package/nuxt-umami)
@@ -11,14 +11,14 @@ Deeply integrate [**Umami Analytics**](https://umami.is/) into your Nuxt website
 
 ## Features
 
-- 📖 Open Source, of course
-- ✨ SSR Support
-- ➖ No extra script tag
-- ⛔ Escapes ad-blockers and script-blockers
+- 📖 Open Source
+- ✨ SSR Support, of course
+- ➖ No extra script: no extra tag, no script loading, instant availability
+- 😜 Escapes ad & script blockers (catch me if you can)
 - 💯 Feature complete + extensive config
 - ✅ Better Typescript, JSDocs, auto completion
 - ✅ Error handling + debugging
-- ✅ Vue composables + auto import (use everywhere)
+- ✅ Vue composables + auto import
 
 ## Setup
 
@@ -78,6 +78,10 @@ defineNuxtConfig({
   },
 });
 ```
+
+### Step 3:
+
+Use it?
 
 ## Configuration
 
