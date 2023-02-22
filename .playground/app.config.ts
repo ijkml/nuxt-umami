@@ -1,8 +1,7 @@
 export default defineAppConfig({
   umami: {
-    endpoint: 'USER_ENDPOINT',
-    websiteId: 'USER_WEBSITE_ID',
-    // domains: 'USER_DOMAINS',
-    // ignoreDnt: true,
+    host: 'https://ijkml.xyz/',
+    id: 'USER_WEBSITE_ID',
+    autoTrack: false,
   },
 });
