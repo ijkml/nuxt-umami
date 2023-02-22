@@ -8,6 +8,7 @@ Deeply integrate [**Umami Analytics**](https://umami.is/) into your Nuxt website
 
 > **Heads up:**
 > This version uses features (Nuxt Layers) that are only available in **Nuxt 3**.
+> Check out [Nuxt Umami v1](https://github.com/ijkml/nuxt-umami) for Nuxt 2 compat.
 
 ## Features
 
