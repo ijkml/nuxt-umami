@@ -106,6 +106,11 @@ async function collect(load: ServerPayload) {
     },
     body: JSON.stringify(load),
   })
+    .then((res) => {
+      if (res && !res.ok) {
+        helloDebugger('err-collect', res);
+      }
+    })
     .catch((err) => {
       helloDebugger('err-collect', err);
     });
