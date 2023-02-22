@@ -18,9 +18,9 @@ declare module '@nuxt/schema' {
        *
        * For example...
        *
-       * script url: `http://ijkml.xyz/umami.js`
+       * script url: `https://ijkml.xyz/umami.js`
        *
-       * endpoint: `http://ijkml.xyz/`
+       * endpoint: `https://ijkml.xyz/`
        */
       host: string
       /**
@@ -39,7 +39,7 @@ declare module '@nuxt/schema' {
        */
       domains?: string
       /**
-       * Whether to ignore users' Do Not Track setting.
+       * Whether to ignore browsers' Do Not Track setting.
        *
        * Setting this to `false` will totally disable tracking
        * on browsers that have the DoNotTrack setting turned on.
@@ -47,7 +47,7 @@ declare module '@nuxt/schema' {
        */
       ignoreDnt?: boolean
       /**
-       * Whether or not to automatically track page views.
+       * Option to automatically track page views.
        *
        * @default true
        */
