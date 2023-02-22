@@ -22,11 +22,13 @@
     "build": "nuxi build .playground",
     "generate": "nuxi generate .playground",
     "preview": "nuxi preview .playground",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "release": "bumpp --commit --push --tag && npm publish --access public"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.35.2",
     "@types/node": "^18.14.0",
+    "bumpp": "^8.2.1",
     "eslint": "^8.34.0",
     "eslint-plugin-vue": "^9.9.0",
     "nuxt": "^3.2.2",
