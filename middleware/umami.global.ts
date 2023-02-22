@@ -1,4 +1,4 @@
-import { umTrackView } from '../composables/umami';
+import { umTrackView } from '../utils/umami';
 
 export default defineNuxtRouteMiddleware((to) => {
   const { umami: { autoTrack } = {} } = useAppConfig();
