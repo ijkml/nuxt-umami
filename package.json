@@ -17,6 +17,14 @@
     "nuxt module",
     "nuxt plugin"
   ],
+  "files": [
+    "utils/",
+    "middleware/",
+    "internal/",
+    "app.config.ts",
+    "app.vue",
+    "nuxt.config.ts"
+  ],
   "scripts": {
     "dev": "nuxi prepare & nuxi dev .playground",
     "build": "nuxi build .playground",
