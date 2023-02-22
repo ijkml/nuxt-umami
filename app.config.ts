@@ -15,18 +15,15 @@ declare module '@nuxt/schema' {
       /**
        * Your umami endpoint. This is where you would
        * normally load the script from.
-       *
-       * For example...
-       *
-       * script url: `https://ijkml.xyz/umami.js`
-       *
-       * endpoint: `https://ijkml.xyz/`
+       * @required true
+       * @example 'https://ijkml.xyz/'
        */
       host: string
       /**
        * Unique identifier provided by Umami
        *
-       * Example `3c255b6d-678a-42dd-8074-272ee5b78484`
+       * @required true
+       * @example `3c255b6d-678a-42dd-8074-272ee5b78484`
        */
       id: string
       /**
@@ -34,7 +31,7 @@ declare module '@nuxt/schema' {
        * Provide a comma delimited list of domains (without 'http').
        * Leave as `undefined` to run on all domains.
        *
-       * Example: `mywebsite.com, mywebsite2.com`
+       * @example `mywebsite.com, mywebsite2.com`
        * @default undefined
        */
       domains?: string

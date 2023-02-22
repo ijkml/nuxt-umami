@@ -19,7 +19,7 @@ Deeply integrate [**Umami Analytics**](https://umami.is/) into your Nuxt website
 - 💯 Feature complete + extensive config
 - ✅ Better Typescript, JSDocs, auto completion
 - ✅ Error handling + debugging
-- ✅ Vue composables + auto import
+- ✅ Nuxt utils + auto import
 
 ## Setup
 
@@ -47,9 +47,12 @@ Or, you can totally skip the installation process and do
 
 ```ts
 defineNuxtConfig({
-  extends: ['nuxt-umami@next']
+  extends: ['github:ijkml/nuxt-umami#next']
 });
 ```
+
+> **Warning**:
+> This might cause unwanted errors due to changes as the branch is still WIP.
 
 ### Step 2: Configure Umami
 
