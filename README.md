@@ -4,7 +4,7 @@
 [![Downloads](https://img.shields.io/npm/dt/nuxt-umami.svg?style=flat-square)](https://www.npmjs.com/package/nuxt-umami)
 [![License](https://img.shields.io/npm/l/nuxt-umami?style=flat-square)](/LICENSE)
 
-Deeply integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites / applications.
+Integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites / applications.
 
 > **Heads up:**
 > This version uses features (Nuxt Layers) that are only available in **Nuxt 3**.
