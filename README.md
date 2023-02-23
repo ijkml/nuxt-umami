@@ -23,7 +23,7 @@ Integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites / app
 
 ## Setup
 
-### Step 1: Installation and add to Nuxt
+### Step 1: Install and add to Nuxt
 
 Install using your favorite package manager...
 
