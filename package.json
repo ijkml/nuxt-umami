@@ -5,8 +5,9 @@
   "private": false,
   "description": "Embed the Umami analytics library into Nuxt",
   "author": "ML <me.mlaure@gmail.com>",
-  "license": "unlicense",
+  "license": "MIT",
   "repository": "https://github.com/ijkml/nuxt-umami",
+  "homepage": "https://github.com/ijkml/nuxt-umami",
   "keywords": [
     "nuxt",
     "umami",
