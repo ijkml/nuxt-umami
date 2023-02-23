@@ -8,7 +8,7 @@ Integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites / app
 
 > **Heads up:**
 > This version uses features (Nuxt Layers) that are only available in **Nuxt 3**.
-> Check out [Nuxt Umami v1](https://github.com/ijkml/nuxt-umami) for Nuxt 2 compat.
+> Check out [Nuxt Umami v1](https://github.com/ijkml/nuxt-umami/tree/main) for Nuxt 2 compat.
 
 ## Features
 
@@ -16,7 +16,7 @@ Integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites / app
 - ✨ SSR Support, of course
 - ➖ No extra script: no extra tag, no script loading, instant availability
 - 😜 Escapes ad & script blockers (catch me if you can)
-- 💯 Feature complete + extensive config
+- 💯 Simplified usage, feature complete, extensive config
 - ✅ Better Typescript, JSDocs, auto completion
 - ✅ Error handling + debugging
 - ✅ Nuxt utils + auto import
@@ -133,5 +133,8 @@ Open an issue, fire a PR. Contributions are welcome! If you encounter any issues
 <a href="https://github.com/ijkml/nuxt-umami/graphs/contributors">
   <img alt="Nuxt Umami contributors" src="https://contrib.rocks/image?repo=ijkml/nuxt-umami" />
 </a>
+
+<br />
+<hr />
 
 [MIT](./LICENSE) License © 2023 [ML](https://github.com/ijkml/)
