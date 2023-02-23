@@ -6,6 +6,7 @@ export default defineAppConfig({
     autoTrack: false,
     ignoreDnt: true,
     ignoreLocalhost: false,
+    version: 1,
   },
 });
 
@@ -15,18 +16,15 @@ declare module '@nuxt/schema' {
       /**
        * Your umami endpoint. This is where you would
        * normally load the script from.
-       *
-       * For example...
-       *
-       * script url: `http://ijkml.xyz/umami.js`
-       *
-       * endpoint: `http://ijkml.xyz/`
+       * @required true
+       * @example 'https://ijkml.xyz/'
        */
       host: string
       /**
        * Unique identifier provided by Umami
        *
-       * Example `3c255b6d-678a-42dd-8074-272ee5b78484`
+       * @required true
+       * @example `3c255b6d-678a-42dd-8074-272ee5b78484`
        */
       id: string
       /**
@@ -34,12 +32,12 @@ declare module '@nuxt/schema' {
        * Provide a comma delimited list of domains (without 'http').
        * Leave as `undefined` to run on all domains.
        *
-       * Example: `mywebsite.com, mywebsite2.com`
+       * @example `mywebsite.com, mywebsite2.com`
        * @default undefined
        */
       domains?: string
       /**
-       * Whether to ignore users' Do Not Track setting.
+       * Whether to ignore browsers' Do Not Track setting.
        *
        * Setting this to `false` will totally disable tracking
        * on browsers that have the DoNotTrack setting turned on.
@@ -47,7 +45,7 @@ declare module '@nuxt/schema' {
        */
       ignoreDnt?: boolean
       /**
-       * Whether or not to automatically track page views.
+       * Option to automatically track page views.
        *
        * @default true
        */
@@ -58,6 +56,12 @@ declare module '@nuxt/schema' {
        * @default false
        */
       ignoreLocalhost?: boolean
+      /**
+       * Version of Umami used, either `1.x.x` or `2.x.x`
+       *
+       * @default 1
+       */
+      version?: 1 | 2
     }
   }
 
@@ -69,6 +73,7 @@ declare module '@nuxt/schema' {
       domains?: string
       ignoreDnt?: boolean
       ignoreLocalhost?: boolean
+      version?: 1 | 2
     }
   }
 }

@@ -1,5 +1,5 @@
 import { assert, collect, getPayload, preflight } from '../internal/utils';
-import type { EventPayload, ViewPayload } from '../internal/types';
+import type { EventData, EventPayload, ViewPayload } from '../internal/types';
 import { helloDebugger } from '../internal/debug';
 
 /**
@@ -14,11 +14,11 @@ function trackView(url?: string, referrer?: string): void {
     umami: {
       id, host, domains,
       ignoreDnt = false,
-      ignoreLocalhost: local = false,
+      ignoreLocalhost: ignoreLocal = false,
     } = {},
   } = useAppConfig();
 
-  const check = preflight({ domains, ignoreDnt, id, host, local });
+  const check = preflight({ domains, ignoreDnt, id, host, ignoreLocal });
 
   if (check === 'ssr') {
     return;
@@ -50,18 +50,18 @@ function trackView(url?: string, referrer?: string): void {
  * Tracks an event with a custom event type.
  *
  * @param eventName event name, eg 'CTA-button-3-clcik'
- * @param eventData additional data for the event, could be `string`/`object`/`array`
+ * @param eventData additional data for the event, provide an object in the format `{key: value}`, `key` = string, `value` = string | number | or boolean.
  */
-function trackEvent(eventName: string, eventData?: string | number | object) {
+function trackEvent(eventName: string, eventData?: EventData) {
   const {
     umami: {
       id, host, domains,
       ignoreDnt = false,
-      ignoreLocalhost: local = false,
+      ignoreLocalhost: ignoreLocal = false,
     } = {},
   } = useAppConfig();
 
-  const check = preflight({ domains, ignoreDnt, host, id, local });
+  const check = preflight({ domains, ignoreDnt, host, id, ignoreLocal });
 
   if (check === 'ssr') {
     return;
@@ -76,13 +76,10 @@ function trackEvent(eventName: string, eventData?: string | number | object) {
 
   const { payload } = getPayload();
   const name = eventName || '#unknown-event';
-  let data;
 
-  try {
-    data = JSON.stringify(eventData);
-  } catch {
-    data = undefined;
-  }
+  const data = (eventData !== null && typeof eventData === 'object')
+    ? eventData
+    : undefined;
 
   void collect({
     type: 'event',

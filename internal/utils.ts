@@ -26,7 +26,7 @@ function isInvalidHost(host: unknown): host is string {
 }
 
 function preflight(
-  { ignoreDnt, domains, id, host, local }: PreflightArgs,
+  { ignoreDnt, domains, id, host, ignoreLocal }: PreflightArgs,
 ): PreflightResult {
   if (typeof window === 'undefined') {
     return 'ssr';
@@ -45,7 +45,7 @@ function preflight(
     navigator,
   } = window;
 
-  if (local && hostname === 'localhost') {
+  if (ignoreLocal && hostname === 'localhost') {
     return 'local';
   }
 
@@ -95,9 +95,10 @@ function getPayload(): GetPayloadReturn {
 }
 
 async function collect(load: ServerPayload) {
-  const { umami: { host } } = useAppConfig();
+  const { umami: { host, version } } = useAppConfig();
   const root = new URL(host);
-  const endpoint = `${`${root.protocol}//${root.host}`}/api/collect`;
+  const branch = version === 2 ? 'api/send' : 'api/collect';
+  const endpoint = `${root.protocol}//${root.host}/${branch}`;
 
   fetch(endpoint, {
     method: 'POST',
@@ -106,6 +107,11 @@ async function collect(load: ServerPayload) {
     },
     body: JSON.stringify(load),
   })
+    .then((res) => {
+      if (res && !res.ok) {
+        helloDebugger('err-collect', res);
+      }
+    })
     .catch((err) => {
       helloDebugger('err-collect', err);
     });

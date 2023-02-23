@@ -10,9 +10,13 @@ interface ViewPayload extends BasicPayload {
   referrer: string
 }
 
+interface EventData {
+  [key: string]: string | number | boolean
+}
+
 interface EventPayload extends BasicPayload {
   event_name: string
-  event_data: unknown
+  event_data?: EventData
 }
 
 type PartialPayload = Omit<BasicPayload, 'website'>;
@@ -24,7 +28,7 @@ interface PreflightArgs {
   domains?: string
   id?: string
   host?: string
-  local?: boolean
+  ignoreLocal?: boolean
 }
 
 interface ServerPayload {
@@ -39,6 +43,7 @@ interface GetPayloadReturn {
 }
 
 export {
+  EventData,
   PartialPayload,
   EventPayload,
   ViewPayload,

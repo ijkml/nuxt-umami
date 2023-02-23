@@ -1,73 +1,129 @@
-# Nuxt Layer Starter
+# Nuxt Umami <sup>@next<sup>
 
-Create Nuxt extendable layer with this GitHub template.
+[![npm](https://img.shields.io/npm/v/nuxt-umami/next?style=flat-square)](https://www.npmjs.com/package/nuxt-umami/v/next)
+[![Downloads](https://img.shields.io/npm/dt/nuxt-umami.svg?style=flat-square)](https://www.npmjs.com/package/nuxt-umami)
+[![License](https://img.shields.io/npm/l/nuxt-umami?style=flat-square)](/LICENSE)
+
+Deeply integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites / applications.
+
+> **Heads up:**
+> This version uses features (Nuxt Layers) that are only available in **Nuxt 3**.
+> Check out [Nuxt Umami v1](https://github.com/ijkml/nuxt-umami) for Nuxt 2 compat.
+
+## Features
+
+- 📖 Open Source
+- ✨ SSR Support, of course
+- ➖ No extra script: no extra tag, no script loading, instant availability
+- 😜 Escapes ad & script blockers (catch me if you can)
+- 💯 Feature complete + extensive config
+- ✅ Better Typescript, JSDocs, auto completion
+- ✅ Error handling + debugging
+- ✅ Nuxt utils + auto import
 
 ## Setup
 
-Make sure to install the dependencies:
+### Step 1: Installation and add to Nuxt
+
+Install using your favorite package manager...
 
 ```bash
-pnpm install
+pnpm add nuxt-umami@next #pnpm
 ```
-
-## Working on your theme
-
-Your theme is at the root of this repository, it is exactly like a regular Nuxt project, except you can publish it on NPM.
-
-The `.playground` directory should help you on trying your theme during development.
-
-Running `pnpm dev` will prepare and boot `.playground` directory, which imports your theme itself.
-
-## Distributing your theme
-
-Your Nuxt layer is shaped exactly the same as any other Nuxt project, except you can publish it on NPM.
-
-To do so, you only have to check if `files` in `package.json` are valid, then run:
 
 ```bash
-npm publish --access public
+npm install nuxt-umami@next #npm
 ```
 
-Once done, your users will only have to run:
-
-```bash
-npm install --save your-theme
-```
-
-Then add the dependency to their `extends` in `nuxt.config`:
+Then add `nuxt-umami` to your `extends` array in `nuxt.config`:
 
 ```ts
 defineNuxtConfig({
-  extends: 'your-theme'
-})
+  extends: ['nuxt-umami']
+});
 ```
 
-## Development Server
+Or, you can totally skip the installation process and do
 
-Start the development server on http://localhost:3000
-
-```bash
-pnpm dev
+```ts
+defineNuxtConfig({
+  extends: ['github:ijkml/nuxt-umami#next']
+});
 ```
 
-## Production
+> **Warning**:
+> This might cause unwanted errors due to changes as the branch is still WIP.
 
-Build the application for production:
+### Step 2: Configure Umami
 
-```bash
-pnpm build
+You can provide configuration options using the `app.config.ts` file or `appConfig` property of the Nuxt config.
+
+#### `app.config.ts` file
+
+(recommended for readability and ease of update)
+
+```ts
+export default defineAppConfig({
+  umami: {
+  // ...umami config here
+  },
+});
 ```
 
-Or statically generate it with:
+#### `appConfig` property
 
-```bash
-pnpm generate
+```ts
+defineNuxtConfig({
+  extends: ['nuxt-umami@next'],
+  appConfig: {
+    umami: {
+      // ...umami config here
+    },
+  },
+});
 ```
 
-Locally preview production build:
+### Step 3:
 
-```bash
-pnpm preview
-```
+Use it?
 
-Checkout the [deployment documentation](https://v3.nuxtjs.org/docs/deployment) for more information.
+## Configuration
+
+| option | type | description | required | default |
+|---|---|---|---|---|
+| host | string | Your Umami endpoint. This is where your script is hosted. Eg: `https://ijkml.xyz/`. | true | '' |
+| id | string | Unique website-id provided by Umami. | true | '' |
+| domains | string | Limit tracker to specific domains by providing a comma-separated list (without 'http'). Leave blank for all domains. | false | '' |
+| ignoreDnt | boolean | Option to ignore browsers' Do Not Track setting. | false | true |
+| autoTrack | boolean | Option to automatically track page views. | false | true |
+| ignoreLocalhost | boolean | Option to prevent tracking on localhost. | false | false |
+
+## Usage
+
+Two functions are auto-imported, `umTrackView()` and `umTrackEvent()`. Use them however and wherever you like.
+
+### Available Methods
+
+- `umTrackView(url, referrer)`
+  - `url`: the path being tracked, eg `/about`, `/contact?by=phone#office`. *Most times*, this can be correctly inferred. Equivalent of `router.fullPath`.
+  - `referrer`: the page referrer. *Most times*, this can be correctly inferred. Equivalent of `document.referrer`.
+
+- `umTrackEvent(eventName, eventData)`
+  - `eventName`: a string type text
+  - `eventData`: an object in the format `{key: value}`, where `key` is a string and `value` is a string, number, or boolean.
+
+
+Reference: [Umami Tracker Functions](https://umami.is/docs/tracker-functions).
+
+
+## Issues, Bugs, Ideas?
+
+Open an issue, fire a PR. Contributions are welcome! If you encounter any issues, don't hesitate to open an issue. I'm always available to help and resolve any bugs.
+
+## Contributors
+
+<a href="https://github.com/ijkml/nuxt-umami/graphs/contributors">
+  <img alt="Nuxt Umami contributors" src="https://contrib.rocks/image?repo=ijkml/nuxt-umami" />
+</a>
+
+[MIT](./LICENSE) License © 2023 [ML](https://github.com/ijkml/)
