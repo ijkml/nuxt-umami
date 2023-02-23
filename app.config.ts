@@ -6,6 +6,7 @@ export default defineAppConfig({
     autoTrack: false,
     ignoreDnt: true,
     ignoreLocalhost: false,
+    version: 1,
   },
 });
 
@@ -55,6 +56,12 @@ declare module '@nuxt/schema' {
        * @default false
        */
       ignoreLocalhost?: boolean
+      /**
+       * Version of Umami used, either `1.x.x` or `2.x.x`
+       *
+       * @default 1
+       */
+      version?: 1 | 2
     }
   }
 
@@ -66,6 +73,7 @@ declare module '@nuxt/schema' {
       domains?: string
       ignoreDnt?: boolean
       ignoreLocalhost?: boolean
+      version?: 1 | 2
     }
   }
 }
