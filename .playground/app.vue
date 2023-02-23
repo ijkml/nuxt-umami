@@ -38,9 +38,6 @@ function testEvent() {
   font-family: "Source Sans Pro", system-ui, -apple-system, Ubuntu, sans-serif;
 }
 
-.page-container {
-}
-
 h1 {
   font-size: x-large;
   font-weight: 600;
