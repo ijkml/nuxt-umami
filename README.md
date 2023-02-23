@@ -91,12 +91,13 @@ Use it?
 
 | option | type | description | required | default |
 |---|---|---|---|---|
-| host | string | Your Umami endpoint. This is where your script is hosted. Eg: `https://ijkml.xyz/`. | true | '' |
-| id | string | Unique website-id provided by Umami. | true | '' |
-| domains | string | Limit tracker to specific domains by providing a comma-separated list (without 'http'). Leave blank for all domains. | false | '' |
-| ignoreDnt | boolean | Option to ignore browsers' Do Not Track setting. | false | true |
-| autoTrack | boolean | Option to automatically track page views. | false | true |
-| ignoreLocalhost | boolean | Option to prevent tracking on localhost. | false | false |
+| host | string | Your Umami endpoint. This is where your script is hosted. Eg: `https://ijkml.xyz/`. | yes | '' |
+| id | string | Unique website-id provided by Umami. | yes | '' |
+| domains | string | Limit tracker to specific domains by providing a comma-separated list (without 'http'). Leave blank for all domains. | no | '' |
+| ignoreDnt | boolean | Option to ignore browsers' Do Not Track setting. | no | true |
+| autoTrack | boolean | Option to automatically track page views. | no | true |
+| ignoreLocalhost | boolean | Option to prevent tracking on localhost. | no | false |
+| version | `1 \| 2`  | Umami version (Cloud) | no | `1` |
 
 ## Usage
 
@@ -115,6 +116,13 @@ Two functions are auto-imported, `umTrackView()` and `umTrackEvent()`. Use them 
 
 Reference: [Umami Tracker Functions](https://umami.is/docs/tracker-functions).
 
+
+## Umami Cloud, v2
+
+Umami v2's release is on the horizon, and they currently offer a [free beta plan](https://umami.is/pricing) for Umami Cloud. To use v2 (or Cloud), set `version: 2` in the Umami config.
+
+> **Warning**:
+> v2 is still WIP pending official release and the new docs. Test rigorously, and if you encounter bugs/issues, please open an issue.
 
 ## Issues, Bugs, Ideas?
 
