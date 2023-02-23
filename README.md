@@ -6,7 +6,14 @@
 [![Downloads](https://img.shields.io/npm/dt/nuxt-umami.svg?style=flat-square)](https://www.npmjs.com/package/nuxt-umami)
 [![License](https://img.shields.io/npm/l/nuxt-umami.svg?style=flat-square)](/LICENSE)
 
-This is a fully featured nuxt module that makes implementing [**Umami Analytics**](https://umami.is/) into your Nuxt project a breeze.
+This is a fully-featured nuxt module that makes implementing [**Umami Analytics**](https://umami.is/) into your Nuxt project a breeze.
+
+---
+> **Heads up:**
+> There is a newer version compatible with **Nuxt 3** that provides better types & developer experience. If you are currently using Nuxt 3, please upgrade to [Nuxt Umami v2](https://github.com/ijkml/nuxt-umami/tree/next).
+---
+
+<br />
 
 ## Features
 
@@ -16,6 +23,10 @@ This is a fully featured nuxt module that makes implementing [**Umami Analytics*
 - ✅ TypeScript & JSDocs
 - ✅ Supports `<script setup>` syntax
 
+---
+> **Heads up:**
+> [Nuxt Umami v2](https://github.com/ijkml/nuxt-umami/tree/next) has a superior feature set. If you are currently using Nuxt 3, please upgrade to [Nuxt Umami v2](https://github.com/ijkml/nuxt-umami/tree/next).
+---
 
 ## Installation
 
@@ -158,33 +169,7 @@ Using the module in your app? Consider giving it a star 🌟. It'd mean the worl
   <img src="https://contrib.rocks/image?repo=ijkml/nuxt-umami" />
 </a>
 
-<!-- Banner Image For Reference: https://banner.browserku.com/ -->
-<!-- <div
-	class="relative bg-gradient-to-r from-[#255461] to-[#00DC82] h-full font-open-sans bg-cover bg-center p-2"
->
-	<div class="z-2 relative bg-white bg-opacity-90 rounded-md shadow-lg h-full p-7 flex flex-col justify-between overflow-hidden">
-        <img class="absolute z-1 top-[-80px] right-[-20px] w-[500px] opacity-8" :src="bg"/>
-        <div>
-    	  <h1 class="text-5xl font-bold line-clamp-3 pb-1">{{ title }}</h1>
-          <p class="text-gray-700 italic">{{ description }}</p>
-        </div>
-		<div class="mt-3 flex items-center justify-between">
-			<div class="flex items-center space-x-2 text-lg">
-				<img class="w-10 h-10 rounded-full" crossorigin="anonymous" :src="avatar" />
-				<span class="font-semibold">{{ author }}</span>
-			</div>
-			<div>
-				<img :src="logo" alt="logo" class="h-12" />
-			</div>
-		</div>
-	</div>
-</div> -->
-<!-- Format Data -->
-<!-- {
-  "title": "nuxt-umami",
-  "description": "Umami Analytics built for Nuxt 2/3.",
-  "author": "Moses Laurence",
-  "avatar": "https://avatars.githubusercontent.com/u/52390439?v=4",
-  "bg": "https://nuxtjs.org/design-kit/black-logo.svg",
-  "logo": "https://nuxtjs.org/design-kit/black-text.svg"
-} -->
+<br />
+<hr />
+
+[MIT](./LICENSE) License © 2023 [ML](https://github.com/ijkml/)
