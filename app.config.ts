@@ -3,7 +3,7 @@ export default defineAppConfig({
     id: '',
     host: '',
     domains: undefined,
-    autoTrack: false,
+    autoTrack: true,
     ignoreDnt: true,
     ignoreLocalhost: false,
     version: 1,
