@@ -1,13 +1,12 @@
 {
   "name": "nuxt-umami",
   "type": "module",
-  "version": "2.0.2",
-  "main": "./nuxt.config.ts",
+  "version": "2.0.3-beta.1",
   "description": "Integrate Umami Analytics into Nuxt",
   "author": "ML <me.mlaure@gmail.com>",
   "license": "MIT",
-  "repository": "https://github.com/ijkml/nuxt-umami/tree/next",
   "homepage": "https://github.com/ijkml/nuxt-umami/tree/next",
+  "repository": "https://github.com/ijkml/nuxt-umami/tree/next",
   "keywords": [
     "nuxt",
     "umami",
@@ -18,6 +17,7 @@
     "nuxt module",
     "nuxt plugin"
   ],
+  "main": "./nuxt.config.ts",
   "files": [
     "utils/",
     "middleware/",
@@ -33,7 +33,7 @@
     "preview": "nuxi preview .playground",
     "lint": "eslint .",
     "release": "bumpp --commit --push --tag && npm publish --access public --tag next",
-    "release:beta": "bumpp --commit --push --no-tag && npm publish --access public --tag next"
+    "release:beta": "bumpp prerelease --commit --push --no-tag && npm publish --access public --tag beta"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.36.0",
