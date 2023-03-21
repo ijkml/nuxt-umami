@@ -33,7 +33,7 @@
     "preview": "nuxi preview .playground",
     "lint": "eslint .",
     "release": "bumpp --commit --push --tag && npm publish --access public --tag next",
-    "release:beta": "bumpp prerelease --commit --push --no-tag && npm publish --access public --tag next"
+    "release:beta": "bumpp prerelease --commit --push --no-tag && npm publish --access public --tag beta"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.36.0",
