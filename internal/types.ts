@@ -23,14 +23,6 @@ type PartialPayload = Omit<BasicPayload, 'website'>;
 type PayloadType = 'pageview' | 'event';
 type PreflightResult = 'ssr' | 'id' | 'host' | 'domain' | 'dnt' | 'local' | true;
 
-interface PreflightArgs {
-  ignoreDnt?: boolean
-  domains?: string
-  id?: string
-  host?: string
-  ignoreLocal?: boolean
-}
-
 interface ServerPayload {
   type: PayloadType
   payload: ViewPayload | EventPayload
@@ -49,7 +41,6 @@ export {
   ViewPayload,
   PayloadType,
   ServerPayload,
-  PreflightArgs,
   PreflightResult,
   GetPayloadReturn,
 };
