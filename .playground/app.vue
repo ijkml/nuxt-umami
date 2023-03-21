@@ -12,7 +12,7 @@ function testEvent() {
 <template>
   <div class="page-root">
     <div class="page-container">
-      <h1>Nuxt module playground!</h1>
+      <h1>Nuxt Umami</h1>
       <br>
       <button @click="testEvent">
         Run trackEvent
@@ -20,7 +20,7 @@ function testEvent() {
       <button @click="testView">
         Run trackView
       </button>
-      <a href="" />
+      <a href="https://ml-umami.netlify.app/share/8o0OFImY/Umami%20Next" target="_blank" rel="noopener noreferrer">See Preview</a>
     </div>
   </div>
 </template>
@@ -43,7 +43,7 @@ h1 {
   font-weight: 600;
 }
 
-button {
+:is(button, a) {
   padding: 8px 12px;
   margin: 16px;
   outline: none;
@@ -56,7 +56,7 @@ button {
   transition: all 350ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
 }
 
-button:is(:hover, :focus-visible) {
+:is(button, a):is(:hover, :focus-visible) {
   background-color: rgb(209, 209, 209);
   outline: none;
 }
