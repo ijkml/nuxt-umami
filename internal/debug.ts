@@ -18,16 +18,14 @@ const warnings: Record<ErrorId, ErrorObj> = {
   'err-collect': { level: 'error', text: 'Uh... Something went wrong and I have no clue.' },
 };
 
-function screamer(id: ErrorId, raw?: any) {
-  const { level, text } = warnings[id];
-  // eslint-disable-next-line no-console
-  console[level](`[UMAMI]: ${text}`, '\n');
-  // eslint-disable-next-line no-console
-  raw && (console[level](raw));
-}
-
-function silencio(id: ErrorId, raw?: any) {}
-
-const helloDebugger = process.env.NODE_ENV === 'production' ? silencio : screamer;
+const helloDebugger = process.env.NODE_ENV === 'production'
+  ? (id: ErrorId, raw?: any) => {}
+  : (id: ErrorId, raw?: any) => {
+      const { level, text } = warnings[id];
+      // eslint-disable-next-line no-console
+      console[level](`[UMAMI]: ${text}`, '\n');
+      // eslint-disable-next-line no-console
+      raw && (console[level](raw));
+    };
 
 export { helloDebugger };
