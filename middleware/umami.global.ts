@@ -1,8 +1,8 @@
-import { getConfig } from '../internal/utils';
+import { umConfig } from '../internal/utils';
 import { umTrackView } from '../utils/umami';
 
 export default defineNuxtRouteMiddleware((to) => {
-  const { autoTrack } = getConfig();
+  const { autoTrack } = umConfig.value;
 
   if (autoTrack) {
     umTrackView(to.fullPath);

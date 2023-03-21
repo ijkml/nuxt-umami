@@ -1,4 +1,4 @@
-import { assert, collect, getConfig, getPayload, preflight } from '../internal/utils';
+import { collect, getPayload, preflight, umConfig } from '../internal/utils';
 import type { EventData, EventPayload, ViewPayload } from '../internal/types';
 import { helloDebugger } from '../internal/debug';
 
@@ -10,9 +10,7 @@ import { helloDebugger } from '../internal/debug';
  * @param referer page referrer, `document.referrer`
  */
 function trackView(url?: string, referrer?: string): void {
-  const { id, host, domains, ignoreDnt, ignoreLocal } = getConfig();
-
-  const check = preflight({ domains, ignoreDnt, id, host, ignoreLocal });
+  const check = preflight();
 
   if (check === 'ssr') {
     return;
@@ -23,8 +21,7 @@ function trackView(url?: string, referrer?: string): void {
     return;
   }
 
-  assert(typeof id === 'string');
-
+  const { id } = umConfig.value;
   const { pageReferrer, pageUrl, payload } = getPayload();
 
   void collect(
@@ -47,9 +44,7 @@ function trackView(url?: string, referrer?: string): void {
  * @param eventData additional data for the event, provide an object in the format `{key: value}`, `key` = string, `value` = string | number | or boolean.
  */
 function trackEvent(eventName: string, eventData?: EventData) {
-  const { id, host, domains, ignoreDnt, ignoreLocal } = getConfig();
-
-  const check = preflight({ domains, ignoreDnt, host, id, ignoreLocal });
+  const check = preflight();
 
   if (check === 'ssr') {
     return;
@@ -60,8 +55,7 @@ function trackEvent(eventName: string, eventData?: EventData) {
     return;
   }
 
-  assert(typeof id === 'string');
-
+  const { id } = umConfig.value;
   const { payload } = getPayload();
   const name = eventName || '#unknown-event';
 

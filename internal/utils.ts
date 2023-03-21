@@ -1,7 +1,6 @@
 import type {
   GetPayloadReturn,
   PartialPayload,
-  PreflightArgs,
   PreflightResult,
   ServerPayload,
 } from '../internal/types';
@@ -25,9 +24,35 @@ function isInvalidHost(host: unknown): host is string {
   }
 }
 
-function preflight(
-  { ignoreDnt, domains, id, host, ignoreLocal }: PreflightArgs,
-): PreflightResult {
+const umConfig = computed(() => {
+  const { public: { umamiHost, umamiId } } = useRuntimeConfig();
+
+  const {
+    umami: {
+      host = '',
+      id = '',
+      domains = '',
+      ignoreDnt = true,
+      ignoreLocalhost: ignoreLocal = false,
+      autoTrack = true,
+      version = 1,
+    },
+  } = useAppConfig();
+
+  return {
+    host: umamiHost || host,
+    id: umamiId || id,
+    domains,
+    ignoreDnt,
+    ignoreLocal,
+    autoTrack,
+    version,
+  };
+});
+
+function preflight(): PreflightResult {
+  const { ignoreDnt, domains, id, host, ignoreLocal } = umConfig.value;
+
   if (typeof window === 'undefined') {
     return 'ssr';
   }
@@ -94,28 +119,8 @@ function getPayload(): GetPayloadReturn {
   };
 }
 
-function getConfig() {
-  const {
-    umami: {
-      host = '',
-      id = '',
-      domains = '',
-      ignoreDnt = true,
-      ignoreLocalhost: ignoreLocal = false,
-      autoTrack = true,
-      version = 1,
-    },
-  } = useAppConfig();
-
-  // experiment
-  const { public: { umamiHost, umamiId } } = useRuntimeConfig();
-  console.info({ umamiHost, umamiId });
-
-  return { host, id, domains, ignoreDnt, ignoreLocal, autoTrack, version };
-}
-
 async function collect(load: ServerPayload) {
-  const { host, version } = getConfig();
+  const { host, version } = umConfig.value;
   const root = new URL(host);
   const branch = version === 2 ? 'api/send' : 'api/collect';
   const endpoint = `${root.protocol}//${root.host}/${branch}`;
@@ -137,4 +142,4 @@ async function collect(load: ServerPayload) {
     });
 }
 
-export { preflight, getPayload, assert, collect, getConfig };
+export { preflight, getPayload, assert, collect, umConfig };
