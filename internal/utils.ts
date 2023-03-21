@@ -94,8 +94,28 @@ function getPayload(): GetPayloadReturn {
   };
 }
 
+function getConfig() {
+  const {
+    umami: {
+      host = '',
+      id = '',
+      domains = '',
+      ignoreDnt = true,
+      ignoreLocalhost: ignoreLocal = false,
+      autoTrack = true,
+      version = 1,
+    },
+  } = useAppConfig();
+
+  // experiment
+  const { public: { umamiHost, umamiId } } = useRuntimeConfig();
+  console.info({ umamiHost, umamiId });
+
+  return { host, id, domains, ignoreDnt, ignoreLocal, autoTrack, version };
+}
+
 async function collect(load: ServerPayload) {
-  const { umami: { host, version } } = useAppConfig();
+  const { host, version } = getConfig();
   const root = new URL(host);
   const branch = version === 2 ? 'api/send' : 'api/collect';
   const endpoint = `${root.protocol}//${root.host}/${branch}`;
@@ -117,4 +137,4 @@ async function collect(load: ServerPayload) {
     });
 }
 
-export { preflight, getPayload, assert, collect };
+export { preflight, getPayload, assert, collect, getConfig };

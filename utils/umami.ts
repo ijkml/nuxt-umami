@@ -1,4 +1,4 @@
-import { assert, collect, getPayload, preflight } from '../internal/utils';
+import { assert, collect, getConfig, getPayload, preflight } from '../internal/utils';
 import type { EventData, EventPayload, ViewPayload } from '../internal/types';
 import { helloDebugger } from '../internal/debug';
 
@@ -10,13 +10,7 @@ import { helloDebugger } from '../internal/debug';
  * @param referer page referrer, `document.referrer`
  */
 function trackView(url?: string, referrer?: string): void {
-  const {
-    umami: {
-      id, host, domains,
-      ignoreDnt = false,
-      ignoreLocalhost: ignoreLocal = false,
-    } = {},
-  } = useAppConfig();
+  const { id, host, domains, ignoreDnt, ignoreLocal } = getConfig();
 
   const check = preflight({ domains, ignoreDnt, id, host, ignoreLocal });
 
@@ -53,13 +47,7 @@ function trackView(url?: string, referrer?: string): void {
  * @param eventData additional data for the event, provide an object in the format `{key: value}`, `key` = string, `value` = string | number | or boolean.
  */
 function trackEvent(eventName: string, eventData?: EventData) {
-  const {
-    umami: {
-      id, host, domains,
-      ignoreDnt = false,
-      ignoreLocalhost: ignoreLocal = false,
-    } = {},
-  } = useAppConfig();
+  const { id, host, domains, ignoreDnt, ignoreLocal } = getConfig();
 
   const check = preflight({ domains, ignoreDnt, host, id, ignoreLocal });
 
