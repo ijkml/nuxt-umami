@@ -1,7 +1,7 @@
 {
   "name": "nuxt-umami",
   "type": "module",
-  "version": "2.0.2",
+  "version": "2.0.3-beta.1",
   "description": "Integrate Umami Analytics into Nuxt",
   "author": "ML <me.mlaure@gmail.com>",
   "license": "MIT",
