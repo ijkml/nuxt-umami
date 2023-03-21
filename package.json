@@ -2,12 +2,11 @@
   "name": "nuxt-umami",
   "type": "module",
   "version": "2.0.2",
-  "main": "./nuxt.config.ts",
   "description": "Integrate Umami Analytics into Nuxt",
   "author": "ML <me.mlaure@gmail.com>",
   "license": "MIT",
-  "repository": "https://github.com/ijkml/nuxt-umami/tree/next",
   "homepage": "https://github.com/ijkml/nuxt-umami/tree/next",
+  "repository": "https://github.com/ijkml/nuxt-umami/tree/next",
   "keywords": [
     "nuxt",
     "umami",
@@ -18,6 +17,7 @@
     "nuxt module",
     "nuxt plugin"
   ],
+  "main": "./nuxt.config.ts",
   "files": [
     "utils/",
     "middleware/",
