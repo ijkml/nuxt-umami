@@ -1,7 +1,6 @@
 import type {
   GetPayloadReturn,
   PartialPayload,
-  PreflightArgs,
   PreflightResult,
   ServerPayload,
 } from '../internal/types';
@@ -10,8 +9,6 @@ import { helloDebugger } from '../internal/debug';
 function isValidString(str: unknown): str is string {
   return typeof str === 'string' && str.trim() !== '';
 }
-
-function assert(value: unknown): asserts value {}
 
 function isInvalidHost(host: unknown): host is string {
   try {
@@ -25,9 +22,35 @@ function isInvalidHost(host: unknown): host is string {
   }
 }
 
-function preflight(
-  { ignoreDnt, domains, id, host, ignoreLocal }: PreflightArgs,
-): PreflightResult {
+const umConfig = computed(() => {
+  const { public: { umamiHost, umamiId } } = useRuntimeConfig();
+
+  const {
+    umami: {
+      host = '',
+      id = '',
+      domains = '',
+      ignoreDnt = true,
+      ignoreLocalhost: ignoreLocal = false,
+      autoTrack = true,
+      version = 1,
+    } = {},
+  } = useAppConfig();
+
+  return {
+    host: umamiHost || host,
+    id: umamiId || id,
+    domains,
+    ignoreDnt,
+    ignoreLocal,
+    autoTrack,
+    version,
+  };
+});
+
+function preflight(): PreflightResult {
+  const { ignoreDnt, domains, id, host, ignoreLocal } = umConfig.value;
+
   if (typeof window === 'undefined') {
     return 'ssr';
   }
@@ -95,7 +118,7 @@ function getPayload(): GetPayloadReturn {
 }
 
 async function collect(load: ServerPayload) {
-  const { umami: { host, version } } = useAppConfig();
+  const { host, version } = umConfig.value;
   const root = new URL(host);
   const branch = version === 2 ? 'api/send' : 'api/collect';
   const endpoint = `${root.protocol}//${root.host}/${branch}`;
@@ -117,4 +140,4 @@ async function collect(load: ServerPayload) {
     });
 }
 
-export { preflight, getPayload, assert, collect };
+export { preflight, getPayload, collect, umConfig };

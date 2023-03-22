@@ -10,6 +10,12 @@ export default defineNuxtConfig({
       version: 1,
     },
   },
+  runtimeConfig: {
+    public: {
+      umamiHost: '',
+      umamiId: '',
+    },
+  },
 });
 
 declare module '@nuxt/schema' {
