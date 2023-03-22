@@ -10,8 +10,6 @@ function isValidString(str: unknown): str is string {
   return typeof str === 'string' && str.trim() !== '';
 }
 
-function assert(value: unknown): asserts value {}
-
 function isInvalidHost(host: unknown): host is string {
   try {
     if (typeof host !== 'string') {
@@ -36,7 +34,7 @@ const umConfig = computed(() => {
       ignoreLocalhost: ignoreLocal = false,
       autoTrack = true,
       version = 1,
-    },
+    } = {},
   } = useAppConfig();
 
   return {
@@ -142,4 +140,4 @@ async function collect(load: ServerPayload) {
     });
 }
 
-export { preflight, getPayload, assert, collect, umConfig };
+export { preflight, getPayload, collect, umConfig };
