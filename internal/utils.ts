@@ -29,7 +29,7 @@ const umConfig = computed(() => {
     umami: {
       host = '',
       id = '',
-      domains = '',
+      domains = undefined,
       ignoreDnt = true,
       ignoreLocalhost: ignoreLocal = false,
       autoTrack = true,
@@ -72,9 +72,11 @@ function preflight(): PreflightResult {
     return 'local';
   }
 
-  const domainList = isValidString(domains)
-    ? domains.split(',').map(d => d.trim())
-    : undefined;
+  const domainList = (Array.isArray(domains) && domains.length)
+    ? domains
+    : isValidString(domains)
+      ? domains.split(',').map(d => d.trim())
+      : undefined;
 
   if (domainList && !domainList.includes(hostname)) {
     return 'domain';
