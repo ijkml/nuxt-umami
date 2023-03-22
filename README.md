@@ -106,7 +106,7 @@ Use it.
 ### Environment Variables
 
 > **Note**:
-> Available in `2.1.0` and after.
+> Available in `^2.1.0` and takes precedence over `appConfig`.
 
 You can provide the `host` and `id` config as environment variables. Simply add `NUXT_PUBLIC_UMAMI_HOST` and `NUXT_PUBLIC_UMAMI_ID` to your `.env` file, and that's it.
 
@@ -114,10 +114,6 @@ You can provide the `host` and `id` config as environment variables. Simply add 
 NUXT_PUBLIC_UMAMI_HOST="https://domain.tld"
 NUXT_PUBLIC_UMAMI_ID="abc123-456def-ghi789"
 ```
-
-> **Note**:
->
-> The `.env` variables take precedence over `appConfig`.
 
 ## Usage
 
