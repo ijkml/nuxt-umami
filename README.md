@@ -89,19 +89,35 @@ defineNuxtConfig({
 
 ### Step 3:
 
-Use it?
+Use it.
 
 ## Configuration
 
 | option | type | description | required | default |
 |---|---|---|---|---|
-| host | string | Your Umami endpoint. This is where your script is hosted. Eg: `https://ijkml.xyz/`. | yes | '' |
-| id | string | Unique website-id provided by Umami. | yes | '' |
-| domains | string | Limit tracker to specific domains by providing a comma-separated list (without 'http'). Leave blank for all domains. | no | '' |
-| ignoreDnt | boolean | Option to ignore browsers' Do Not Track setting. | no | true |
-| autoTrack | boolean | Option to automatically track page views. | no | true |
-| ignoreLocalhost | boolean | Option to prevent tracking on localhost. | no | false |
+| host | `string` | Your Umami endpoint. This is where your script is hosted. Eg: `https://ijkml.xyz/`. | yes | `''` |
+| id | `string` | Unique website-id provided by Umami. | yes | `''` |
+| domains | `string \| Array<string>`  | Limit tracker to specific domains by providing an array or comma-separated list (without 'http'). Leave blank for all domains. | no | `undefined` |
+| ignoreDnt | `boolean` | Option to ignore browsers' Do Not Track setting. | no | `true` |
+| autoTrack | `boolean` | Option to automatically track page views. | no | `true` |
+| ignoreLocalhost | `boolean` | Option to prevent tracking on localhost. | no | `false` |
 | version | `1 \| 2`  | Umami version (Cloud) | no | `1` |
+
+### Environment Variables
+
+> **Note**:
+> Available in `2.1.0` and after.
+
+You can provide the `host` and `id` config as environment variables. Simply add `NUXT_PUBLIC_UMAMI_HOST` and `NUXT_PUBLIC_UMAMI_ID` to your `.env` file, and that's it.
+
+```sh
+NUXT_PUBLIC_UMAMI_HOST="https://domain.tld"
+NUXT_PUBLIC_UMAMI_ID="abc123-456def-ghi789"
+```
+
+> **Note**:
+>
+> The `.env` variables take precedence over `appConfig`.
 
 ## Usage
 
@@ -110,8 +126,8 @@ Two functions are auto-imported, `umTrackView()` and `umTrackEvent()`. Use them 
 ### Available Methods
 
 - `umTrackView(url, referrer)`
-  - `url`: the path being tracked, eg `/about`, `/contact?by=phone#office`. *Most times*, this can be correctly inferred. Equivalent of `router.fullPath`.
-  - `referrer`: the page referrer. *Most times*, this can be correctly inferred. Equivalent of `document.referrer`.
+  - `url`: the path being tracked, eg `/about`, `/contact?by=phone#office`. This can be correctly inferred. Equivalent of `router.fullPath`.
+  - `referrer`: the page referrer. This can be correctly inferred. Equivalent of `document.referrer`.
 
 - `umTrackEvent(eventName, eventData)`
   - `eventName`: a string type text
