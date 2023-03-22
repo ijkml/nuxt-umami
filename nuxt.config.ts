@@ -37,13 +37,14 @@ declare module '@nuxt/schema' {
       id: string
       /**
        * Configure the tracker to only run on specific domains.
-       * Provide a comma delimited list of domains (without 'http').
+       * Provide an array or comma delimited list of domains (without 'http').
        * Leave as `undefined` to run on all domains.
        *
        * @example `mywebsite.com, mywebsite2.com`
+       * @example ['mywebsite.com', 'mywebsite2.com']
        * @default undefined
        */
-      domains?: string
+      domains?: string | string[]
       /**
        * Whether to ignore browsers' Do Not Track setting.
        *
@@ -78,7 +79,7 @@ declare module '@nuxt/schema' {
       host: string
       id: string
       autoTrack?: boolean
-      domains?: string
+      domains?: string | string[]
       ignoreDnt?: boolean
       ignoreLocalhost?: boolean
       version?: 1 | 2
