@@ -71,6 +71,10 @@ declare module '@nuxt/schema' {
        * @default 1
        */
       version?: 1 | 2
+      /**
+       * Self-hosted Umami lets you set a COLLECT_API_ENDPOINT, which is `/api/collect` by default. See Umami Docs: https://umami.is/docs/environment-variables
+       */
+      customEndpoint?: `/${string}`
     }
   }
 
@@ -83,6 +87,7 @@ declare module '@nuxt/schema' {
       ignoreDnt?: boolean
       ignoreLocalhost?: boolean
       version?: 1 | 2
+      customEndpoint?: `/${string}`
     }
   }
 }
