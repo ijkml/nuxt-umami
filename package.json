@@ -36,12 +36,12 @@
     "release:beta": "bumpp prerelease --commit --push --no-tag && npm publish --access public --tag beta"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.37.0",
-    "@types/node": "^18.15.5",
-    "bumpp": "^9.0.0",
-    "eslint": "^8.36.0",
-    "eslint-plugin-vue": "^9.9.0",
-    "nuxt": "^3.3.1",
-    "typescript": "^5.0.2"
+    "@antfu/eslint-config": "^0.38.4",
+    "@types/node": "^18.15.11",
+    "bumpp": "^9.1.0",
+    "eslint": "^8.37.0",
+    "eslint-plugin-vue": "^9.10.0",
+    "nuxt": "^3.3.3",
+    "typescript": "^5.0.3"
   }
 }
