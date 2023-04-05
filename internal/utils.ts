@@ -33,9 +33,16 @@ const umConfig = computed(() => {
       ignoreDnt = true,
       ignoreLocalhost: ignoreLocal = false,
       autoTrack = true,
+      customEndpoint: customEP = undefined,
       version = 1,
     } = {},
   } = useAppConfig();
+
+  const customEndpoint = !isValidString(customEP)
+    ? undefined
+    : customEP.startsWith('/')
+      ? customEP
+      : `/${customEP}`;
 
   return {
     host: umamiHost || host,
@@ -44,6 +51,7 @@ const umConfig = computed(() => {
     ignoreDnt,
     ignoreLocal,
     autoTrack,
+    customEndpoint,
     version,
   };
 });
@@ -120,10 +128,10 @@ function getPayload(): GetPayloadReturn {
 }
 
 async function collect(load: ServerPayload) {
-  const { host, version } = umConfig.value;
+  const { host, customEndpoint, version } = umConfig.value;
   const root = new URL(host);
-  const branch = version === 2 ? 'api/send' : 'api/collect';
-  const endpoint = `${root.protocol}//${root.host}/${branch}`;
+  const branch = customEndpoint || (version === 2 ? '/api/send' : '/api/collect');
+  const endpoint = `${root.protocol}//${root.host}${branch}`;
 
   fetch(endpoint, {
     method: 'POST',
