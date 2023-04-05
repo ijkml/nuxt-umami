@@ -87,6 +87,18 @@ defineNuxtConfig({
 });
 ```
 
+#### Environment Variables
+
+> **Note**:
+> Available in `^2.1.0` and takes precedence over `appConfig`.
+
+You can provide the `host` and `id` config (only) as environment variables. Simply add `NUXT_PUBLIC_UMAMI_HOST` and `NUXT_PUBLIC_UMAMI_ID` to your `.env` file, and that's it.
+
+```sh
+NUXT_PUBLIC_UMAMI_HOST="https://domain.tld"
+NUXT_PUBLIC_UMAMI_ID="abc123-456def-ghi789"
+```
+
 ### Step 3:
 
 Use it.
@@ -101,19 +113,8 @@ Use it.
 | ignoreDnt | `boolean` | Option to ignore browsers' Do Not Track setting. | no | `true` |
 | autoTrack | `boolean` | Option to automatically track page views. | no | `true` |
 | ignoreLocalhost | `boolean` | Option to prevent tracking on localhost. | no | `false` |
-| version | `1 \| 2`  | Umami version (Cloud) | no | `1` |
-
-### Environment Variables
-
-> **Note**:
-> Available in `^2.1.0` and takes precedence over `appConfig`.
-
-You can provide the `host` and `id` config as environment variables. Simply add `NUXT_PUBLIC_UMAMI_HOST` and `NUXT_PUBLIC_UMAMI_ID` to your `.env` file, and that's it.
-
-```sh
-NUXT_PUBLIC_UMAMI_HOST="https://domain.tld"
-NUXT_PUBLIC_UMAMI_ID="abc123-456def-ghi789"
-```
+| customEndpoint | `string` | Set a custom `COLLECT_API_ENDPOINT`. See [Docs](https://umami.is/docs/environment-variables). | no | `undefined`
+| version | `1 \| 2` | Umami version (Cloud) | no | `1` |
 
 ## Usage
 
