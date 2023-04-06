@@ -19,6 +19,7 @@ const warnings: Record<ErrorId, ErrorObj> = {
 };
 
 const helloDebugger = process.env.NODE_ENV === 'production'
+  // eslint-disable-next-line unused-imports/no-unused-vars
   ? (id: ErrorId, raw?: any) => {}
   : (id: ErrorId, raw?: any) => {
       const { level, text } = warnings[id];

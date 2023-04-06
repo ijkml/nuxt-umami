@@ -56,12 +56,22 @@ const umConfig = computed(() => {
   };
 });
 
-function preflight(): PreflightResult {
-  const { ignoreDnt, domains, id, host, ignoreLocal } = umConfig.value;
+const domainList = computed(() => {
+  const domains = umConfig.value.domains;
 
+  return (Array.isArray(domains) && domains.length)
+    ? domains
+    : isValidString(domains)
+      ? domains.split(',').map(d => d.trim())
+      : undefined;
+});
+
+const preflight = computed((): PreflightResult => {
   if (typeof window === 'undefined') {
     return 'ssr';
   }
+
+  const { ignoreDnt, id, host, ignoreLocal } = umConfig.value;
 
   if (!isValidString(id)) {
     return 'id';
@@ -80,13 +90,9 @@ function preflight(): PreflightResult {
     return 'local';
   }
 
-  const domainList = (Array.isArray(domains) && domains.length)
-    ? domains
-    : isValidString(domains)
-      ? domains.split(',').map(d => d.trim())
-      : undefined;
+  const domains = domainList.value;
 
-  if (domainList && !domainList.includes(hostname)) {
+  if (domains && !domains.includes(hostname)) {
     return 'domain';
   }
 
@@ -101,7 +107,7 @@ function preflight(): PreflightResult {
   }
 
   return true;
-}
+});
 
 function getPayload(): GetPayloadReturn {
   const {

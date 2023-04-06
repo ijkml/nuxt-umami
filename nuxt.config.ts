@@ -8,6 +8,7 @@ export default defineNuxtConfig({
       ignoreDnt: true,
       ignoreLocalhost: false,
       version: 1,
+      customEndpoint: undefined,
     },
   },
   runtimeConfig: {

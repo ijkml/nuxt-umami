@@ -10,7 +10,7 @@ import { helloDebugger } from '../internal/debug';
  * @param referer page referrer, `document.referrer`
  */
 function trackView(url?: string, referrer?: string): void {
-  const check = preflight();
+  const check = preflight.value;
 
   if (check === 'ssr') {
     return;
@@ -44,7 +44,7 @@ function trackView(url?: string, referrer?: string): void {
  * @param eventData additional data for the event, provide an object in the format `{key: value}`, `key` = string, `value` = string | number | or boolean.
  */
 function trackEvent(eventName: string, eventData?: EventData) {
-  const check = preflight();
+  const check = preflight.value;
 
   if (check === 'ssr') {
     return;
