@@ -1,5 +1,3 @@
-![cover image](/preview/cover.png)
-
 # Nuxt Umami Module
   
 [![npm](https://img.shields.io/npm/v/nuxt-umami.svg?style=flat-square)](https://www.npmjs.com/package/nuxt-umami)
@@ -9,8 +7,9 @@
 This is a fully-featured nuxt module that makes implementing [**Umami Analytics**](https://umami.is/) into your Nuxt project a breeze.
 
 ---
-> **Heads up:**
-> There is a newer version compatible with **Nuxt 3** that provides better types & developer experience. If you are currently using Nuxt 3, please upgrade to [Nuxt Umami v2](https://github.com/ijkml/nuxt-umami/tree/next).
+> **Note:**
+>
+> Hey! If you're using **Nuxt 3**, I recommend upgrading to [Nuxt Umami v2](https://github.com/ijkml/nuxt-umami/) for better types and DX. **Heads up:** starting **May 7, 2023**, the package will only be available as `nuxt-umami@v1`.
 ---
 
 <br />
@@ -32,17 +31,17 @@ This is a fully-featured nuxt module that makes implementing [**Umami Analytics*
 
 With `pnpm`
 ```bash
-pnpm add -D nuxt-umami
+pnpm add -D nuxt-umami@v1
 ```
 
 Or, with `npm`
 ```bash
-npm install -D nuxt-umami
+npm install -D nuxt-umami@v1
 ```
 
 Or, with `yarn`
 ```bash
-yarn add -D nuxt-umami
+yarn add -D nuxt-umami@v1
 ```
 
 ### Setup
