@@ -5,8 +5,8 @@ export default defineNuxtConfig({
     UmamiMetrics,
   ],
   umami: {
-    websiteId: '3c255b6d-678a-42dd-8074-272ee5b78484', // string
-    scriptUrl: 'http://localhost:3001/umami.js', // string
+    websiteId: 'ba4c9424-c4b7-48df-b66d-4213730673e5', // string
+    scriptUrl: 'https://ml-umami.netlify.app/umami.js', // string
     // autoTrack: true, // bool
     // domains: '', // string
     // cache: true, // bool
