@@ -33,16 +33,18 @@ const umConfig = computed(() => {
       ignoreDnt = true,
       ignoreLocalhost: ignoreLocal = false,
       autoTrack = true,
-      customEndpoint: customEP = undefined,
+      customEndpoint: _customEP = undefined,
       version = 1,
     } = {},
   } = useAppConfig();
 
-  const customEndpoint = !isValidString(customEP)
-    ? undefined
-    : customEP.startsWith('/')
-      ? customEP
-      : `/${customEP}`;
+  const customEP = isValidString(_customEP) ? _customEP.trim() : undefined;
+
+  const customEndpoint = (customEP && customEP !== '/')
+    ? customEP.startsWith('/')
+      ? _customEP
+      : `/${_customEP}`
+    : undefined;
 
   return {
     host: umamiHost || host,
