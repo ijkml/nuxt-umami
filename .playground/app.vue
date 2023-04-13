@@ -21,6 +21,18 @@ function testEvent() {
         Run trackView
       </button>
       <a href="https://ml-umami.netlify.app/share/8o0OFImY/Umami%20Next" target="_blank" rel="noopener noreferrer">See Preview</a>
+
+      <br>
+
+      <NuxtLink to="/page-1">
+        Page 1
+      </NuxtLink>
+      <NuxtLink to="/page-2">
+        Page 2
+      </NuxtLink>
+      <NuxtLink to="/page-3">
+        Page 3
+      </NuxtLink>
     </div>
   </div>
 </template>
