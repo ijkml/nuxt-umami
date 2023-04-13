@@ -3,12 +3,12 @@ export default defineNuxtConfig({
     umami: {
       id: '',
       host: '',
-      domains: undefined,
+      version: 1,
+      domains: '',
       autoTrack: true,
       ignoreDnt: true,
+      customEndpoint: '/',
       ignoreLocalhost: false,
-      version: 1,
-      customEndpoint: undefined,
     },
   },
   runtimeConfig: {
