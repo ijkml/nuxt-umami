@@ -22,7 +22,7 @@ function trackView(url?: string, referrer?: string): void {
   }
 
   const { id } = umConfig.value;
-  const { pageReferrer, pageUrl, payload } = getPayload();
+  const { pageReferrer, pageUrl, payload } = getPayload.value;
 
   void collect(
     {
@@ -56,7 +56,8 @@ function trackEvent(eventName: string, eventData?: EventData) {
   }
 
   const { id } = umConfig.value;
-  const { payload } = getPayload();
+  const { payload } = getPayload.value;
+
   const name = eventName || '#unknown-event';
 
   const data = (eventData !== null && typeof eventData === 'object')

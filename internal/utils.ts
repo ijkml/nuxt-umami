@@ -66,6 +66,14 @@ const domainList = computed(() => {
       : undefined;
 });
 
+const endpoint = computed(() => {
+  const { host, customEndpoint, version } = umConfig.value;
+  const root = new URL(host);
+  const branch = customEndpoint || (version === 2 ? '/api/send' : '/api/collect');
+
+  return `${root.protocol}//${root.host}${branch}`;
+});
+
 const preflight = computed((): PreflightResult => {
   if (typeof window === 'undefined') {
     return 'ssr';
@@ -77,7 +85,7 @@ const preflight = computed((): PreflightResult => {
     return 'id';
   }
 
-  if (isInvalidHost(host)) {
+  if (isInvalidHost(host) || isInvalidHost(endpoint.value)) {
     return 'host';
   }
 
@@ -109,37 +117,32 @@ const preflight = computed((): PreflightResult => {
   return true;
 });
 
-function getPayload(): GetPayloadReturn {
+const getPayload = computed((): GetPayloadReturn => {
   const {
-    location: { hostname, pathname, search, hash },
+    location: { hostname },
     screen: { width, height },
-    navigator,
-    document: { referrer: pageReferrer },
+    navigator: { language },
+    document: { referrer },
   } = window;
 
-  const pageUrl = pathname + search + hash;
+  const { fullPath } = useRoute();
 
   const payload: PartialPayload = {
     screen: `${width}x${height}`,
-    language: navigator.language,
+    language,
     hostname,
-    url: pageUrl,
+    url: fullPath,
   };
 
   return {
     payload,
-    pageUrl,
-    pageReferrer,
+    pageUrl: fullPath,
+    pageReferrer: referrer,
   };
-}
+});
 
 async function collect(load: ServerPayload) {
-  const { host, customEndpoint, version } = umConfig.value;
-  const root = new URL(host);
-  const branch = customEndpoint || (version === 2 ? '/api/send' : '/api/collect');
-  const endpoint = `${root.protocol}//${root.host}${branch}`;
-
-  fetch(endpoint, {
+  fetch(endpoint.value, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
