@@ -117,29 +117,29 @@ const preflight = computed((): PreflightResult => {
   return true;
 });
 
-function getPayload(): GetPayloadReturn {
+const getPayload = computed((): GetPayloadReturn => {
   const {
-    location: { hostname, pathname, search, hash },
+    location: { hostname },
     screen: { width, height },
-    navigator,
-    document: { referrer: pageReferrer },
+    navigator: { language },
+    document: { referrer },
   } = window;
 
-  const pageUrl = pathname + search + hash;
+  const { fullPath } = useRoute();
 
   const payload: PartialPayload = {
     screen: `${width}x${height}`,
-    language: navigator.language,
+    language,
     hostname,
-    url: pageUrl,
+    url: fullPath,
   };
 
   return {
     payload,
-    pageUrl,
-    pageReferrer,
+    pageUrl: fullPath,
+    pageReferrer: referrer,
   };
-}
+});
 
 async function collect(load: ServerPayload) {
   fetch(endpoint.value, {
