@@ -114,7 +114,6 @@ Use it.
 | autoTrack | `boolean` | Option to automatically track page views. | no | `true` |
 | ignoreLocalhost | `boolean` | Option to prevent tracking on localhost. | no | `false` |
 | customEndpoint | `string` | Set a custom `COLLECT_API_ENDPOINT`. See [Docs](https://umami.is/docs/environment-variables). | no | `undefined`
-| version | `1 \| 2` | Umami version (Cloud) | no | `1` |
 
 ## Usage
 
@@ -136,14 +135,16 @@ Reference: [Umami Tracker Functions](https://umami.is/docs/tracker-functions).
 
 ## Umami Cloud, v2
 
-Umami v2's release is on the horizon, and they currently offer a [free beta plan](https://umami.is/pricing) for Umami Cloud. To use v2 (or Cloud), set `version: 2` in the Umami config.
+~~Umami v2's release is on the horizon, and they currently offer a [free beta plan](https://umami.is/pricing) for Umami Cloud. To use v2 (or Cloud), set `version: 2` in the Umami config.~~
 
-> **Warning**:
-> v2 is still WIP pending official release and the new docs. Test rigorously, and if you encounter bugs/issues, please open an issue.
+Nuxt Umami v2 is not compatible with Umami (v2) Cloud. You can try [Nuxt Umami v1](https://github.com/ijkml/nuxt-umami/tree/main).
+
+> **Note**:
+> At this point, I do not have any plans to support Umami v2 Cloud (not until the official release and the new docs at least). But if you want to help, reach out.
 
 ## Issues, Bugs, Ideas?
 
-Open an issue, fire a PR. Contributions are welcome! If you encounter any issues, don't hesitate to open an issue. I'm always available to help and resolve any bugs.
+Open an issue. Contributions are welcome, just send a PR! If you encounter any issues, don't hesitate to open an issue. I'm always available to help and resolve any bugs.
 
 ## Contributors
 
