@@ -16,6 +16,7 @@ const warnings: Record<ErrorId, ErrorObj> = {
   'err-host': { level: 'error', text: '`host` is missing or incorrectly configured. Check `runtimeConfig`.' },
   'err-local': { level: 'info', text: 'Tracking disabled on localhost' },
   'err-collect': { level: 'error', text: 'Uh... Something went wrong and I have no clue.' },
+  'err-v2': { level: 'warn', text: 'Oops, this module is not compatible with Umami v2 Cloud' },
 };
 
 const helloDebugger = process.env.NODE_ENV === 'production'

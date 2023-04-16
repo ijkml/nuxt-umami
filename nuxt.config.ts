@@ -28,14 +28,14 @@ declare module '@nuxt/schema' {
        * @required true
        * @example 'https://ijkml.xyz/'
        */
-      host: string
+      host?: string
       /**
        * Unique identifier provided by Umami
        *
        * @required true
        * @example `3c255b6d-678a-42dd-8074-272ee5b78484`
        */
-      id: string
+      id?: string
       /**
        * Configure the tracker to only run on specific domains.
        * Provide an array or comma delimited list of domains (without 'http').
@@ -69,6 +69,7 @@ declare module '@nuxt/schema' {
       /**
        * Version of Umami used, either `1.x.x` or `2.x.x`
        *
+       * @deprecated Nuxt Umami does not support Umami v2 (Cloud)
        * @default 1
        */
       version?: 1 | 2
