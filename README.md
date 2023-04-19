@@ -8,7 +8,7 @@ Integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites / app
 
 > **Heads up:**
 > This version uses features (Nuxt Layers) that are only available in **Nuxt 3**.
-> Check out [Nuxt Umami v1](https://github.com/ijkml/nuxt-umami/tree/main) for Nuxt 2 compat.
+> Check out [Nuxt Umami v1](https://github.com/ijkml/nuxt-umami/tree/v1) for Nuxt 2 compat.
 
 ## Features
 
@@ -137,7 +137,7 @@ Reference: [Umami Tracker Functions](https://umami.is/docs/tracker-functions).
 
 ~~Umami v2's release is on the horizon, and they currently offer a [free beta plan](https://umami.is/pricing) for Umami Cloud. To use v2 (or Cloud), set `version: 2` in the Umami config.~~
 
-Nuxt Umami v2 is not compatible with Umami (v2) Cloud. You can try [Nuxt Umami v1](https://github.com/ijkml/nuxt-umami/tree/main).
+Nuxt Umami v2 is not compatible with Umami (v2) Cloud. You can try [Nuxt Umami v1](https://github.com/ijkml/nuxt-umami/tree/v1).
 
 > **Note**:
 > At this point, I do not have any plans to support Umami v2 Cloud (not until the official release and the new docs at least). But if you want to help, reach out.
