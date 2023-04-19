@@ -69,7 +69,7 @@ declare module '@nuxt/schema' {
       /**
        * Version of Umami used, either `1.x.x` or `2.x.x`
        *
-       * @deprecated Nuxt Umami does not support Umami v2 (Cloud)
+       * @deprecated Nuxt Umami does not support Umami v2 (Cloud) yet
        * @default 1
        */
       version?: 1 | 2
