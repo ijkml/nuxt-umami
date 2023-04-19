@@ -125,24 +125,24 @@ const preflight = computed((): PreflightResult => {
 
 const getPayload = computed((): GetPayloadReturn => {
   const {
-    location: { hostname },
+    location: { hostname, hash, search, pathname },
     screen: { width, height },
     navigator: { language },
     document: { referrer },
   } = window;
 
-  const { fullPath } = useRoute();
+  const pageUrl = pathname + search + hash;
 
   const payload: PartialPayload = {
     screen: `${width}x${height}`,
     language,
     hostname,
-    url: fullPath,
+    url: pageUrl,
   };
 
   return {
     payload,
-    pageUrl: fullPath,
+    pageUrl,
     pageReferrer: referrer,
   };
 });
