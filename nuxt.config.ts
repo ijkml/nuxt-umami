@@ -69,12 +69,13 @@ declare module '@nuxt/schema' {
       /**
        * Version of Umami used, either `1.x.x` or `2.x.x`
        *
-       * @deprecated Nuxt Umami does not support Umami v2 (Cloud) yet
        * @default 1
        */
       version?: 1 | 2
       /**
-       * Self-hosted Umami lets you set a COLLECT_API_ENDPOINT, which is `/api/collect` by default. See Umami [Docs](https://umami.is/docs/environment-variables).
+       * Self-hosted Umami lets you set a COLLECT_API_ENDPOINT, which is:
+       * - `/api/collect` by default in Umami v1
+       * - `/api/send` by default in Umami v2. See Umami [Docs](https://umami.is/docs/environment-variables).
        */
       customEndpoint?: `/${string}`
     }

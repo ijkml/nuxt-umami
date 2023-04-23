@@ -69,9 +69,9 @@ const domainList = computed(() => {
 });
 
 const endpoint = computed(() => {
-  const { host, customEndpoint } = umConfig.value;
+  const { host, customEndpoint, version } = umConfig.value;
   const root = new URL(host);
-  const branch = customEndpoint || '/api/collect';
+  const branch = customEndpoint || (version === 2 ? '/api/send' : '/api/collect');
 
   return `${root.protocol}//${root.host}${branch}`;
 });
@@ -81,7 +81,7 @@ const preflight = computed((): PreflightResult => {
     return 'ssr';
   }
 
-  const { ignoreDnt, id, host, ignoreLocal, version } = umConfig.value;
+  const { ignoreDnt, id, host, ignoreLocal } = umConfig.value;
 
   if (!isValidString(id)) {
     return 'id';
@@ -89,10 +89,6 @@ const preflight = computed((): PreflightResult => {
 
   if (isInvalidHost(host) || isInvalidHost(endpoint.value)) {
     return 'host';
-  }
-
-  if (version === 2) {
-    return 'v2';
   }
 
   const {
@@ -128,7 +124,7 @@ const getPayload = computed((): GetPayloadReturn => {
     location: { hostname, hash, search, pathname },
     screen: { width, height },
     navigator: { language },
-    document: { referrer },
+    document: { referrer, title },
   } = window;
 
   const pageUrl = pathname + search + hash;
@@ -139,6 +135,11 @@ const getPayload = computed((): GetPayloadReturn => {
     hostname,
     url: pageUrl,
   };
+
+  // Page Title is also collected in Umami v2
+  if (umConfig.value.version === 2) {
+    payload.title = title;
+  }
 
   return {
     payload,

@@ -1,6 +1,9 @@
 <script setup>
 // onMounted(() => {});
 
+const route = useRoute();
+useSeoMeta({ title: route.path.slice(1, 2).toUpperCase() + route.path.slice(2).replace('-', ' ') });
+
 function testView() {
   umTrackView();
 }

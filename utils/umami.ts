@@ -1,5 +1,5 @@
 import { collect, getPayload, preflight, umConfig } from '../internal/utils';
-import type { EventData, EventPayload, ViewPayload } from '../internal/types';
+import type { EventData, EventPayloadV1, EventPayloadV2, ViewPayload } from '../internal/types';
 import { helloDebugger } from '../internal/debug';
 
 /**
@@ -21,12 +21,14 @@ function trackView(url?: string, referrer?: string): void {
     return;
   }
 
-  const { id } = umConfig.value;
+  const { id, version } = umConfig.value;
   const { pageReferrer, pageUrl, payload } = getPayload.value;
+
+  const type = version === 2 ? 'event' : 'pageview';
 
   void collect(
     {
-      type: 'pageview',
+      type,
       payload: {
         ...payload,
         website: id,
@@ -55,7 +57,7 @@ function trackEvent(eventName: string, eventData?: EventData) {
     return;
   }
 
-  const { id } = umConfig.value;
+  const { id, version } = umConfig.value;
   const { payload } = getPayload.value;
 
   const name = eventName || '#unknown-event';
@@ -64,15 +66,28 @@ function trackEvent(eventName: string, eventData?: EventData) {
     ? eventData
     : undefined;
 
-  void collect({
-    type: 'event',
-    payload: {
-      ...payload,
-      website: id,
-      event_name: name,
-      event_data: data,
-    } satisfies EventPayload,
-  });
+  if (version === 2) {
+    void collect({
+      type: 'event',
+      payload: {
+        ...payload,
+        referrer: '',
+        website: id,
+        name,
+        data,
+      } satisfies EventPayloadV2,
+    });
+  } else {
+    void collect({
+      type: 'event',
+      payload: {
+        ...payload,
+        website: id,
+        event_name: name,
+        event_data: data,
+      } satisfies EventPayloadV1,
+    });
+  }
 }
 
 export { trackEvent as umTrackEvent, trackView as umTrackView };
