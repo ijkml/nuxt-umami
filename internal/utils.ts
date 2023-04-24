@@ -1,10 +1,11 @@
+import { useTitle } from '@vueuse/core';
 import type {
   GetPayloadReturn,
   PartialPayload,
   PreflightResult,
   ServerPayload,
-} from '../internal/types';
-import { helloDebugger } from '../internal/debug';
+} from './types';
+import { helloDebugger } from './debug';
 
 function isValidString(str: unknown): str is string {
   return typeof str === 'string' && str.trim() !== '';
@@ -121,30 +122,28 @@ const preflight = computed((): PreflightResult => {
 
 const getPayload = computed((): GetPayloadReturn => {
   const {
-    location: { hostname, hash, search, pathname },
+    location: { hostname },
     screen: { width, height },
     navigator: { language },
     document: { referrer, title },
   } = window;
 
-  const pageUrl = pathname + search + hash;
+  const pageTitle = useTitle();
+  const { fullPath: pageUrl } = useRoute();
 
   const payload: PartialPayload = {
     screen: `${width}x${height}`,
     language,
     hostname,
     url: pageUrl,
+    referrer,
+    title: pageTitle.value || title,
   };
-
-  // Page Title is also collected in Umami v2
-  if (umConfig.value.version === 2) {
-    payload.title = title;
-  }
 
   return {
     payload,
-    pageUrl,
     pageReferrer: referrer,
+    pageUrl,
   };
 });
 
@@ -166,4 +165,4 @@ async function collect(load: ServerPayload) {
     });
 }
 
-export { preflight, getPayload, collect, umConfig };
+export { isValidString, preflight, getPayload, collect, umConfig };
