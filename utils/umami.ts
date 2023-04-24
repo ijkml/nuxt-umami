@@ -1,5 +1,5 @@
-import { collect, getPayload, preflight, umConfig } from '../internal/utils';
-import type { EventData, EventPayloadV1, EventPayloadV2, ViewPayload } from '../internal/types';
+import { collect, getPayload, isValidString, preflight, umConfig } from '../internal/utils';
+import type { EventData, EventPayload, ViewPayload } from '../internal/types';
 import { helloDebugger } from '../internal/debug';
 
 /**
@@ -21,19 +21,17 @@ function trackView(url?: string, referrer?: string): void {
     return;
   }
 
-  const { id, version } = umConfig.value;
+  const { id: website, version } = umConfig.value;
   const { pageReferrer, pageUrl, payload } = getPayload.value;
-
-  const type = version === 2 ? 'event' : 'pageview';
 
   void collect(
     {
-      type,
+      type: version === 2 ? 'event' : 'pageview',
       payload: {
         ...payload,
-        website: id,
-        url: url || pageUrl,
-        referrer: referrer || pageReferrer,
+        url: isValidString(url) ? url : pageUrl,
+        referrer: isValidString(referrer) ? referrer : pageReferrer,
+        website,
       } satisfies ViewPayload,
     },
   );
@@ -42,8 +40,9 @@ function trackView(url?: string, referrer?: string): void {
 /**
  * Tracks an event with a custom event type.
  *
- * @param eventName event name, eg 'CTA-button-3-clcik'
- * @param eventData additional data for the event, provide an object in the format `{key: value}`, `key` = string, `value` = string | number | or boolean.
+ * @param eventName event name, eg 'CTA-button-click'
+ * @param eventData additional data for the event, provide an object in the format
+ * `{key: value}`, `key` = string, `value` = string | number | boolean.
  */
 function trackEvent(eventName: string, eventData?: EventData) {
   const check = preflight.value;
@@ -57,37 +56,33 @@ function trackEvent(eventName: string, eventData?: EventData) {
     return;
   }
 
-  const { id, version } = umConfig.value;
+  const { id: website, version } = umConfig.value;
   const { payload } = getPayload.value;
 
-  const name = eventName || '#unknown-event';
+  const name = isValidString(eventName) ? eventName : '#unknown-event';
 
   const data = (eventData !== null && typeof eventData === 'object')
     ? eventData
     : undefined;
 
-  if (version === 2) {
-    void collect({
-      type: 'event',
-      payload: {
-        ...payload,
-        referrer: '',
-        website: id,
+  const eventObj = version === 2
+    ? {
         name,
         data,
-      } satisfies EventPayloadV2,
-    });
-  } else {
-    void collect({
-      type: 'event',
-      payload: {
-        ...payload,
-        website: id,
+      }
+    : {
         event_name: name,
         event_data: data,
-      } satisfies EventPayloadV1,
-    });
-  }
+      };
+
+  void collect({
+    type: 'event',
+    payload: {
+      ...payload,
+      ...eventObj,
+      website,
+    } satisfies EventPayload,
+  });
 }
 
 export { trackEvent as umTrackEvent, trackView as umTrackView };
