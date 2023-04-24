@@ -4,35 +4,34 @@ interface BasicPayload {
   hostname: string
   screen: string
   language: string
-  title?: string
-}
-
-interface ViewPayload extends BasicPayload {
+  title: string
   referrer: string
 }
+
+interface ViewPayload extends BasicPayload {}
 
 interface EventData {
   [key: string]: string | number | boolean
 }
 
-interface EventPayloadV1 extends BasicPayload {
-  event_name: string
-  event_data?: EventData
-}
+type EventPayloadPartial =
+  {
+    name: string
+    data?: EventData
+  } | {
+    event_name: string
+    event_data?: EventData
+  };
 
-interface EventPayloadV2 extends BasicPayload {
-  referrer: string
-  name: string
-  data?: EventData
-}
+type EventPayload = BasicPayload & EventPayloadPartial;
 
 type PartialPayload = Omit<BasicPayload, 'website'>;
 type PayloadType = 'pageview' | 'event';
-type PreflightResult = 'ssr' | 'id' | 'host' | 'domain' | 'dnt' | 'local' | 'v2' | true;
+type PreflightResult = 'ssr' | 'id' | 'host' | 'domain' | 'dnt' | 'local' | true;
 
 interface ServerPayload {
   type: PayloadType
-  payload: ViewPayload | EventPayloadV1 | EventPayloadV2
+  payload: ViewPayload | EventPayload
 }
 
 interface GetPayloadReturn {
@@ -44,8 +43,7 @@ interface GetPayloadReturn {
 export {
   EventData,
   PartialPayload,
-  EventPayloadV1,
-  EventPayloadV2,
+  EventPayload,
   ViewPayload,
   PayloadType,
   ServerPayload,
