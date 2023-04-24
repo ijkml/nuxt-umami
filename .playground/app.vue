@@ -1,14 +1,10 @@
-<script setup>
-// onMounted(() => {});
-
-const route = useRoute();
-useSeoMeta({ title: route.path.slice(1, 2).toUpperCase() + route.path.slice(2).replace('-', ' ') });
-
+<script setup lang="ts">
 function testView() {
   umTrackView();
 }
+
 function testEvent() {
-  umTrackEvent('event-test-1', { type: 'click', position: 'left' });
+  umTrackEvent('event-test-2', { type: 'click', position: 'left' });
 }
 </script>
 
@@ -17,6 +13,11 @@ function testEvent() {
     <div class="page-container">
       <h1>Nuxt Umami</h1>
       <br>
+
+      <NuxtLayout>
+        <NuxtPage />
+      </NuxtLayout>
+
       <button @click="testEvent">
         Run trackEvent
       </button>
