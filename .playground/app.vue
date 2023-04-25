@@ -18,25 +18,24 @@ function testEvent() {
         <NuxtPage />
       </NuxtLayout>
 
-      <button @click="testEvent">
-        Run trackEvent
-      </button>
-      <button @click="testView">
-        Run trackView
-      </button>
-      <a href="https://ml-umami.netlify.app/share/8o0OFImY/Umami%20Next" target="_blank" rel="noopener noreferrer">See Preview</a>
+      <div class="deck">
+        <button @click="testEvent">
+          Run trackEvent
+        </button>
+        <button @click="testView">
+          Run trackView
+        </button>
+        <a href="https://ml-umami.netlify.app/share/8o0OFImY/Umami%20Next" target="_blank" rel="noopener noreferrer">See Preview</a>
+      </div>
 
-      <br>
-
-      <NuxtLink to="/page-1">
-        Page 1
-      </NuxtLink>
-      <NuxtLink to="/page-2">
-        Page 2
-      </NuxtLink>
-      <NuxtLink to="/page-3">
-        Page 3
-      </NuxtLink>
+      <div class="deck">
+        <NuxtLink to="/">
+          Homepage
+        </NuxtLink>
+        <NuxtLink v-for="i in 3" :key="i" :to="`/page-${i}`">
+          Page {{ i }}
+        </NuxtLink>
+      </div>
     </div>
   </div>
 </template>
@@ -55,13 +54,15 @@ function testEvent() {
 }
 
 h1 {
-  font-size: x-large;
-  font-weight: 600;
+  font-size: xx-large;
+  font-weight: 700;
 }
 
 :is(button, a) {
   padding: 8px 12px;
-  margin: 16px;
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: center;
   outline: none;
   cursor: pointer;
   border: 1px solid #aaa;
@@ -70,10 +71,25 @@ h1 {
   height: auto;
   background-color: whitesmoke;
   transition: all 350ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  font-family: monospace;
 }
 
 :is(button, a):is(:hover, :focus-visible) {
   background-color: rgb(209, 209, 209);
   outline: none;
+}
+
+:deep(h2) {
+  font-size: x-large;
+}
+
+.deck {
+  display: flex;
+  padding: 8px;
+  gap: 1rem;
+  margin-top: 1rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 </style>

@@ -9,5 +9,5 @@ useHead({ title });
 </script>
 
 <template>
-  <Heading />
+  <Heading :title="title" />
 </template>
