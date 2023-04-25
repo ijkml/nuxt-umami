@@ -8,8 +8,6 @@ interface BasicPayload {
   referrer: string
 }
 
-interface ViewPayload extends BasicPayload {}
-
 interface EventData {
   [key: string]: string | number | boolean
 }
@@ -23,7 +21,8 @@ type EventPayloadPartial =
     event_data?: EventData
   };
 
-type EventPayload = BasicPayload & EventPayloadPartial;
+  type EventPayload = BasicPayload & EventPayloadPartial;
+  type ViewPayload = BasicPayload;
 
 type PartialPayload = Omit<BasicPayload, 'website'>;
 type PayloadType = 'pageview' | 'event';
