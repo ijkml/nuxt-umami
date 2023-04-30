@@ -1,4 +1,4 @@
-import { collect, getPayload, preflight, umConfig } from '../internal/utils';
+import { collect, getPayload, isValidString, preflight, umConfig } from '../internal/utils';
 import type { EventData, EventPayload, ViewPayload } from '../internal/types';
 import { helloDebugger } from '../internal/debug';
 
@@ -21,17 +21,17 @@ function trackView(url?: string, referrer?: string): void {
     return;
   }
 
-  const { id } = umConfig.value;
+  const { id: website, version } = umConfig.value;
   const { pageReferrer, pageUrl, payload } = getPayload.value;
 
   void collect(
     {
-      type: 'pageview',
+      type: version === 2 ? 'event' : 'pageview',
       payload: {
         ...payload,
-        website: id,
-        url: url || pageUrl,
-        referrer: referrer || pageReferrer,
+        url: isValidString(url) ? url : pageUrl,
+        referrer: isValidString(referrer) ? referrer : pageReferrer,
+        website,
       } satisfies ViewPayload,
     },
   );
@@ -40,8 +40,9 @@ function trackView(url?: string, referrer?: string): void {
 /**
  * Tracks an event with a custom event type.
  *
- * @param eventName event name, eg 'CTA-button-3-clcik'
- * @param eventData additional data for the event, provide an object in the format `{key: value}`, `key` = string, `value` = string | number | or boolean.
+ * @param eventName event name, eg 'CTA-button-click'
+ * @param eventData additional data for the event, provide an object in the format
+ * `{key: value}`, `key` = string, `value` = string | number | boolean.
  */
 function trackEvent(eventName: string, eventData?: EventData) {
   const check = preflight.value;
@@ -55,22 +56,31 @@ function trackEvent(eventName: string, eventData?: EventData) {
     return;
   }
 
-  const { id } = umConfig.value;
+  const { id: website, version } = umConfig.value;
   const { payload } = getPayload.value;
 
-  const name = eventName || '#unknown-event';
+  const name = isValidString(eventName) ? eventName : '#unknown-event';
 
   const data = (eventData !== null && typeof eventData === 'object')
     ? eventData
     : undefined;
 
+  const eventObj = version === 2
+    ? {
+        name,
+        data,
+      }
+    : {
+        event_name: name,
+        event_data: data,
+      };
+
   void collect({
     type: 'event',
     payload: {
       ...payload,
-      website: id,
-      event_name: name,
-      event_data: data,
+      ...eventObj,
+      website,
     } satisfies EventPayload,
   });
 }

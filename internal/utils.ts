@@ -1,10 +1,11 @@
+import { useTitle } from '@vueuse/core';
 import type {
   GetPayloadReturn,
   PartialPayload,
   PreflightResult,
   ServerPayload,
-} from '../internal/types';
-import { helloDebugger } from '../internal/debug';
+} from './types';
+import { helloDebugger } from './debug';
 
 function isValidString(str: unknown): str is string {
   return typeof str === 'string' && str.trim() !== '';
@@ -69,9 +70,9 @@ const domainList = computed(() => {
 });
 
 const endpoint = computed(() => {
-  const { host, customEndpoint } = umConfig.value;
+  const { host, customEndpoint, version } = umConfig.value;
   const root = new URL(host);
-  const branch = customEndpoint || '/api/collect';
+  const branch = customEndpoint || (version === 2 ? '/api/send' : '/api/collect');
 
   return `${root.protocol}//${root.host}${branch}`;
 });
@@ -81,7 +82,7 @@ const preflight = computed((): PreflightResult => {
     return 'ssr';
   }
 
-  const { ignoreDnt, id, host, ignoreLocal, version } = umConfig.value;
+  const { ignoreDnt, id, host, ignoreLocal } = umConfig.value;
 
   if (!isValidString(id)) {
     return 'id';
@@ -89,10 +90,6 @@ const preflight = computed((): PreflightResult => {
 
   if (isInvalidHost(host) || isInvalidHost(endpoint.value)) {
     return 'host';
-  }
-
-  if (version === 2) {
-    return 'v2';
   }
 
   const {
@@ -125,25 +122,28 @@ const preflight = computed((): PreflightResult => {
 
 const getPayload = computed((): GetPayloadReturn => {
   const {
-    location: { hostname, hash, search, pathname },
+    location: { hostname },
     screen: { width, height },
     navigator: { language },
-    document: { referrer },
+    document: { referrer, title },
   } = window;
 
-  const pageUrl = pathname + search + hash;
+  const pageTitle = useTitle();
+  const { fullPath: pageUrl } = useRoute();
 
   const payload: PartialPayload = {
     screen: `${width}x${height}`,
     language,
     hostname,
     url: pageUrl,
+    referrer,
+    title: pageTitle.value || title,
   };
 
   return {
     payload,
-    pageUrl,
     pageReferrer: referrer,
+    pageUrl,
   };
 });
 
@@ -165,4 +165,4 @@ async function collect(load: ServerPayload) {
     });
 }
 
-export { preflight, getPayload, collect, umConfig };
+export { isValidString, preflight, getPayload, collect, umConfig };
