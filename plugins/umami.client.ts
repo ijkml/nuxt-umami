@@ -12,9 +12,9 @@ export default defineNuxtPlugin({
       setTimeout(umTrackView, 300);
 
       // TODO: fix
-      // in cases where the title is set/updated in `<script>`,
-      // document.title will reflect the old title when we trackView immediately,
-      // so we wait [magic seconds] until `document.title` has updated
+      // `useHead()` updates the DOM's head using this hook
+      // currently, there is no hook we can watch, so we need
+      // to wait for the update to finish, to capture title
     },
   },
 });
