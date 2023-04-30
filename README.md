@@ -114,6 +114,7 @@ Use it.
 | autoTrack | `boolean` | Option to automatically track page views. | no | `true` |
 | ignoreLocalhost | `boolean` | Option to prevent tracking on localhost. | no | `false` |
 | customEndpoint | `string` | Set a custom `COLLECT_API_ENDPOINT`. See [Docs](https://umami.is/docs/environment-variables). | no | `undefined`
+| version | `1 \| 2`  | Umami version | no | `1` |
 
 ## Usage
 
@@ -133,14 +134,12 @@ Two functions are auto-imported, `umTrackView()` and `umTrackEvent()`. Use them 
 Reference: [Umami Tracker Functions](https://umami.is/docs/tracker-functions).
 
 
-## Umami Cloud, v2
-
-~~Umami v2's release is on the horizon, and they currently offer a [free beta plan](https://umami.is/pricing) for Umami Cloud. To use v2 (or Cloud), set `version: 2` in the Umami config.~~
-
-Nuxt Umami v2 is not compatible with Umami (v2) Cloud. You can try [Nuxt Umami v1](https://github.com/ijkml/nuxt-umami/tree/v1).
+## Umami v2
 
 > **Note**:
-> At this point, I do not have any plans to support Umami v2 Cloud (not until the official release and the new docs at least). But if you want to help, reach out.
+> Support for Umami v2 is now available in `^2.3.0`.
+
+To use Umami v2, set `version: 2` in the Umami config.
 
 ## Issues, Bugs, Ideas?
 
