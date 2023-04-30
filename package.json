@@ -21,6 +21,7 @@
   "files": [
     "utils/",
     "middleware/",
+    "plugins/",
     "internal/",
     "app.config.ts",
     "app.vue",
