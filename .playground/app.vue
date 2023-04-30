@@ -69,6 +69,7 @@ h1 {
   border-radius: 6px;
   width: auto;
   height: auto;
+  user-select: none;
   background-color: whitesmoke;
   transition: all 350ms cubic-bezier(0.445, 0.05, 0.55, 0.95);
   font-family: monospace;
