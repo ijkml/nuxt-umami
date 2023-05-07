@@ -2,7 +2,6 @@
   "name": "nuxt-umami",
   "type": "module",
   "version": "2.3.1",
-  "private": "false",
   "description": "Integrate Umami Analytics into Nuxt",
   "author": "ML <me.mlaure@gmail.com>",
   "license": "MIT",
@@ -34,7 +33,7 @@
     "generate": "nuxi generate .playground",
     "preview": "nuxi preview .playground",
     "lint": "eslint .",
-    "release": "bumpp --commit --push --tag && npm publish --access public",
+    "release": "./release.sh",
     "release:beta": "bumpp prerelease --commit --push --no-tag && npm publish --access public --tag beta"
   },
   "dependencies": {
