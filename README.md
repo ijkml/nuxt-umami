@@ -1,4 +1,4 @@
-# Nuxt Umami <sup>@next<sup>
+# Nuxt Umami
 
 [![npm](https://img.shields.io/npm/v/nuxt-umami/next?style=flat-square)](https://www.npmjs.com/package/nuxt-umami/v/next)
 [![Downloads](https://img.shields.io/npm/dt/nuxt-umami.svg?style=flat-square)](https://www.npmjs.com/package/nuxt-umami)
@@ -32,11 +32,11 @@ Integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites / app
 Install using your favorite package manager...
 
 ```bash
-pnpm add nuxt-umami@next #pnpm
+pnpm add nuxt-umami #pnpm
 ```
 
 ```bash
-npm install nuxt-umami@next #npm
+npm install nuxt-umami #npm
 ```
 
 Then add `nuxt-umami` to your `extends` array in `nuxt.config`:
@@ -78,7 +78,7 @@ export default defineAppConfig({
 
 ```ts
 defineNuxtConfig({
-  extends: ['nuxt-umami@next'],
+  extends: ['nuxt-umami'],
   appConfig: {
     umami: {
       // ...umami config here
