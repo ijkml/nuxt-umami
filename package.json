@@ -5,8 +5,8 @@
   "description": "Integrate Umami Analytics into Nuxt",
   "author": "ML <me.mlaure@gmail.com>",
   "license": "MIT",
-  "homepage": "https://github.com/ijkml/nuxt-umami/tree/next",
-  "repository": "https://github.com/ijkml/nuxt-umami/tree/next",
+  "homepage": "https://github.com/ijkml/nuxt-umami/",
+  "repository": "https://github.com/ijkml/nuxt-umami/",
   "keywords": [
     "nuxt",
     "umami",
