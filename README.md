@@ -1,6 +1,6 @@
 # Nuxt Umami
 
-[![npm](https://img.shields.io/npm/v/nuxt-umami/next?style=flat-square)](https://www.npmjs.com/package/nuxt-umami/v/next)
+[![npm](https://img.shields.io/npm/v/nuxt-umami?style=flat-square)](https://www.npmjs.com/package/nuxt-umami/)
 [![Downloads](https://img.shields.io/npm/dt/nuxt-umami.svg?style=flat-square)](https://www.npmjs.com/package/nuxt-umami)
 [![License](https://img.shields.io/npm/l/nuxt-umami?style=flat-square)](/LICENSE)
 
@@ -51,7 +51,7 @@ Or, you can totally skip the installation process and do
 
 ```ts
 defineNuxtConfig({
-  extends: ['github:ijkml/nuxt-umami#next']
+  extends: ['github:ijkml/nuxt-umami']
 });
 ```
 
