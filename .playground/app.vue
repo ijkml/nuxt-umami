@@ -29,6 +29,12 @@ function testEvent() {
       </div>
 
       <div class="deck">
+        <button data-umami-event="event-test-1" data-umami-event-data="Hello World!">
+          Trigger attribute event
+        </button>
+      </div>
+
+      <div class="deck">
         <NuxtLink to="/">
           Homepage
         </NuxtLink>
