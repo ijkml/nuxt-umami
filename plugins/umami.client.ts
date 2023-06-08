@@ -34,7 +34,7 @@ export default defineNuxtPlugin({
           return;
         }
 
-        // TODO: Think about handling multiple events (e.g. click, focus, etc.) (Maybe using an attribute like data-umami-event="click focus") 
+        // TODO: Think about handling multiple events (e.g. click, focus, etc.) (Maybe using an attribute like data-umami-type="click focus") 
         tracker.addEventListener('click', () => {
 
           const eventData = tracker.getAttributeNames().reduce((acc, name) => {
