@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useToggle } from '@vueuse/core';
+
 function testView() {
   umTrackView();
 }
@@ -6,6 +8,8 @@ function testView() {
 function testEvent() {
   umTrackEvent('event-test-2', { type: 'click', position: 'left' });
 }
+
+const [contentVis, toggleVis] = useToggle(true);
 </script>
 
 <template>
@@ -17,6 +21,8 @@ function testEvent() {
       <NuxtLayout>
         <NuxtPage />
       </NuxtLayout>
+
+      <ContainerA v-if="contentVis" />
 
       <div class="deck">
         <button @click="testEvent">
@@ -31,6 +37,10 @@ function testEvent() {
       <div class="deck">
         <button data-umami-event="event-test-1" data-umami-event-data="Hello World!">
           Trigger attribute event
+        </button>
+
+        <button @click="toggleVis()">
+          Show hidden content
         </button>
       </div>
 
@@ -48,7 +58,7 @@ function testEvent() {
 
 <style src="./reset.css"></style>
 
-<style scoped>
+<style>
 .page-root {
   background: linear-gradient(to bottom right, burlywood, aliceblue);
   min-height: 100vh;

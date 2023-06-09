@@ -1,3 +1,4 @@
+import { fauxTrack } from '../internal/demo';
 import { umConfig } from '../internal/utils';
 import { umTrackView } from '../utils/umami';
 
@@ -22,21 +23,19 @@ export default defineNuxtPlugin({
       if (!autoTrack || !document) {
         return;
       }
-      
+
       // TODO: We should introduce a new setting to allow users to change the 'umami' keyword, this may help bypass adblockers in the future
       const trackers = document.querySelectorAll('[data-umami-event]');
 
       trackers.forEach((tracker) => {
-
         const event = tracker.getAttribute('data-umami-event');
 
         if (!event) {
           return;
         }
 
-        // TODO: Think about handling multiple events (e.g. click, focus, etc.) (Maybe using an attribute like data-umami-type="click focus") 
+        // TODO: Think about handling multiple events (e.g. click, focus, etc.) (Maybe using an attribute like data-umami-type="click focus")
         tracker.addEventListener('click', () => {
-
           const eventData = tracker.getAttributeNames().reduce((acc, name) => {
             if (name.startsWith('data-umami-event-')) {
               const key = name.replace('data-umami-event-', '');
@@ -51,9 +50,9 @@ export default defineNuxtPlugin({
             return acc;
           }, {} as Record<string, string>);
 
-          umTrackEvent(event, eventData);
+          fauxTrack(event, eventData);
         });
-      })
-    }
+      });
+    },
   },
 });
