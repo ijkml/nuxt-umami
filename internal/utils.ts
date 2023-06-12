@@ -71,10 +71,12 @@ const domainList = computed(() => {
 
 const endpoint = computed(() => {
   const { host, customEndpoint, version } = umConfig.value;
-  const root = new URL(host);
-  const branch = customEndpoint || (version === 2 ? '/api/send' : '/api/collect');
 
-  return `${root.protocol}//${root.host}${branch}`;
+  const { host: urlHost, protocol } = new URL(host);
+  const _v = urlHost === 'analytics.umami.is' ? 2 : version;
+  const branch = customEndpoint || (_v === 2 ? '/api/send' : '/api/collect');
+
+  return `${protocol}//${urlHost}${branch}`;
 });
 
 const preflight = computed((): PreflightResult => {
