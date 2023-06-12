@@ -1,7 +1,7 @@
 {
   "name": "nuxt-umami",
   "type": "module",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "description": "Integrate Umami Analytics into Nuxt",
   "author": "ML <me.mlaure@gmail.com>",
   "license": "MIT",
@@ -40,12 +40,12 @@
     "@vueuse/core": "^10.1.2"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.38.6",
-    "@types/node": "^18.16.5",
-    "bumpp": "^9.1.0",
-    "eslint": "^8.40.0",
-    "eslint-plugin-vue": "^9.11.0",
-    "nuxt": "^3.4.3",
-    "typescript": "^5.0.4"
+    "@antfu/eslint-config": "^0.39.5",
+    "@types/node": "^20.3.0",
+    "bumpp": "^9.1.1",
+    "eslint": "^8.42.0",
+    "eslint-plugin-vue": "^9.14.1",
+    "nuxt": "^3.5.3",
+    "typescript": "^5.1.3"
   }
 }

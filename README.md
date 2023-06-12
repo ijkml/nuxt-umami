@@ -17,7 +17,7 @@ Integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites / app
 - ➖ No extra script: no extra tag, no script loading, instant availability
 - 😜 Escapes ad & script blockers (catch me if you can)
 - 💯 Simplified usage, feature complete, extensive config
-- ✅ Better Typescript, JSDocs, auto completion
+- ✅ Typescript, JSDocs, auto completion
 - ✅ Error handling + debugging
 - ✅ Nuxt utils + auto import
 
