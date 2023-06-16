@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useToggle } from '@vueuse/core';
-
 function testView() {
   umTrackView();
 }
@@ -9,7 +7,18 @@ function testEvent() {
   umTrackEvent('event-test-2', { type: 'click', position: 'left' });
 }
 
-const [contentVis, toggleVis] = useToggle(true);
+const tt = ref('TT');
+const tc = ref(0);
+
+const directiveBtns = computed(() => [
+  { text: 'Test Directive 1', action: 'test-action-1' },
+  { text: `Test Directive ${tc.value}`, action: { name: 'Reactive Action', id: tt.value } },
+]);
+
+function updateRefs() {
+  tc.value++;
+  tt.value = `TT-${tc.value}`;
+}
 </script>
 
 <template>
@@ -22,8 +31,6 @@ const [contentVis, toggleVis] = useToggle(true);
         <NuxtPage />
       </NuxtLayout>
 
-      <ContainerA v-if="contentVis" />
-
       <div class="deck">
         <button @click="testEvent">
           Run trackEvent
@@ -31,17 +38,21 @@ const [contentVis, toggleVis] = useToggle(true);
         <button @click="testView">
           Run trackView
         </button>
-        <a href="https://ml-umami.netlify.app/share/8o0OFImY/Umami%20Next" target="_blank" rel="noopener noreferrer">See Preview</a>
+        <a
+          href="https://ml-umami.netlify.app/share/8o0OFImY/Umami%20Next"
+          target="_blank"
+          rel="noopener noreferrer"
+        >See Preview</a>
       </div>
 
       <div class="deck">
-        <button data-umami-event="event-test-1" data-umami-event-data="Hello World!">
-          Trigger attribute event
-        </button>
-
-        <button @click="toggleVis()">
-          Show hidden content
-        </button>
+        <button
+          v-for="btn in directiveBtns"
+          :key="btn.text"
+          v-umami="btn.action"
+          @click="updateRefs"
+          v-text="btn.text"
+        />
       </div>
 
       <div class="deck">
