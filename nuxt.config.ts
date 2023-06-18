@@ -7,6 +7,7 @@ export default defineNuxtConfig({
       domains: '',
       autoTrack: true,
       ignoreDnt: true,
+      useDirective: false,
       customEndpoint: '/',
       ignoreLocalhost: false,
     },

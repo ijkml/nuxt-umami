@@ -5,8 +5,11 @@ import { umTrackView } from '../utils/umami';
 export default defineNuxtPlugin({
   name: 'umami-auto-track',
   async setup(nuxtApp) {
-    // TODO: use config toggle
-    nuxtApp.vueApp.directive('umami', directive);
+    const { useDirective } = umConfig.value;
+
+    if (useDirective) {
+      nuxtApp.vueApp.directive('umami', directive);
+    }
   },
   hooks: {
     'page:finish': function () {

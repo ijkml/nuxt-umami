@@ -1,8 +1,6 @@
 import type { Directive } from 'vue';
-import { fauxTrack as umTrackEvent } from '../internal/demo';
 import { helloDebugger } from '../internal/debug';
-
-// import { umTrackEvent } from '../utils/umami';
+import { umTrackEvent } from '../utils/umami';
 
 // "savory" is a fun synonym for umami, why?
 // 1. dodge script blockers
@@ -28,7 +26,6 @@ async function setAttributes(el: HTMLElement, value: BindingValue) {
         throw new TypeError('invalid directive value');
       }
 
-      // TODO: flatten out nested objects (?)
       const { name: vName = '', ...rawData } = value;
       const vData = Object.keys(rawData).length > 0
         ? JSON.stringify(rawData)

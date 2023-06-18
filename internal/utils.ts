@@ -36,6 +36,7 @@ const umConfig = computed(() => {
       autoTrack = true,
       customEndpoint: _customEP = undefined,
       version: _ver = 1,
+      useDirective = false,
     } = {},
   } = useAppConfig();
 
@@ -60,6 +61,7 @@ const umConfig = computed(() => {
     autoTrack,
     customEndpoint,
     version,
+    useDirective,
   };
 });
 
