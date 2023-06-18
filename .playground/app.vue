@@ -50,9 +50,11 @@ function updateRefs() {
           v-for="btn in directiveBtns"
           :key="btn.text"
           v-umami="btn.action"
-          @click="updateRefs"
           v-text="btn.text"
         />
+        <button @click="updateRefs">
+          Update Refs
+        </button>
       </div>
 
       <div class="deck">

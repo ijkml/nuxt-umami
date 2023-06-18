@@ -4,6 +4,7 @@ type LogLevel = 'info' | 'warn' | 'error';
 type ErrorId = `err-${PreflightErr}`;
 type PreflightErr = Exclude<PreflightResult, 'ssr' | true> | 'collect' | 'directive';
 
+// type directiveErrs = 'missing-name' | 'nested-object';
 interface ErrorObj {
   level: LogLevel
   text: string
