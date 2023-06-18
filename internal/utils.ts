@@ -11,15 +11,15 @@ function isValidString(str: unknown): str is string {
   return typeof str === 'string' && str.trim() !== '';
 }
 
-function isInvalidHost(host: unknown): host is string {
+function isValidHost(host: unknown): host is string {
   try {
     if (typeof host !== 'string') {
       return false;
     }
     const url = new URL(host);
-    return !(isValidString(url.host) && ['http:', 'https:'].includes(url.protocol));
+    return isValidString(url.host) && ['http:', 'https:'].includes(url.protocol);
   } catch (error) {
-    return true;
+    return false;
   }
 }
 
@@ -28,14 +28,14 @@ const umConfig = computed(() => {
 
   const {
     umami: {
-      host = '',
+      host: _host = '',
       id = '',
       domains = undefined,
       ignoreDnt = true,
       ignoreLocalhost: ignoreLocal = false,
       autoTrack = true,
       customEndpoint: _customEP = undefined,
-      version = 1,
+      version: _ver = 1,
     } = {},
   } = useAppConfig();
 
@@ -47,8 +47,12 @@ const umConfig = computed(() => {
       : `/${_customEP}`
     : undefined;
 
+  const rawHost = umamiHost || _host;
+  const host = isValidHost(rawHost) ? rawHost : null;
+  const version = host && host.includes('analytics.umami.is') ? 2 : _ver;
+
   return {
-    host: umamiHost || host,
+    host,
     id: umamiId || id,
     domains,
     ignoreDnt,
@@ -71,10 +75,9 @@ const domainList = computed(() => {
 
 const endpoint = computed(() => {
   const { host, customEndpoint, version } = umConfig.value;
+  const { host: urlHost = '', protocol = '' } = host ? new URL(host) : {};
 
-  const { host: urlHost, protocol } = new URL(host);
-  const _v = urlHost === 'analytics.umami.is' ? 2 : version;
-  const branch = customEndpoint || (_v === 2 ? '/api/send' : '/api/collect');
+  const branch = customEndpoint || (version === 2 ? '/api/send' : '/api/collect');
 
   return `${protocol}//${urlHost}${branch}`;
 });
@@ -90,7 +93,7 @@ const preflight = computed((): PreflightResult => {
     return 'id';
   }
 
-  if (isInvalidHost(host) || isInvalidHost(endpoint.value)) {
+  if (!host || !isValidHost(endpoint.value)) {
     return 'host';
   }
 
