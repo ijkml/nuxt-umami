@@ -14,12 +14,12 @@ Integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites / app
 
 - 📖 Open Source
 - ✨ SSR Support, of course
-- ➖ No extra script: no extra tag, no script loading, instant availability
-- 😜 Escapes ad & script blockers (catch me if you can)
-- 💯 Simplified usage, feature complete, extensive config
+- ➖ No extra script: no loading delay, instant availability
+- 😜 Escapes most ad & script blockers (catch me if you can)
+- 💯 Simple, feature complete, extensive config
 - ✅ Typescript, JSDocs, auto completion
-- ✅ Error handling + debugging
-- ✅ Nuxt utils + auto import
+- ✅ Easy debuggin' (one `console.log` at a time)
+- ✅ Auto imported, available (almsot) everywhere
 
 ## Setup
 
@@ -105,20 +105,23 @@ Use it.
 
 ## Configuration
 
-| option | type | description | required | default |
-|---|---|---|---|---|
-| host | `string` | Your Umami endpoint. This is where your script is hosted. Eg: `https://ijkml.xyz/`. | yes | `''` |
-| id | `string` | Unique website-id provided by Umami. | yes | `''` |
-| domains | `string \| Array<string>`  | Limit tracker to specific domains by providing an array or comma-separated list (without 'http'). Leave blank for all domains. | no | `undefined` |
-| ignoreDnt | `boolean` | Option to ignore browsers' Do Not Track setting. | no | `true` |
-| autoTrack | `boolean` | Option to automatically track page views. | no | `true` |
-| ignoreLocalhost | `boolean` | Option to prevent tracking on localhost. | no | `false` |
-| customEndpoint | `string` | Set a custom `COLLECT_API_ENDPOINT`. See [Docs](https://umami.is/docs/environment-variables). | no | `undefined`
-| version | `1 \| 2`  | Umami version | no | `1` |
+| option          | type                      | description                                                                                                                    | required | default     |
+| --------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | -------- | ----------- |
+| host            | `string`                  | Your Umami endpoint. This is where your script is hosted. Eg: `https://ijkml.xyz/`.                                            | yes      | `''`        |
+| id              | `string`                  | Unique website-id provided by Umami.                                                                                           | yes      | `''`        |
+| domains         | `string \| Array<string>` | Limit tracker to specific domains by providing an array or comma-separated list (without 'http'). Leave blank for all domains. | no       | `undefined` |
+| ignoreDnt       | `boolean`                 | Option to ignore browsers' Do Not Track setting.                                                                               | no       | `true`      |
+| autoTrack       | `boolean`                 | Option to automatically track page views.                                                                                      | no       | `true`      |
+| ignoreLocalhost | `boolean`                 | Option to prevent tracking on localhost.                                                                                       | no       | `false`     |
+| customEndpoint  | `string`                  | Set a custom `COLLECT_API_ENDPOINT`. See [Docs](https://umami.is/docs/environment-variables).                                  | no       | `undefined` |
+| version         | `1 \| 2`                  | Umami version                                                                                                                  | no       | `1`         |
+| useDirective    | `boolean`                 | Option to enable the `v-umami` directive. See below.                                                                           | no       | `false`     |
 
 ## Usage
 
-Two functions are auto-imported, `umTrackView()` and `umTrackEvent()`. Use them however and wherever you like.
+Two functions are auto-imported, `umTrackView()` and `umTrackEvent()`. Use them however and wherever you like. These functions work even in `<script setup>` without the `onMounted` hook.
+
+The `v-umami` directive can be enabled in the config.
 
 ### Available Methods
 
@@ -133,6 +136,20 @@ Two functions are auto-imported, `umTrackView()` and `umTrackEvent()`. Use them 
 
 Reference: [Umami Tracker Functions](https://umami.is/docs/tracker-functions).
 
+### Directive
+
+> **Note**:
+> Available from `^2.5.0`. Add `useDirective: true` to your config.
+
+You can pass a string as the event name, or an object containing a `name` property (required, this is the event name). Every other property will be passed on as event data.
+
+```vue
+<button v-umami="'Event-Name'">Event Button</button>
+
+<button v-umami="{name: 'Event-Name'}">as object</button>
+
+<button v-umami="{name: 'Event-Name', position: 'left', ...others}">with event details</button>
+```
 
 ## Umami v2
 
