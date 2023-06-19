@@ -69,9 +69,9 @@ const domainList = computed(() => {
   const domains = umConfig.value.domains;
 
   return (Array.isArray(domains) && domains.length)
-    ? domains
+    ? domains.filter(isValidString)
     : isValidString(domains)
-      ? domains.split(',').map(d => d.trim())
+      ? domains.split(',').map(d => d.trim()).filter(isValidString)
       : undefined;
 });
 
