@@ -11,7 +11,7 @@ const tt = ref('TT');
 const tc = ref(0);
 
 const directiveBtns = computed(() => [
-  { text: 'Test Directive 1', action: 'test-action-1' },
+  { text: 'Test Directive 1', action: 'test-directive' },
   { text: `Test Directive ${tc.value}`, action: { name: 'Reactive Action', id: tt.value } },
 ]);
 

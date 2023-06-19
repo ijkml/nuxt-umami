@@ -22,8 +22,8 @@ async function setAttributes(el: HTMLElement, value: BindingValue) {
     name = value;
   } else {
     try {
-      if (typeof value !== 'object' || value === null) {
-        throw new TypeError('invalid directive value');
+      if (typeof value !== 'object' || value === null || Array.isArray(value)) {
+        throw new TypeError(typeof value);
       }
 
       const { name: vName = '', ...rawData } = value;
@@ -32,7 +32,7 @@ async function setAttributes(el: HTMLElement, value: BindingValue) {
         : '';
       [name, data] = [vName, vData];
     } catch (err) {
-      helloDebugger('err-directive', value);
+      helloDebugger('err-directive', `Provided ${typeof value}: ${value}`);
     }
   }
 
@@ -54,10 +54,6 @@ function getAttributes(el: HTMLElement) {
 function eventHandler(el: HTMLElement) {
   return () => {
     const { name, data } = getAttributes(el);
-
-    if (!name && !data) {
-      return;
-    }
 
     umTrackEvent(name, data);
   };

@@ -69,18 +69,4 @@ declare module '@nuxt/schema' {
 
     }
   }
-
-  interface AppConfig {
-    umami: {
-      host: string
-      id: string
-      autoTrack?: boolean
-      domains?: string | string[]
-      ignoreDnt?: boolean
-      ignoreLocalhost?: boolean
-      version?: 1 | 2
-      customEndpoint?: `/${string}`
-      useDirective?: boolean
-    }
-  }
 }

@@ -59,7 +59,12 @@ function trackEvent(eventName: string, eventData?: EventData) {
   const { id: website, version } = umConfig.value;
   const { payload } = getPayload.value;
 
-  const name = isValidString(eventName) ? eventName : '#unknown-event';
+  let name = eventName;
+
+  if (!isValidString(eventName)) {
+    helloDebugger('err-event-name');
+    name = '#unknown-event';
+  }
 
   const data = (eventData !== null && typeof eventData === 'object')
     ? eventData
