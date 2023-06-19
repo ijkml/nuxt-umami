@@ -101,7 +101,9 @@ NUXT_PUBLIC_UMAMI_ID="abc123-456def-ghi789"
 
 ### Step 3:
 
-Use it.
+<details>
+<summary>Use it</summary>
+<p>
 
 ```vue
 <script setup>
@@ -117,6 +119,9 @@ function complexCalc() {
   <button @click="complexCalc">Button 2</button>
 </template>
 ```
+
+</p>
+</details>
 
 ## Configuration
 
@@ -158,18 +163,20 @@ You can pass a string as the event name, or an object containing a `name` proper
 
 ```vue
 <button v-umami="'Event-Name'">Event Button</button>
-
 <button v-umami="{name: 'Event-Name'}">as object</button>
-
 <button v-umami="{name: 'Event-Name', position: 'left', ...others}">with event details</button>
 ```
 
 ## Umami v2
 
 > **Note**:
-> Support for Umami v2 is now available in `^2.3.0`.
+> Support for Umami v2 is available in `2.3.0` and later.
 
 To use Umami v2, set `version: 2` in the Umami config.
+
+## Wait, there's more...
+
+Learn how to host your own Umami instance and set up your Nuxt app, check out [this straightforward guide by Miracle Onyenma](https://miracleio.me/blog/set-up-analytics-for-your-nuxt-3-app-with-umami).
 
 ## Issues, Bugs, Ideas?
 
