@@ -1,8 +1,16 @@
+import { directive } from '../internal/directive';
 import { umConfig } from '../internal/utils';
 import { umTrackView } from '../utils/umami';
 
 export default defineNuxtPlugin({
   name: 'umami-auto-track',
+  async setup(nuxtApp) {
+    const { useDirective } = umConfig.value;
+
+    if (useDirective) {
+      nuxtApp.vueApp.directive('umami', directive);
+    }
+  },
   hooks: {
     'page:finish': function () {
       const { autoTrack } = umConfig.value;

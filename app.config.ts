@@ -60,6 +60,13 @@ declare module '@nuxt/schema' {
        * - `/api/send` by default in Umami v2. See Umami [Docs](https://umami.is/docs/environment-variables).
        */
       customEndpoint?: `/${string}`
+      /**
+       * Enable `v-umami` directive
+       *
+       * @default false
+       */
+      useDirective?: boolean
+
     }
   }
 
@@ -73,6 +80,7 @@ declare module '@nuxt/schema' {
       ignoreLocalhost?: boolean
       version?: 1 | 2
       customEndpoint?: `/${string}`
+      useDirective?: boolean
     }
   }
 }

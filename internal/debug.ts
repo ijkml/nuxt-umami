@@ -2,8 +2,9 @@ import type { PreflightResult } from './types';
 
 type LogLevel = 'info' | 'warn' | 'error';
 type ErrorId = `err-${PreflightErr}`;
-type PreflightErr = Exclude<PreflightResult, 'ssr' | true> | 'collect';
+type PreflightErr = Exclude<PreflightResult, 'ssr' | true> | 'collect' | 'directive';
 
+// type directiveErrs = 'missing-name' | 'nested-object';
 interface ErrorObj {
   level: LogLevel
   text: string
@@ -16,6 +17,7 @@ const warnings: Record<ErrorId, ErrorObj> = {
   'err-host': { level: 'error', text: '`host` is missing or incorrectly configured. Check `runtimeConfig`.' },
   'err-local': { level: 'info', text: 'Tracking disabled on localhost' },
   'err-collect': { level: 'error', text: 'Uh... Something went wrong and I have no clue.' },
+  'err-directive': { level: 'error', text: 'Error: Invalid v-umami directive value. Expected string or object with value:key pairs. See https://github.com/ijkml/nuxt-umami#available-methods' },
 };
 
 const helloDebugger = process.env.NODE_ENV === 'production'

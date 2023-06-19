@@ -6,6 +6,19 @@ function testView() {
 function testEvent() {
   umTrackEvent('event-test-2', { type: 'click', position: 'left' });
 }
+
+const tt = ref('TT');
+const tc = ref(0);
+
+const directiveBtns = computed(() => [
+  { text: 'Test Directive 1', action: 'test-action-1' },
+  { text: `Test Directive ${tc.value}`, action: { name: 'Reactive Action', id: tt.value } },
+]);
+
+function updateRefs() {
+  tc.value++;
+  tt.value = `TT-${tc.value}`;
+}
 </script>
 
 <template>
@@ -25,7 +38,23 @@ function testEvent() {
         <button @click="testView">
           Run trackView
         </button>
-        <a href="https://ml-umami.netlify.app/share/8o0OFImY/Umami%20Next" target="_blank" rel="noopener noreferrer">See Preview</a>
+        <a
+          href="https://ml-umami.netlify.app/share/8o0OFImY/Umami%20Next"
+          target="_blank"
+          rel="noopener noreferrer"
+        >See Preview</a>
+      </div>
+
+      <div class="deck">
+        <button
+          v-for="btn in directiveBtns"
+          :key="btn.text"
+          v-umami="btn.action"
+          v-text="btn.text"
+        />
+        <button @click="updateRefs">
+          Update Refs
+        </button>
       </div>
 
       <div class="deck">
@@ -42,7 +71,7 @@ function testEvent() {
 
 <style src="./reset.css"></style>
 
-<style scoped>
+<style>
 .page-root {
   background: linear-gradient(to bottom right, burlywood, aliceblue);
   min-height: 100vh;
