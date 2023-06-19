@@ -103,6 +103,21 @@ NUXT_PUBLIC_UMAMI_ID="abc123-456def-ghi789"
 
 Use it.
 
+```vue
+<script setup>
+function complexCalc() {
+  // ... do something
+  umTrackEvent('complex-btn', { propA: 1, propB: 'two', propC: false });
+}
+</script>
+
+<template>
+  <button @click="umTrackEvent('button-1')">Button 1</button>
+
+  <button @click="complexCalc">Button 2</button>
+</template>
+```
+
 ## Configuration
 
 | option          | type                      | description                                                                                                                    | required | default     |
@@ -119,9 +134,7 @@ Use it.
 
 ## Usage
 
-Two functions are auto-imported, `umTrackView()` and `umTrackEvent()`. Use them however and wherever you like. These functions work even in `<script setup>` without the `onMounted` hook.
-
-The `v-umami` directive can be enabled in the config.
+Two functions are auto-imported, `umTrackView()` and `umTrackEvent()`. Use them however and wherever you like. These functions work even in `<script setup>` without the `onMounted` hook. The `v-umami` directive can be enabled in the config.
 
 ### Available Methods
 
