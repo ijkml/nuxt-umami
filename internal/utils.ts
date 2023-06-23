@@ -129,7 +129,7 @@ const preflight = computed((): PreflightResult => {
 
 const getPayload = computed((): GetPayloadReturn => {
   const {
-    location: { hostname },
+    location: { hostname, href },
     screen: { width, height },
     navigator: { language },
     document: { referrer, title },
@@ -138,18 +138,22 @@ const getPayload = computed((): GetPayloadReturn => {
   const pageTitle = useTitle();
   const { fullPath: pageUrl } = useRoute();
 
+  // get `ref from url
+  const params = new URL(href).searchParams;
+  const pageRef = referrer || params.get('ref') || '';
+
   const payload: PartialPayload = {
     screen: `${width}x${height}`,
     language,
     hostname,
     url: pageUrl,
-    referrer,
+    referrer: pageRef,
     title: pageTitle.value || title,
   };
 
   return {
     payload,
-    pageReferrer: referrer,
+    pageReferrer: pageRef,
     pageUrl,
   };
 });
