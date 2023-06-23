@@ -145,7 +145,7 @@ Two functions are auto-imported, `umTrackView()` and `umTrackEvent()`. Use them 
 
 - `umTrackView(url, referrer)`
   - `url`: the path being tracked, eg `/about`, `/contact?by=phone#office`. This can be correctly inferred. Equivalent of `router.fullPath`.
-  - `referrer`: the page referrer. This can be correctly inferred. Equivalent of `document.referrer`.
+  - `referrer`: the page referrer. This can be correctly inferred. Equivalent of `document.referrer` or the `ref` search param in the url (eg: `example.com/?ref=thereferrer`).
 
 - `umTrackEvent(eventName, eventData)`
   - `eventName`: a string type text
