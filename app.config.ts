@@ -66,7 +66,12 @@ declare module '@nuxt/schema' {
        * @default false
        */
       useDirective?: boolean
-
+      /**
+       * Enable warning and error logs in prod
+       *
+       * @default false
+       */
+      debug?: boolean
     }
   }
 }

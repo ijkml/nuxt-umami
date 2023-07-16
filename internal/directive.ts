@@ -1,5 +1,5 @@
 import type { Directive } from 'vue';
-import { helloDebugger } from '../internal/debug';
+import { helloDebugger } from '../internal/utils';
 import { umTrackEvent } from '../utils/umami';
 
 // "savory" is a fun synonym for umami, why?
@@ -32,7 +32,7 @@ async function setAttributes(el: HTMLElement, value: BindingValue) {
         : '';
       [name, data] = [vName, vData];
     } catch (err) {
-      helloDebugger('err-directive', `Provided ${typeof value}: ${value}`);
+      helloDebugger.value('err-directive', `Provided ${typeof value}: ${value}`);
     }
   }
 

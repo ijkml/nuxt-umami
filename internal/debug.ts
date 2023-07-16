@@ -22,15 +22,15 @@ const warnings: Record<ErrorId, ErrorObj> = {
   'err-event-name': { level: 'warn', text: 'A function/directive event was fired without a name. `#unknown-event` will be used as the event name.' },
 };
 
-const helloDebugger = process.env.NODE_ENV === 'production'
-  // eslint-disable-next-line unused-imports/no-unused-vars
-  ? (id: ErrorId, raw?: any) => {}
-  : (id: ErrorId, raw?: any) => {
-      const { level, text } = warnings[id];
-      // eslint-disable-next-line no-console
-      console[level](`[UMAMI]: ${text}`, '\n');
-      // eslint-disable-next-line no-console
-      raw && (console[level](raw));
-    };
+// eslint-disable-next-line n/prefer-global/process
+const envIsProd = process.env.NODE_ENV === 'production';
 
-export { helloDebugger };
+function detective(id: ErrorId, raw?: any) {
+  const { level, text } = warnings[id];
+  // eslint-disable-next-line no-console
+  console[level](`[UMAMI]: ${text}`, '\n');
+  // eslint-disable-next-line no-console
+  raw && (console[level](raw));
+}
+
+export { detective, envIsProd };

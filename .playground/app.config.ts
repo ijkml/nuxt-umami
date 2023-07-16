@@ -5,5 +5,7 @@ export default defineAppConfig({
     autoTrack: true,
     // version: 2,
     useDirective: true,
+    debug: true,
+    ignoreDnt: false,
   },
 });
