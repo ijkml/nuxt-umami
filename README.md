@@ -152,8 +152,11 @@ Two functions are auto-imported, `umTrackView()` and `umTrackEvent()`. Use them 
   - `eventName`: a string type text
   - `eventData`: an object in the format `{key: value}`, where `key` is a string and `value` is a string, number, or boolean.
 
-
 Reference: [Umami Tracker Functions](https://umami.is/docs/tracker-functions).
+
+### Debugging
+
+For cases where you need that `console.log('here')` in live sites, set `debug: true` in your config.
 
 ### Directive
 
