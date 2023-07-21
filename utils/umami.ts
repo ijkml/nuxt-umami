@@ -1,6 +1,5 @@
-import { collect, getPayload, isValidString, preflight, umConfig } from '../internal/utils';
+import { collect, getPayload, helloDebugger, isValidString, preflight, umConfig } from '../internal/utils';
 import type { EventData, EventPayload, ViewPayload } from '../internal/types';
-import { helloDebugger } from '../internal/debug';
 
 /**
  * Track page views
@@ -17,7 +16,7 @@ function trackView(url?: string, referrer?: string): void {
   }
 
   if (check !== true) {
-    helloDebugger(`err-${check}`);
+    helloDebugger.value(`err-${check}`);
     return;
   }
 
@@ -52,7 +51,7 @@ function trackEvent(eventName: string, eventData?: EventData) {
   }
 
   if (check !== true) {
-    helloDebugger(`err-${check}`);
+    helloDebugger.value(`err-${check}`);
     return;
   }
 
@@ -62,7 +61,7 @@ function trackEvent(eventName: string, eventData?: EventData) {
   let name = eventName;
 
   if (!isValidString(eventName)) {
-    helloDebugger('err-event-name');
+    helloDebugger.value('err-event-name');
     name = '#unknown-event';
   }
 

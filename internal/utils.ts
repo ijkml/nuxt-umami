@@ -1,11 +1,12 @@
 import { useTitle } from '@vueuse/core';
+
 import type {
   GetPayloadReturn,
   PartialPayload,
   PreflightResult,
   ServerPayload,
 } from './types';
-import { helloDebugger } from './debug';
+import { detective, envIsProd } from './debug';
 
 function isValidString(str: unknown): str is string {
   return typeof str === 'string' && str.trim() !== '';
@@ -37,6 +38,7 @@ const umConfig = computed(() => {
       customEndpoint: _customEP = undefined,
       version: _ver = 1,
       useDirective = false,
+      debug = false,
     } = {},
   } = useAppConfig();
 
@@ -62,7 +64,20 @@ const umConfig = computed(() => {
     customEndpoint,
     version,
     useDirective,
+    debug: !!debug,
   };
+});
+
+const helloDebugger = computed(() => {
+  const enabled = envIsProd ? umConfig.value.debug : true;
+
+  type DetectiveParams = Parameters<typeof detective>;
+
+  return enabled
+    ? function (...params: DetectiveParams) {
+      detective(...params);
+    }
+    : function (..._args: DetectiveParams) {};
 });
 
 const domainList = computed(() => {
@@ -168,12 +183,12 @@ async function collect(load: ServerPayload) {
   })
     .then((res) => {
       if (res && !res.ok) {
-        helloDebugger('err-collect', res);
+        helloDebugger.value('err-collect', res);
       }
     })
     .catch((err) => {
-      helloDebugger('err-collect', err);
+      helloDebugger.value('err-collect', err);
     });
 }
 
-export { isValidString, preflight, getPayload, collect, umConfig };
+export { isValidString, preflight, getPayload, collect, umConfig, helloDebugger };

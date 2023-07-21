@@ -5,6 +5,7 @@ export default defineNuxtConfig({
       host: '',
       version: 1,
       domains: '',
+      debug: false,
       autoTrack: true,
       ignoreDnt: true,
       useDirective: false,

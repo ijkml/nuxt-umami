@@ -136,6 +136,7 @@ function complexCalc() {
 | customEndpoint  | `string`                  | Set a custom `COLLECT_API_ENDPOINT`. See [Docs](https://umami.is/docs/environment-variables).                                  | no       | `undefined` |
 | version         | `1 \| 2`                  | Umami version                                                                                                                  | no       | `1`         |
 | useDirective    | `boolean`                 | Option to enable the `v-umami` directive. See below.                                                                           | no       | `false`     |
+| debug           | `boolean`                 | Option to enable error logs (in production), useful for testing in prod :)                                                     | no       | `false`     |
 
 ## Usage
 
@@ -174,9 +175,9 @@ You can pass a string as the event name, or an object containing a `name` proper
 
 To use Umami v2, set `version: 2` in the Umami config.
 
-## Wait, there's more...
+## Setup guide
 
-Learn how to host your own Umami instance and set up your Nuxt app, check out [this straightforward guide by Miracle Onyenma](https://miracleio.me/blog/set-up-analytics-for-your-nuxt-3-app-with-umami).
+Learn how to host your own Umami instance and set up your Nuxt app using [Miracle Onyenma's simple guide](https://miracleio.me/blog/set-up-analytics-for-your-nuxt-3-app-with-umami).
 
 ## Issues, Bugs, Ideas?
 
