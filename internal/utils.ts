@@ -153,7 +153,7 @@ const getPayload = computed((): GetPayloadReturn => {
   const pageTitle = useTitle();
   const { fullPath: pageUrl } = useRoute();
 
-  // get `ref from url
+  // get ref from url
   const params = new URL(href).searchParams;
   const pageRef = referrer || params.get('ref') || '';
 
