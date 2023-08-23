@@ -19,6 +19,10 @@ function updateRefs() {
   tc.value++;
   tt.value = `TT-${tc.value}`;
 }
+
+function seePreview() {
+  umTrackEvent('see-preview', { from: 'localhost' });
+}
 </script>
 
 <template>
@@ -39,9 +43,10 @@ function updateRefs() {
           Run trackView
         </button>
         <a
-          href="https://ml-umami.netlify.app/share/8o0OFImY/Umami%20Next"
+          href="https://ml-umami.netlify.app/share/cJU6OHJ5CgsutGOb/Nuxt%20Umami"
           target="_blank"
           rel="noopener noreferrer"
+          @click="seePreview"
         >See Preview</a>
       </div>
 

@@ -25,7 +25,7 @@ Integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites / app
 
 ### 🚀 Try it online
 
-<a href="https://stackblitz.com/edit/nuxt-umami-next"><img src="https://developer.stackblitz.com/img/open_in_stackblitz.svg" alt="Open in StackBlitz"></a>
+<a href="https://stackblitz.com/edit/nuxt-umami"><img src="https://developer.stackblitz.com/img/open_in_stackblitz.svg" alt="Open in StackBlitz"></a>
 
 ### Step 1: Install and add to Nuxt
 
@@ -154,11 +154,7 @@ Two functions are auto-imported, `umTrackView()` and `umTrackEvent()`. Use them 
 
 Reference: [Umami Tracker Functions](https://umami.is/docs/tracker-functions).
 
-### Debugging
-
-For cases where you need that `console.log('here')` in live sites, set `debug: true` in your config.
-
-### Directive
+### Vue Directive
 
 > **Note**:
 > Available from `^2.5.0`. Add `useDirective: true` to your config.
@@ -170,6 +166,10 @@ You can pass a string as the event name, or an object containing a `name` proper
 <button v-umami="{name: 'Event-Name'}">as object</button>
 <button v-umami="{name: 'Event-Name', position: 'left', ...others}">with event details</button>
 ```
+
+### Debugging
+
+For cases where you need that `console.log('here')` in live sites, set `debug: true` in your config.
 
 ## Umami v2
 
