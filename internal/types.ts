@@ -39,7 +39,7 @@ interface GetPayloadReturn {
   pageReferrer: string
 }
 
-export {
+export type {
   EventData,
   PartialPayload,
   EventPayload,
