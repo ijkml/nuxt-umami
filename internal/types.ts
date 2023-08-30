@@ -8,7 +8,7 @@ interface BasicPayload {
   referrer: string
 }
 
-interface EventData {
+export interface EventData {
   [key: string]: string | number | boolean
 }
 
@@ -21,31 +21,20 @@ type EventPayloadPartial =
     event_data?: EventData
   };
 
-  type EventPayload = BasicPayload & EventPayloadPartial;
-  type ViewPayload = BasicPayload;
+export type EventPayload = BasicPayload & EventPayloadPartial;
+export type ViewPayload = BasicPayload;
 
-type PartialPayload = Omit<BasicPayload, 'website'>;
-type PayloadType = 'pageview' | 'event';
-type PreflightResult = 'ssr' | 'id' | 'host' | 'domain' | 'dnt' | 'local' | true;
+export type PartialPayload = Omit<BasicPayload, 'website'>;
+export type PayloadType = 'pageview' | 'event';
+export type PreflightResult = 'ssr' | 'id' | 'host' | 'domain' | 'dnt' | 'local' | true;
 
-interface ServerPayload {
+export interface ServerPayload {
   type: PayloadType
   payload: ViewPayload | EventPayload
 }
 
-interface GetPayloadReturn {
+export interface GetPayloadReturn {
   payload: PartialPayload
   pageUrl: string
   pageReferrer: string
 }
-
-export {
-  EventData,
-  PartialPayload,
-  EventPayload,
-  ViewPayload,
-  PayloadType,
-  ServerPayload,
-  PreflightResult,
-  GetPayloadReturn,
-};
