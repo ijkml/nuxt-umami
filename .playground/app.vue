@@ -43,7 +43,7 @@ function seePreview() {
           Run trackView
         </button>
         <a
-          href="https://ml-umami.netlify.app/share/cJU6OHJ5CgsutGOb/Nuxt%20Umami"
+          href="https://ml-umami.netlify.app/share/j2f1spIBFqHJKsXv/Nuxt%20Umami"
           target="_blank"
           rel="noopener noreferrer"
           @click="seePreview"
