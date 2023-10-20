@@ -6,6 +6,9 @@
   "author": "ML <me.mlaure@gmail.com>",
   "license": "MIT",
   "homepage": "https://github.com/ijkml/nuxt-umami/",
+  "sponsor": {
+    "url": "https://github.com/sponsors/ijkml/"
+  },
   "repository": "https://github.com/ijkml/nuxt-umami/",
   "keywords": [
     "nuxt",
@@ -37,15 +40,15 @@
     "release:beta": "bumpp prerelease --commit --push --no-tag && npm publish --access public --tag beta"
   },
   "dependencies": {
-    "@vueuse/core": "^10.3.0"
+    "@vueuse/core": "^10.5.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.41.0",
-    "@types/node": "^20.5.3",
+    "@antfu/eslint-config": "~0.42.1",
+    "@types/node": "^20.8.7",
     "bumpp": "^9.2.0",
-    "eslint": "^8.47.0",
+    "eslint": "^8.51.0",
     "eslint-plugin-vue": "^9.17.0",
-    "nuxt": "^3.6.5",
-    "typescript": "^5.1.6"
+    "nuxt": "^3.8.0",
+    "typescript": "^5.2.2"
   }
 }
