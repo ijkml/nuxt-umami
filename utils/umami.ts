@@ -6,7 +6,7 @@ import type { EventData, EventPayload, ViewPayload } from '../internal/types';
  *
  * Both params are optional and will be automatically inferred
  * @param url page being tracked, eg `/about`, `/contact?by=phone#office`
- * @param referer page referrer, `document.referrer`
+ * @param referrer page referrer, `document.referrer`
  */
 function trackView(url?: string, referrer?: string): void {
   const check = preflight.value;
