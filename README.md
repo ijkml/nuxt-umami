@@ -6,10 +6,6 @@
 
 Integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites / applications.
 
-> **Heads up:**
-> This version uses features (Nuxt Layers) that are only available in **Nuxt 3**.
-> Check out [Nuxt Umami v1](https://github.com/ijkml/nuxt-umami/tree/v1) for Nuxt 2 compat.
-
 ## Features
 
 - 📖 Open Source
@@ -20,6 +16,10 @@ Integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites / app
 - ✅ Typescript, JSDocs, auto completion
 - ✅ Easy debuggin' (one `console.log` at a time)
 - ✅ Auto imported, available (almsot) everywhere
+
+> [!IMPORTANT]
+> Nuxt Umami v2 uses features that are only available in **Nuxt 3** (Nuxt Layers).
+> Check out [Nuxt Umami v1](https://github.com/ijkml/nuxt-umami/tree/v1) for Nuxt 2 compat.
 
 ## Setup
 
@@ -55,9 +55,6 @@ defineNuxtConfig({
 });
 ```
 
-> **Warning**:
-> This might cause unwanted errors due to changes as the branch is still WIP.
-
 ### Step 2: Configure Umami
 
 You can provide configuration options using the `app.config.ts` file or `appConfig` property of the Nuxt config.
@@ -89,7 +86,7 @@ defineNuxtConfig({
 
 #### Environment Variables
 
-> **Note**:
+> [!NOTE]
 > Available in `^2.1.0` and takes precedence over `appConfig`.
 
 You can provide the `host` and `id` config (only) as environment variables. Simply add `NUXT_PUBLIC_UMAMI_HOST` and `NUXT_PUBLIC_UMAMI_ID` to your `.env` file, and that's it.
@@ -114,9 +111,13 @@ function complexCalc() {
 </script>
 
 <template>
-  <button @click="umTrackEvent('button-1')">Button 1</button>
+  <button @click="umTrackEvent('button-1')">
+    Button 1
+  </button>
 
-  <button @click="complexCalc">Button 2</button>
+  <button @click="complexCalc">
+    Button 2
+  </button>
 </template>
 ```
 
@@ -156,25 +157,30 @@ Reference: [Umami Tracker Functions](https://umami.is/docs/tracker-functions).
 
 ### Vue Directive
 
-> **Note**:
+> [!NOTE]
 > Available from `^2.5.0`. Add `useDirective: true` to your config.
 
 You can pass a string as the event name, or an object containing a `name` property (required, this is the event name). Every other property will be passed on as event data.
 
 ```vue
-<button v-umami="'Event-Name'">Event Button</button>
-<button v-umami="{name: 'Event-Name'}">as object</button>
-<button v-umami="{name: 'Event-Name', position: 'left', ...others}">with event details</button>
+<button v-umami="'Event-Name'">
+  Event Button
+</button>
+
+<button v-umami="{name: 'Event-Name'}">
+  as object
+</button>
+
+<button v-umami="{name: 'Event-Name', position: 'left', ...others}">
+  with event details
+</button>
 ```
 
-### Debugging
+### Live Debugging
 
 For cases where you need that `console.log('here')` in live sites, set `debug: true` in your config.
 
 ## Umami v2
-
-> **Note**:
-> Support for Umami v2 is available in `2.3.0` and later.
 
 To use Umami v2, set `version: 2` in the Umami config.
 
