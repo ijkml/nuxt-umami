@@ -3,6 +3,8 @@
 [![npm](https://img.shields.io/npm/v/nuxt-umami?style=flat-square)](https://www.npmjs.com/package/nuxt-umami/)
 [![Downloads](https://img.shields.io/npm/dt/nuxt-umami.svg?style=flat-square)](https://www.npmjs.com/package/nuxt-umami)
 [![License](https://img.shields.io/npm/l/nuxt-umami?style=flat-square)](/LICENSE)
+[![Sponsor](https://img.shields.io/badge/Sponsor-21262d?style=flat-square&logo=github&logoColor=db61a2)](https://github.com/sponsors/ijkml)
+
 
 Integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites / applications.
 
@@ -10,12 +12,12 @@ Integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites / app
 
 - 📖 Open Source
 - ✨ SSR Support, of course
-- ➖ No extra script: no loading delay, instant availability
-- 😜 Escapes most ad & script blockers (catch me if you can)
+- ➖ No extra script, no loading delay
+- 😜 Escapes ad & script blockers
 - 💯 Simple, feature complete, extensive config
 - ✅ Typescript, JSDocs, auto completion
-- ✅ Easy debuggin' (one `console.log` at a time)
 - ✅ Auto imported, available (almsot) everywhere
+- ✅ Easy debuggin' (one `console.log` at a time)
 
 > [!IMPORTANT]
 > Nuxt Umami v2 uses features that are only available in **Nuxt 3** (Nuxt Layers).
@@ -176,29 +178,32 @@ You can pass a string as the event name, or an object containing a `name` proper
 </button>
 ```
 
-### Live Debugging
+## FAQS and Quirks
 
-For cases where you need that `console.log('here')` in live sites, set `debug: true` in your config.
+* __I don't see errors in live sites...__
+  * If you're debugging live sites, set `debug: true` in your config.
+* __Can I use Umami v2/Cloud?__
+  * Yes. To use Umami v2, set `version: 2` in the Nuxt-Umami config.
+* __Welp, I am getting some CORS errors!__
+  * Some adblockers like _uBlock_ and _Ghostery_ block Umami Cloud's endpoints. Try to disable your adblockers (yes, all of them). Also, double-check your config and Umami version. If all else fails, host your own Umami instance.
+* __How do I set up my own Umami instance?__
+  * Miracle Onyenma published a simple guide in his blog. [Check it out]((https://miracleio.me/blog/set-up-analytics-for-your-nuxt-3-app-with-umami)).
+* __Should I sponsor this project?__
+  * Absolutely, you can do that here: https://github.com/sponsors/ijkml.
 
-## Umami v2
-
-To use Umami v2, set `version: 2` in the Umami config.
-
-## Setup guide
-
-Learn how to host your own Umami instance and set up your Nuxt app using [Miracle Onyenma's simple guide](https://miracleio.me/blog/set-up-analytics-for-your-nuxt-3-app-with-umami).
 
 ## Issues, Bugs, Ideas?
 
-Open an issue. Contributions are welcome, just send a PR! If you encounter any issues, don't hesitate to open an issue. I'm always available to help and resolve any bugs.
+Contributions are welcome, start a discussion, send a PR! If you find an issue, keep it, finders keepers 😅. (Or, open an issue, I'll be happy to help.)
 
 ## Contributors
+
+Thank you!
 
 <a href="https://github.com/ijkml/nuxt-umami/graphs/contributors">
   <img alt="Nuxt Umami contributors" src="https://contrib.rocks/image?repo=ijkml/nuxt-umami" />
 </a>
 
-<br />
 <hr />
 
 [MIT](./LICENSE) License © 2023 [ML](https://github.com/ijkml/)
