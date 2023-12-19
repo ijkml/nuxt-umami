@@ -187,7 +187,7 @@ You can pass a string as the event name, or an object containing a `name` proper
 * __Welp, I am getting some CORS errors!__
   * Some adblockers like _uBlock_ and _Ghostery_ block Umami Cloud's endpoints. Try to disable your adblockers (yes, all of them). Also, double-check your config and Umami version. If all else fails, host your own Umami instance.
 * __How do I set up my own Umami instance?__
-  * Miracle Onyenma published a simple guide in his blog. [Check it out]((https://miracleio.me/blog/set-up-analytics-for-your-nuxt-3-app-with-umami)).
+  * Miracle Onyenma published a simple guide in his blog. [Check it out](https://miracleio.me/blog/set-up-analytics-for-your-nuxt-3-app-with-umami).
 * __Should I sponsor this project?__
   * Absolutely, you can do that here: https://github.com/sponsors/ijkml.
 
