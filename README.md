@@ -184,6 +184,8 @@ You can pass a string as the event name, or an object containing a `name` proper
   * If you're debugging live sites, set `debug: true` in your config.
 * __Can I use Umami v2/Cloud?__
   * Yes. To use Umami v2, set `version: 2` in the Nuxt-Umami config.
+* __`nuxt typecheck` fails! What can I do to resolve it?__
+  * The problem could be tied to `pnpm`'s dependency hoisting. Thanks to [Jeet for discovering this](https://github.com/ijkml/nuxt-umami/issues/85#issuecomment-1868442446). Simply create a `.npmrc` file in the root of your Nuxt project and add `shamefully-hoist=true`. If that doesn't work, I'll be happy to look further into it.
 * __Welp, I am getting some CORS errors!__
   * Some adblockers like _uBlock_ and _Ghostery_ block Umami Cloud's endpoints. Try to disable your adblockers (yes, all of them). Also, double-check your config and Umami version. If all else fails, host your own Umami instance.
 * __How do I set up my own Umami instance?__
