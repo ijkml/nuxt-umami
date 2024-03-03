@@ -20,16 +20,16 @@ function trackView(url?: string, referrer?: string): void {
   }
 
   const { id: website, version } = umConfig.value;
-  const { pageReferrer, pageUrl, payload } = getPayload.value;
+  const payload = getPayload.value;
 
   void collect(
     {
       type: version === 2 ? 'event' : 'pageview',
       payload: {
-        ...payload,
-        url: isValidString(url) ? url : pageUrl,
-        referrer: isValidString(referrer) ? referrer : pageReferrer,
         website,
+        ...payload,
+        ...(isValidString(referrer) && { referrer: encodeURIComponent(referrer) }),
+        ...(isValidString(url) && { url: encodeURIComponent(url) }),
       } satisfies ViewPayload,
     },
   );
@@ -54,7 +54,7 @@ function trackEvent(eventName: string, eventData?: EventData) {
   }
 
   const { id: website, version } = umConfig.value;
-  const { payload } = getPayload.value;
+  const payload = getPayload.value;
 
   let name = eventName;
 

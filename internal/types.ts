@@ -33,12 +33,6 @@ interface ServerPayload {
   payload: ViewPayload | EventPayload;
 }
 
-interface GetPayloadReturn {
-  payload: PartialPayload;
-  pageUrl: string;
-  pageReferrer: string;
-}
-
 export type {
   EventData,
   PartialPayload,
@@ -47,5 +41,4 @@ export type {
   PayloadType,
   ServerPayload,
   PreflightResult,
-  GetPayloadReturn,
 };

@@ -1,7 +1,6 @@
 import { useTitle } from '@vueuse/core';
 
 import type {
-  GetPayloadReturn,
   PartialPayload,
   PreflightResult,
   ServerPayload,
@@ -125,7 +124,7 @@ const preflight = computed((): PreflightResult => {
   return true;
 });
 
-const getPayload = computed((): GetPayloadReturn => {
+const getPayload = computed((): PartialPayload => {
   const {
     location: { hostname, href },
     screen: { width, height },
@@ -140,19 +139,13 @@ const getPayload = computed((): GetPayloadReturn => {
   const params = new URL(href).searchParams;
   const pageRef = referrer || params.get('ref') || '';
 
-  const payload: PartialPayload = {
+  return {
     screen: `${width}x${height}`,
     language,
     hostname,
-    url: pageUrl,
-    referrer: pageRef,
-    title: pageTitle.value || title,
-  };
-
-  return {
-    payload,
-    pageReferrer: pageRef,
-    pageUrl,
+    url: encodeURIComponent(pageUrl),
+    referrer: encodeURIComponent(pageRef),
+    title: encodeURIComponent(pageTitle.value || title),
   };
 });
 
