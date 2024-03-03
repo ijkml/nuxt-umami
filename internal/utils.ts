@@ -33,7 +33,6 @@ const umConfig = computed(() => {
       host: _host = '',
       id = '',
       domains = undefined,
-      ignoreDnt = true,
       ignoreLocalhost: ignoreLocal = false,
       autoTrack = true,
       customEndpoint: _customEP = undefined,
@@ -59,7 +58,6 @@ const umConfig = computed(() => {
     host,
     id: umamiId || id,
     domains,
-    ignoreDnt,
     ignoreLocal,
     autoTrack,
     customEndpoint,
@@ -104,7 +102,7 @@ const preflight = computed((): PreflightResult => {
   if (typeof window === 'undefined')
     return 'ssr';
 
-  const { ignoreDnt, id, host, ignoreLocal } = umConfig.value;
+  const { id, host, ignoreLocal } = umConfig.value;
 
   if (!isValidString(id))
     return 'id';
@@ -114,7 +112,6 @@ const preflight = computed((): PreflightResult => {
 
   const {
     location: { hostname },
-    navigator,
   } = window;
 
   if (ignoreLocal && hostname === 'localhost')
@@ -124,15 +121,6 @@ const preflight = computed((): PreflightResult => {
 
   if (domains && !domains.includes(hostname))
     return 'domain';
-
-  if (!ignoreDnt && [1, '1', 'yes'].includes(
-    navigator.doNotTrack
-    // @ts-expect-error `doNotTrack` might not exist on `window`
-    || window.doNotTrack
-    // @ts-expect-error `msDoNotTrack` might not exist on `navigator`
-    || navigator.msDoNotTrack,
-  ))
-    return 'dnt';
 
   return true;
 });
