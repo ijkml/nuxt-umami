@@ -7,16 +7,15 @@ export default defineNuxtPlugin({
   async setup(nuxtApp) {
     const { useDirective } = umConfig.value;
 
-    if (useDirective) {
+    if (useDirective)
       nuxtApp.vueApp.directive('umami', directive);
-    }
   },
   hooks: {
     'page:finish': function () {
       const { autoTrack } = umConfig.value;
-      if (!autoTrack) {
+      if (!autoTrack)
         return;
-      }
+
       setTimeout(umTrackView, 300);
 
       // TODO: fix

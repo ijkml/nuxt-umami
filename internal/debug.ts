@@ -7,12 +7,12 @@ type ErrorType = PreflightErrs | FunctionErrs;
 type LogLevel = 'info' | 'warn' | 'error';
 type ErrorId = `err-${ErrorType}`;
 interface ErrorObj {
-  level: LogLevel
-  text: string
+  level: LogLevel;
+  text: string;
 }
 
 const warnings: Record<ErrorId, ErrorObj> = {
-  'err-dnt': { level: 'info', text: "Tracking disabled by browser's DoNotTrack" },
+  'err-dnt': { level: 'info', text: 'Tracking disabled by browser\'s DoNotTrack' },
   'err-domain': { level: 'info', text: 'Tracking is disabled for this domain because it is not in the allowed domain config.' },
   'err-id': { level: 'error', text: '`id` is missing or incorrectly configured. Check config.' },
   'err-host': { level: 'error', text: '`host` is missing or incorrectly configured. Check config.' },
@@ -22,9 +22,6 @@ const warnings: Record<ErrorId, ErrorObj> = {
   'err-event-name': { level: 'warn', text: 'A function/directive event was fired without a name. `#unknown-event` will be used as the event name.' },
 };
 
-// eslint-disable-next-line n/prefer-global/process
-const envIsProd = process.env.NODE_ENV === 'production';
-
 function detective(id: ErrorId, raw?: any) {
   const { level, text } = warnings[id];
   // eslint-disable-next-line no-console
@@ -33,4 +30,4 @@ function detective(id: ErrorId, raw?: any) {
   raw && (console[level](raw));
 }
 
-export { detective, envIsProd };
+export { detective };

@@ -11,9 +11,8 @@ import type { EventData, EventPayload, ViewPayload } from '../internal/types';
 function trackView(url?: string, referrer?: string): void {
   const check = preflight.value;
 
-  if (check === 'ssr') {
+  if (check === 'ssr')
     return;
-  }
 
   if (check !== true) {
     helloDebugger.value(`err-${check}`);
@@ -46,9 +45,8 @@ function trackView(url?: string, referrer?: string): void {
 function trackEvent(eventName: string, eventData?: EventData) {
   const check = preflight.value;
 
-  if (check === 'ssr') {
+  if (check === 'ssr')
     return;
-  }
 
   if (check !== true) {
     helloDebugger.value(`err-${check}`);

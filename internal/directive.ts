@@ -10,31 +10,30 @@ const ATTR_NAME = 'savoryName';
 const ATTR_DATA = 'savoryData';
 
 type BindingValue = string | {
-  name: string
-  [k: string]: string | boolean | number
+  name: string;
+  [k: string]: string | boolean | number;
 };
 
 async function setAttributes(el: HTMLElement, value: BindingValue) {
   let name = '';
   let data = '';
 
-  if (typeof value === 'string') {
+  if (typeof value === 'string')
     name = value;
-  } else {
+  else
     try {
-      if (typeof value !== 'object' || value === null || Array.isArray(value)) {
+      if (typeof value !== 'object' || value === null || Array.isArray(value))
         throw new TypeError(typeof value);
-      }
 
       const { name: vName = '', ...rawData } = value;
       const vData = Object.keys(rawData).length > 0
         ? JSON.stringify(rawData)
         : '';
       [name, data] = [vName, vData];
-    } catch (err) {
+    }
+    catch (err) {
       helloDebugger.value('err-directive', `Provided ${typeof value}: ${value}`);
     }
-  }
 
   const attr = el.dataset;
   [attr[ATTR_NAME], attr[ATTR_DATA]] = [name, data];
@@ -46,7 +45,8 @@ function getAttributes(el: HTMLElement) {
 
   try {
     data = JSON.parse(el.dataset[ATTR_DATA] || '');
-  } catch (error) {}
+  }
+  catch (error) {}
 
   return { name, data };
 }
