@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const shareUrl = 'https://savory.vercel.app/share/j2f1spIBFqHJKsXv/Nuxt%20Umami';
+
 function testView() {
   umTrackView();
 }
@@ -43,7 +45,7 @@ function seePreview() {
           Run trackView
         </button>
         <a
-          href="https://ml-umami.netlify.app/share/j2f1spIBFqHJKsXv/Nuxt%20Umami"
+          :href="shareUrl"
           target="_blank"
           rel="noopener noreferrer"
           @click="seePreview"
