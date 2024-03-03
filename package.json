@@ -22,13 +22,13 @@
   ],
   "main": "./nuxt.config.ts",
   "files": [
-    "utils/",
-    "middleware/",
-    "plugins/",
-    "internal/",
     "app.config.ts",
     "app.vue",
-    "nuxt.config.ts"
+    "internal/",
+    "middleware/",
+    "nuxt.config.ts",
+    "plugins/",
+    "utils/"
   ],
   "scripts": {
     "dev": "nuxi prepare & nuxi dev .playground",
@@ -36,19 +36,19 @@
     "generate": "nuxi generate .playground",
     "preview": "nuxi preview .playground",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "release": "./release.sh",
     "release:beta": "bumpp prerelease --commit --push --no-tag && npm publish --access public --tag beta"
   },
   "dependencies": {
-    "@vueuse/core": "^10.7.0"
+    "@vueuse/core": "^10.9.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "~0.42.1",
-    "@types/node": "^20.10.5",
-    "bumpp": "^9.2.1",
-    "eslint": "^8.56.0",
-    "eslint-plugin-vue": "^9.19.2",
-    "nuxt": "^3.8.2",
+    "@antfu/eslint-config": "~2.7.0",
+    "@types/node": "^20.11.24",
+    "bumpp": "^9.3.0",
+    "eslint": "^8.57.0",
+    "nuxt": "^3.10.3",
     "typescript": "^5.3.3"
   }
 }
