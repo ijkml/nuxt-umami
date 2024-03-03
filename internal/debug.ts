@@ -12,7 +12,6 @@ interface ErrorObj {
 }
 
 const warnings: Record<ErrorId, ErrorObj> = {
-  'err-dnt': { level: 'info', text: 'Tracking disabled by browser\'s DoNotTrack' },
   'err-domain': { level: 'info', text: 'Tracking is disabled for this domain because it is not in the allowed domain config.' },
   'err-id': { level: 'error', text: '`id` is missing or incorrectly configured. Check config.' },
   'err-host': { level: 'error', text: '`host` is missing or incorrectly configured. Check config.' },

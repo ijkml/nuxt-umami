@@ -29,11 +29,8 @@ declare module '@nuxt/schema' {
        */
       domains?: string | string[];
       /**
-       * Whether to ignore browsers' Do Not Track setting.
-       *
-       * Setting this to `false` will totally disable tracking
-       * on browsers that have the DoNotTrack setting turned on.
-       * @default true
+       * This option has been deprecated and is
+       * just here for compatibility.
        */
       ignoreDnt?: boolean;
       /**

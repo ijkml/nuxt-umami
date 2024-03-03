@@ -26,7 +26,7 @@ type EventPayloadPartial =
 
 type PartialPayload = Omit<BasicPayload, 'website'>;
 type PayloadType = 'pageview' | 'event';
-type PreflightResult = 'ssr' | 'id' | 'host' | 'domain' | 'dnt' | 'local' | true;
+type PreflightResult = 'ssr' | 'id' | 'host' | 'domain' | 'local' | true;
 
 interface ServerPayload {
   type: PayloadType;
