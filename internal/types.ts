@@ -1,24 +1,24 @@
 interface BasicPayload {
-  url: string
-  website: string
-  hostname: string
-  screen: string
-  language: string
-  title: string
-  referrer: string
+  url: string;
+  website: string;
+  hostname: string;
+  screen: string;
+  language: string;
+  title: string;
+  referrer: string;
 }
 
 interface EventData {
-  [key: string]: string | number | boolean
+  [key: string]: string | number | boolean;
 }
 
 type EventPayloadPartial =
   {
-    name: string
-    data?: EventData
+    name: string;
+    data?: EventData;
   } | {
-    event_name: string
-    event_data?: EventData
+    event_name: string;
+    event_data?: EventData;
   };
 
   type EventPayload = BasicPayload & EventPayloadPartial;
@@ -29,14 +29,14 @@ type PayloadType = 'pageview' | 'event';
 type PreflightResult = 'ssr' | 'id' | 'host' | 'domain' | 'dnt' | 'local' | true;
 
 interface ServerPayload {
-  type: PayloadType
-  payload: ViewPayload | EventPayload
+  type: PayloadType;
+  payload: ViewPayload | EventPayload;
 }
 
 interface GetPayloadReturn {
-  payload: PartialPayload
-  pageUrl: string
-  pageReferrer: string
+  payload: PartialPayload;
+  pageUrl: string;
+  pageReferrer: string;
 }
 
 export type {

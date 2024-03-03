@@ -6,7 +6,7 @@ import type {
   PreflightResult,
   ServerPayload,
 } from './types';
-import { detective, envIsProd } from './debug';
+import { detective } from './debug';
 
 function isValidString(str: unknown): str is string {
   return typeof str === 'string' && str.trim() !== '';
@@ -14,12 +14,13 @@ function isValidString(str: unknown): str is string {
 
 function isValidHost(host: unknown): host is string {
   try {
-    if (typeof host !== 'string') {
+    if (typeof host !== 'string')
       return false;
-    }
+
     const url = new URL(host);
     return isValidString(url.host) && ['http:', 'https:'].includes(url.protocol);
-  } catch (error) {
+  }
+  catch (error) {
     return false;
   }
 }
@@ -69,7 +70,7 @@ const umConfig = computed(() => {
 });
 
 const helloDebugger = computed(() => {
-  const enabled = envIsProd ? umConfig.value.debug : true;
+  const enabled = import.meta.env.DEV ? true : umConfig.value.debug;
 
   type DetectiveParams = Parameters<typeof detective>;
 
@@ -100,34 +101,29 @@ const endpoint = computed(() => {
 });
 
 const preflight = computed((): PreflightResult => {
-  if (typeof window === 'undefined') {
+  if (typeof window === 'undefined')
     return 'ssr';
-  }
 
   const { ignoreDnt, id, host, ignoreLocal } = umConfig.value;
 
-  if (!isValidString(id)) {
+  if (!isValidString(id))
     return 'id';
-  }
 
-  if (!host || !isValidHost(endpoint.value)) {
+  if (!host || !isValidHost(endpoint.value))
     return 'host';
-  }
 
   const {
     location: { hostname },
     navigator,
   } = window;
 
-  if (ignoreLocal && hostname === 'localhost') {
+  if (ignoreLocal && hostname === 'localhost')
     return 'local';
-  }
 
   const domains = domainList.value;
 
-  if (domains && !domains.includes(hostname)) {
+  if (domains && !domains.includes(hostname))
     return 'domain';
-  }
 
   if (!ignoreDnt && [1, '1', 'yes'].includes(
     navigator.doNotTrack
@@ -135,9 +131,8 @@ const preflight = computed((): PreflightResult => {
     || window.doNotTrack
     // @ts-expect-error `msDoNotTrack` might not exist on `navigator`
     || navigator.msDoNotTrack,
-  )) {
+  ))
     return 'dnt';
-  }
 
   return true;
 });
@@ -182,9 +177,8 @@ async function collect(load: ServerPayload) {
     body: JSON.stringify(load),
   })
     .then((res) => {
-      if (res && !res.ok) {
+      if (res && !res.ok)
         helloDebugger.value('err-collect', res);
-      }
     })
     .catch((err) => {
       helloDebugger.value('err-collect', err);

@@ -5,7 +5,6 @@
 [![License](https://img.shields.io/npm/l/nuxt-umami?style=flat-square)](/LICENSE)
 [![Sponsor](https://img.shields.io/badge/Sponsor-21262d?style=flat-square&logo=github&logoColor=db61a2)](https://github.com/sponsors/ijkml)
 
-
 Integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites / applications.
 
 ## Features
@@ -192,7 +191,6 @@ You can pass a string as the event name, or an object containing a `name` proper
   * Miracle Onyenma published a simple guide in his blog. [Check it out](https://miracleio.me/blog/set-up-analytics-for-your-nuxt-3-app-with-umami).
 * __Should I sponsor this project?__
   * Absolutely, you can do that here: https://github.com/sponsors/ijkml.
-
 
 ## Issues, Bugs, Ideas?
 
