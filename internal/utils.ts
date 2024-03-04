@@ -143,8 +143,8 @@ const getPayload = computed((): PartialPayload => {
     screen: `${width}x${height}`,
     language,
     hostname,
-    url: encodeURIComponent(pageUrl),
-    referrer: encodeURIComponent(pageRef),
+    url: encodeURI(pageUrl),
+    referrer: encodeURI(pageRef),
     title: encodeURIComponent(pageTitle.value || title),
   };
 });

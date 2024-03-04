@@ -28,8 +28,8 @@ function trackView(url?: string, referrer?: string): void {
       payload: {
         website,
         ...payload,
-        ...(isValidString(referrer) && { referrer: encodeURIComponent(referrer) }),
-        ...(isValidString(url) && { url: encodeURIComponent(url) }),
+        ...(isValidString(referrer) && { referrer: encodeURI(referrer) }),
+        ...(isValidString(url) && { url: encodeURI(url) }),
       } satisfies ViewPayload,
     },
   );
