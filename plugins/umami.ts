@@ -3,7 +3,7 @@ import { umConfig } from '../internal/utils';
 import { umTrackView } from '../utils/umami';
 
 export default defineNuxtPlugin({
-  name: 'umami-auto-track',
+  name: 'umami-tracker',
   async setup(nuxtApp) {
     const { useDirective } = umConfig.value;
 
