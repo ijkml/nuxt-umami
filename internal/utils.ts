@@ -143,17 +143,22 @@ const getPayload = computed((): PartialPayload => {
   };
 });
 
+const cache = ref('');
+
 async function collect(load: ServerPayload) {
   fetch(endpoint.value, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      ...(cache.value && { 'x-umami-cache': cache.value }),
     },
     body: JSON.stringify(load),
   })
-    .then((res) => {
+    .then(async (res) => {
       if (res && !res.ok)
-        helloDebugger.value('err-collect', res);
+        return helloDebugger.value('err-collect', res);
+
+      cache.value = await res.text();
     })
     .catch((err) => {
       helloDebugger.value('err-collect', err);
