@@ -40,9 +40,6 @@
     "release": "./release.sh",
     "release:beta": "bumpp prerelease --commit --push --no-tag && npm publish --access public --tag beta"
   },
-  "dependencies": {
-    "@vueuse/core": "^10.9.0"
-  },
   "devDependencies": {
     "@antfu/eslint-config": "~2.7.0",
     "@types/node": "^20.11.24",
