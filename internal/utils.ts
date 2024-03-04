@@ -1,11 +1,9 @@
-import { useTitle } from '@vueuse/core';
-
 import type {
   PartialPayload,
   PreflightResult,
   ServerPayload,
 } from './types';
-import { detective } from './debug';
+import { debug } from './debug';
 
 function isValidString(str: unknown): str is string {
   return typeof str === 'string' && str.trim() !== '';
@@ -69,13 +67,13 @@ const umConfig = computed(() => {
 const helloDebugger = computed(() => {
   const enabled = import.meta.env.DEV ? true : umConfig.value.debug;
 
-  type DetectiveParams = Parameters<typeof detective>;
+  type DetectiveParams = Parameters<typeof debug>;
 
   return enabled
     ? function (...params: DetectiveParams) {
-      detective(...params);
+      debug(...params);
     }
-    : function (..._args: DetectiveParams) {};
+    : function (..._params: DetectiveParams) {};
 });
 
 const domainList = computed(() => {
@@ -126,26 +124,22 @@ const preflight = computed((): PreflightResult => {
 
 const getPayload = computed((): PartialPayload => {
   const {
-    location: { hostname, href },
+    location: { hostname },
     screen: { width, height },
     navigator: { language },
     document: { referrer, title },
   } = window;
 
-  const pageTitle = useTitle();
-  const { fullPath: pageUrl } = useRoute();
-
-  // get ref from url
-  const params = new URL(href).searchParams;
-  const pageRef = referrer || params.get('ref') || '';
+  const { fullPath, query } = useRoute();
+  const pageRef = referrer || (query.ref as string) || '';
 
   return {
     screen: `${width}x${height}`,
     language,
     hostname,
-    url: encodeURI(pageUrl),
+    url: encodeURI(fullPath),
     referrer: encodeURI(pageRef),
-    title: encodeURIComponent(pageTitle.value || title),
+    title: encodeURIComponent(title),
   };
 });
 

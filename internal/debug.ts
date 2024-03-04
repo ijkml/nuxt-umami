@@ -13,15 +13,15 @@ interface ErrorObj {
 
 const warnings: Record<ErrorId, ErrorObj> = {
   'err-domain': { level: 'info', text: 'Tracking is disabled for this domain because it is not in the allowed domain config.' },
-  'err-id': { level: 'error', text: '`id` is missing or incorrectly configured. Check config.' },
-  'err-host': { level: 'error', text: '`host` is missing or incorrectly configured. Check config.' },
+  'err-id': { level: 'error', text: '`id` is missing or incorrectly configured. Check Umami config.' },
+  'err-host': { level: 'error', text: '`host` is missing or incorrectly configured. Check Umami config.' },
   'err-local': { level: 'info', text: 'Tracking disabled on localhost' },
-  'err-collect': { level: 'error', text: 'Uh... Something went wrong and I have no clue.' },
-  'err-directive': { level: 'error', text: 'Error: Invalid v-umami directive value. Expected string or object with {value:key} pairs. See https://github.com/ijkml/nuxt-umami#available-methods' },
-  'err-event-name': { level: 'warn', text: 'A function/directive event was fired without a name. `#unknown-event` will be used as the event name.' },
+  'err-collect': { level: 'error', text: 'Uhm... Something went wrong and I have no clue.' },
+  'err-directive': { level: 'error', text: 'Invalid v-umami directive value. Expected string or object with {key:value} pairs. See https://github.com/ijkml/nuxt-umami#available-methods' },
+  'err-event-name': { level: 'warn', text: 'An Umami track event was fired without a name. `#unknown-event` will be used as event name.' },
 };
 
-function detective(id: ErrorId, raw?: any) {
+function debug(id: ErrorId, raw?: any) {
   const { level, text } = warnings[id];
   // eslint-disable-next-line no-console
   console[level](`[UMAMI]: ${text}`, '\n');
@@ -29,4 +29,4 @@ function detective(id: ErrorId, raw?: any) {
   raw && (console[level](raw));
 }
 
-export { detective };
+export { debug };
