@@ -12,7 +12,7 @@ interface EventData {
   [key: string]: string | number | boolean;
 }
 
-type EventPayloadPartial =
+type EventDetails =
   {
     name: string;
     data?: EventData;
@@ -21,8 +21,8 @@ type EventPayloadPartial =
     event_data?: EventData;
   };
 
-  type EventPayload = BasicPayload & EventPayloadPartial;
-  type ViewPayload = BasicPayload;
+type EventPayload = BasicPayload & EventDetails;
+type ViewPayload = BasicPayload;
 
 type PartialPayload = Omit<BasicPayload, 'website'>;
 type PayloadType = 'pageview' | 'event';
