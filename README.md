@@ -132,7 +132,6 @@ function complexCalc() {
 | host            | `string`                  | Your Umami endpoint. This is where your script is hosted. Eg: `https://ijkml.xyz/`.                                            | yes      | `''`        |
 | id              | `string`                  | Unique website-id provided by Umami.                                                                                           | yes      | `''`        |
 | domains         | `string \| Array<string>` | Limit tracker to specific domains by providing an array or comma-separated list (without 'http'). Leave blank for all domains. | no       | `undefined` |
-| ignoreDnt       | `boolean`                 | Option to ignore browsers' Do Not Track setting.                                                                               | no       | `true`      |
 | autoTrack       | `boolean`                 | Option to automatically track page views.                                                                                      | no       | `true`      |
 | ignoreLocalhost | `boolean`                 | Option to prevent tracking on localhost.                                                                                       | no       | `false`     |
 | customEndpoint  | `string`                  | Set a custom `COLLECT_API_ENDPOINT`. See [Docs](https://umami.is/docs/environment-variables).                                  | no       | `undefined` |
