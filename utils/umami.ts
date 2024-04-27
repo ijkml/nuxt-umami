@@ -1,5 +1,5 @@
-import { collect, getPayload, helloDebugger, isValidString, preflight, umConfig } from '../internal/utils';
-import type { EventData, EventPayload, ViewPayload } from '../internal/types';
+import { collect, earlyPromise, getPayload, helloDebugger, isValidString, preflight, umConfig } from '../internal/utils';
+import type { EventData, EventPayload, FetchResult, ViewPayload } from '../internal/types';
 
 /**
  * Track page views
@@ -8,21 +8,21 @@ import type { EventData, EventPayload, ViewPayload } from '../internal/types';
  * @param url page being tracked, eg `/about`, `/contact?by=phone#office`
  * @param referrer page referrer, `document.referrer`
  */
-function trackView(url?: string, referrer?: string): void {
+function trackView(url?: string, referrer?: string): FetchResult {
   const check = preflight.value;
 
   if (check === 'ssr')
-    return;
+    return earlyPromise(false);
 
   if (check !== true) {
     helloDebugger.value(`err-${check}`);
-    return;
+    return earlyPromise(false);
   }
 
   const { id: website, version } = umConfig.value;
   const payload = getPayload.value;
 
-  void collect(
+  return collect(
     {
       type: version === 2 ? 'event' : 'pageview',
       payload: {
@@ -42,15 +42,15 @@ function trackView(url?: string, referrer?: string): void {
  * @param eventData additional data for the event, provide an object in the format
  * `{key: value}`, `key` = string, `value` = string | number | boolean.
  */
-function trackEvent(eventName: string, eventData?: EventData) {
+function trackEvent(eventName: string, eventData?: EventData): FetchResult {
   const check = preflight.value;
 
   if (check === 'ssr')
-    return;
+    return earlyPromise(false);
 
   if (check !== true) {
     helloDebugger.value(`err-${check}`);
-    return;
+    return earlyPromise(false);
   }
 
   const { id: website, version } = umConfig.value;
@@ -68,16 +68,10 @@ function trackEvent(eventName: string, eventData?: EventData) {
     : undefined;
 
   const eventObj = version === 2
-    ? {
-        name,
-        data,
-      }
-    : {
-        event_name: name,
-        event_data: data,
-      };
+    ? { name, data }
+    : { event_name: name, event_data: data };
 
-  void collect({
+  return collect({
     type: 'event',
     payload: {
       ...payload,

@@ -1,4 +1,5 @@
 import type {
+  FetchResult,
   PartialPayload,
   PreflightResult,
   ServerPayload,
@@ -145,8 +146,12 @@ const getPayload = computed((): PartialPayload => {
 
 const cache = ref('');
 
-async function collect(load: ServerPayload) {
-  fetch(endpoint.value, {
+function earlyPromise(ok: boolean): FetchResult {
+  return Promise.resolve({ ok });
+}
+
+async function collect(load: ServerPayload): FetchResult {
+  return fetch(endpoint.value, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -154,15 +159,17 @@ async function collect(load: ServerPayload) {
     },
     body: JSON.stringify(load),
   })
-    .then(async (res) => {
-      if (res && !res.ok)
-        return helloDebugger.value('err-collect', res);
+    .then(async (response) => {
+      if (!response.ok)
+        throw new Error('Network error', { cause: response });
 
-      cache.value = await res.text();
+      cache.value = await response.text();
+      return { ok: true };
     })
     .catch((err) => {
       helloDebugger.value('err-collect', err);
+      return { ok: false };
     });
 }
 
-export { isValidString, preflight, getPayload, collect, umConfig, helloDebugger };
+export { isValidString, preflight, getPayload, collect, earlyPromise, umConfig, helloDebugger };

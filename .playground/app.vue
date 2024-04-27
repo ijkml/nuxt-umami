@@ -2,7 +2,10 @@
 const shareUrl = 'https://savory.vercel.app/share/j2f1spIBFqHJKsXv/Nuxt%20Umami';
 
 function testView() {
-  umTrackView();
+  umTrackView().then(({ ok }) => {
+    // eslint-disable-next-line no-console
+    console.log(ok ? 'That went well ;)' : `Oops, that didn't go as planned`);
+  });
 }
 
 function testEvent() {
