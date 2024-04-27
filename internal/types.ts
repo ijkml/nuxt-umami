@@ -33,6 +33,8 @@ interface ServerPayload {
   payload: ViewPayload | EventPayload;
 }
 
+type FetchResult = Promise<{ ok: boolean }>;
+
 export type {
   EventData,
   PartialPayload,
@@ -41,4 +43,5 @@ export type {
   PayloadType,
   ServerPayload,
   PreflightResult,
+  FetchResult,
 };
