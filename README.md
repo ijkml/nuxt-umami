@@ -155,6 +155,16 @@ Two functions are auto-imported, `umTrackView()` and `umTrackEvent()`. Use them 
 
 Reference: [Umami Tracker Functions](https://umami.is/docs/tracker-functions).
 
+### Method Return
+
+Both `umTrackEvent` and `umTrackView` return a Promise with an `ok` status that you can await or chain, `Promise<{ok: boolean}>`.
+
+```ts
+umTrackView().then(res => console.log(res.ok));
+
+umTrackView().then(({ ok }) => console.log(ok));
+```
+
 ### Vue Directive
 
 > [!NOTE]
