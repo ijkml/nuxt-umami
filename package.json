@@ -41,11 +41,11 @@
     "release:beta": "bumpp prerelease --commit --push --no-tag && npm publish --access public --tag beta"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "~2.7.0",
-    "@types/node": "^20.11.24",
-    "bumpp": "^9.3.0",
-    "eslint": "^8.57.0",
-    "nuxt": "^3.10.3",
-    "typescript": "^5.3.3"
+    "@antfu/eslint-config": "~2.16.0",
+    "@types/node": "^20.12.7",
+    "bumpp": "^9.4.0",
+    "eslint": "^9.1.1",
+    "nuxt": "^3.11.2",
+    "typescript": "^5.4.5"
   }
 }
