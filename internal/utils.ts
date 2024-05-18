@@ -50,7 +50,7 @@ const umConfig = computed(() => {
 
   const rawHost = umamiHost || _host;
   const host = isValidHost(rawHost) ? rawHost : null;
-  const version = host && host.includes('analytics.umami.is') ? 2 : _ver;
+  const version = host && host.includes('umami.is') ? 2 : _ver;
 
   return {
     host,
@@ -68,23 +68,17 @@ const umConfig = computed(() => {
 const helloDebugger = computed(() => {
   const enabled = import.meta.env.DEV ? true : umConfig.value.debug;
 
-  type DetectiveParams = Parameters<typeof debug>;
-
-  return enabled
-    ? function (...params: DetectiveParams) {
-      debug(...params);
-    }
-    : function (..._params: DetectiveParams) {};
+  return enabled ? debug : (..._params: Parameters<typeof debug>) => void 0;
 });
 
 const domainList = computed(() => {
   const domains = umConfig.value.domains;
 
-  return (Array.isArray(domains) && domains.length)
-    ? domains.filter(isValidString)
-    : isValidString(domains)
-      ? domains.split(',').map(d => d.trim()).filter(isValidString)
-      : undefined;
+  if (Array.isArray(domains) && domains.length)
+    return domains.filter(isValidString);
+  else if (isValidString(domains))
+    return domains.split(',').map(d => d.trim()).filter(isValidString);
+  else return undefined;
 });
 
 const endpoint = computed(() => {
@@ -172,4 +166,4 @@ async function collect(load: ServerPayload): FetchResult {
     });
 }
 
-export { isValidString, preflight, getPayload, collect, earlyPromise, umConfig, helloDebugger };
+export { collect, umConfig, preflight, getPayload, earlyPromise, isValidString, helloDebugger };
