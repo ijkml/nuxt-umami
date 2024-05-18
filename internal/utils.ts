@@ -50,7 +50,7 @@ const umConfig = computed(() => {
 
   const rawHost = umamiHost || _host;
   const host = isValidHost(rawHost) ? rawHost : null;
-  const version = host && host.includes('analytics.umami.is') ? 2 : _ver;
+  const version = host && host.includes('umami.is') ? 2 : _ver;
 
   return {
     host,
