@@ -12,6 +12,10 @@ function testEvent() {
   umTrackEvent('event-test-2', { type: 'click', position: 'left' });
 }
 
+function disableTrackingViaLocalStorage(){
+  localStorage.setItem('umami.disabled', '1')
+}
+
 const tt = ref('TT');
 const tc = ref(0);
 
@@ -46,6 +50,9 @@ function seePreview() {
         </button>
         <button @click="testView">
           Run trackView
+        </button>
+        <button @click="disableTrackingViaLocalStorage">
+          Disable tracking via localStorage
         </button>
         <a
           :href="shareUrl"
