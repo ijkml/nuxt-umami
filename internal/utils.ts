@@ -102,12 +102,15 @@ const preflight = computed((): PreflightResult => {
   if (!host || !isValidHost(endpoint.value))
     return 'host';
 
-  const {
-    location: { hostname },
-  } = window;
+  const hostname = window.location.hostname;
+  const storage = window.localStorage;
 
   if (ignoreLocal && hostname === 'localhost')
-    return 'local';
+    return 'localhost';
+
+  // Disable tracking when umami.disabled=1 in localStorage
+  if (storage.getItem('umami.disabled') === '1')
+    return 'local-storage';
 
   const domains = domainList.value;
 

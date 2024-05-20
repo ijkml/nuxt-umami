@@ -28,6 +28,29 @@ function updateRefs() {
 function seePreview() {
   umTrackEvent('see-preview', { from: 'localhost' });
 }
+
+// is disabled via localStorage
+const idvls = ref(false);
+let storage: Storage | undefined;
+let refresh = function () {};
+
+watch(idvls, (status) => {
+  storage?.setItem('umami.disabled', String(+status));
+  // refresh to apply changes
+  refresh();
+  // better user perf than watching localStorage
+});
+
+onMounted(() => {
+  storage = localStorage;
+  idvls.value = storage?.getItem('umami.disabled') === '1';
+  nextTick().then(() => {
+    // real refresh fn here to prevent loop :)
+    refresh = function () {
+      navigateTo('/', { replace: true, external: true });
+    };
+  });
+});
 </script>
 
 <template>
@@ -74,6 +97,18 @@ function seePreview() {
         <NuxtLink v-for="i in 3" :key="i" :to="`/page-${i}`">
           Page {{ i }}
         </NuxtLink>
+      </div>
+
+      <div class="deck">
+        <div>
+          <input
+            id="umami-disabled"
+            v-model="idvls"
+            name="umami-disabled"
+            type="checkbox"
+          >
+          <label for="umami-disabled">Disable Umami via localStorage</label>
+        </div>
       </div>
     </div>
   </div>
@@ -131,5 +166,14 @@ h1 {
   align-items: flex-start;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+input {
+  margin: 0.4rem;
+}
+
+label, input {
+  user-select: none;
+  cursor: pointer;
 }
 </style>
