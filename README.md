@@ -193,9 +193,11 @@ You can pass a string as the event name, or an object containing a `name` proper
 * __Can I use Umami v2/Cloud?__
   * Yes. To use Umami v2, set `version: 2` in the Nuxt-Umami config.
 * __`nuxt typecheck` fails! What can I do to resolve it?__
-  * The problem could be tied to `pnpm`'s dependency hoisting. Thanks to [Jeet for discovering this](https://github.com/ijkml/nuxt-umami/issues/85#issuecomment-1868442446). Simply create a `.npmrc` file in the root of your Nuxt project and add `shamefully-hoist=true`. If that doesn't work, I'll be happy to look further into it.
+  * The problem could be tied to `pnpm`'s dependency hoisting. Thanks to [Jeet for discovering this](https://github.com/ijkml/nuxt-umami/issues/85#issuecomment-1868442446). Simply create a `.npmrc` file in the root of your Nuxt project and add `shamefully-hoist=true`. If that doesn't work, I'll be happy to look into it further.
 * __Welp, I am getting some CORS errors!__
   * Some adblockers like _uBlock_ and _Ghostery_ block Umami Cloud's endpoints. Try to disable your adblockers (yes, all of them). Also, double-check your config and Umami version. If all else fails, host your own Umami instance.
+* __`autoTrack` is not working?__
+  * The current implementation of `autoTrack` relies on `<NuxtPage>` being present in your app. If you don't have `<NuxtPage>`, you'd have to call `umTrackView()` yourself `onMounted()`. [See this issue](https://github.com/ijkml/nuxt-umami/issues/102#issuecomment-2112482840).
 * __How do I set up my own Umami instance?__
   * Miracle Onyenma published a simple guide in his blog. [Check it out](https://miracleio.me/blog/set-up-analytics-for-your-nuxt-3-app-with-umami).
 * __Should I sponsor this project?__
