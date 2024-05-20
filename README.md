@@ -5,22 +5,18 @@
 [![License](https://img.shields.io/npm/l/nuxt-umami?style=flat-square)](/LICENSE)
 [![Sponsor](https://img.shields.io/badge/Sponsor-21262d?style=flat-square&logo=github&logoColor=db61a2)](https://github.com/sponsors/ijkml)
 
-Integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites / applications.
+Integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites/applications.
 
 ## Features
 
-- 📖 Open Source
-- ✨ SSR Support, of course
+- 📖 Open source
+- ✨ SSR support, of course
 - ➖ No extra script, no loading delay
 - 😜 Escapes ad & script blockers
 - 💯 Simple, feature complete, extensive config
 - ✅ Typescript, JSDocs, auto completion
 - ✅ Auto imported, available (almsot) everywhere
 - ✅ Easy debuggin' (one `console.log` at a time)
-
-> [!IMPORTANT]
-> Nuxt Umami v2 uses features that are only available in **Nuxt 3** (Nuxt Layers).
-> Check out [Nuxt Umami v1](https://github.com/ijkml/nuxt-umami/tree/v1) for Nuxt 2 compat.
 
 ## Setup
 
@@ -87,10 +83,7 @@ defineNuxtConfig({
 
 #### Environment Variables
 
-> [!NOTE]
-> Available in `^2.1.0` and takes precedence over `appConfig`.
-
-You can provide the `host` and `id` config (only) as environment variables. Simply add `NUXT_PUBLIC_UMAMI_HOST` and `NUXT_PUBLIC_UMAMI_ID` to your `.env` file, and that's it.
+You can provide the `host` and `id` config (only) as environment variables. Simply add `NUXT_PUBLIC_UMAMI_HOST` and `NUXT_PUBLIC_UMAMI_ID` to your `.env` file, and that's it. Please note that provided env variables override `appConfig`.
 
 ```sh
 NUXT_PUBLIC_UMAMI_HOST="https://domain.tld"
@@ -141,7 +134,9 @@ function complexCalc() {
 
 ## Usage
 
-Two functions are auto-imported, `umTrackView()` and `umTrackEvent()`. Use them however and wherever you like. These functions work even in `<script setup>` without the `onMounted` hook. The `v-umami` directive can be enabled in the config.
+Two functions are auto-imported, `umTrackView()` and `umTrackEvent()`. Use them freely. Please note that in `<script setup>`, these functions might fail silently. Use the `onMounted` hook or call them on user interaction.
+
+The `v-umami` directive can be enabled [in the config](#vue-directive).
 
 ### Available Methods
 
@@ -167,8 +162,7 @@ umTrackView().then(({ ok }) => console.log(ok));
 
 ### Vue Directive
 
-> [!NOTE]
-> Available from `^2.5.0`. Add `useDirective: true` to your config.
+To use directive `v-umami`, add `useDirective: true` to your config.
 
 You can pass a string as the event name, or an object containing a `name` property (required, this is the event name). Every other property will be passed on as event data.
 
@@ -186,6 +180,12 @@ You can pass a string as the event name, or an object containing a `name` proper
 </button>
 ```
 
+### Prevent tracking yourself
+
+To prevent tracking yourself, add the key `umami.disabled` to your browser's localStorage. Set the value to 1.
+
+See: [Umami Docs](https://umami.is/docs/track-events#prevent-tracking-yourself).
+
 ## FAQS and Quirks
 
 * __I don't see errors in live sites...__
@@ -193,9 +193,11 @@ You can pass a string as the event name, or an object containing a `name` proper
 * __Can I use Umami v2/Cloud?__
   * Yes. To use Umami v2, set `version: 2` in the Nuxt-Umami config.
 * __`nuxt typecheck` fails! What can I do to resolve it?__
-  * The problem could be tied to `pnpm`'s dependency hoisting. Thanks to [Jeet for discovering this](https://github.com/ijkml/nuxt-umami/issues/85#issuecomment-1868442446). Simply create a `.npmrc` file in the root of your Nuxt project and add `shamefully-hoist=true`. If that doesn't work, I'll be happy to look further into it.
+  * The problem could be tied to `pnpm`'s dependency hoisting. Thanks to [Jeet for discovering this](https://github.com/ijkml/nuxt-umami/issues/85#issuecomment-1868442446). Simply create a `.npmrc` file in the root of your Nuxt project and add `shamefully-hoist=true`. If that doesn't work, I'll be happy to look into it further.
 * __Welp, I am getting some CORS errors!__
   * Some adblockers like _uBlock_ and _Ghostery_ block Umami Cloud's endpoints. Try to disable your adblockers (yes, all of them). Also, double-check your config and Umami version. If all else fails, host your own Umami instance.
+* __`autoTrack` is not working?__
+  * The current implementation of `autoTrack` relies on `<NuxtPage>` being present in your app. If you don't have `<NuxtPage>`, you'd have to call `umTrackView()` yourself `onMounted()`. [See this issue](https://github.com/ijkml/nuxt-umami/issues/102#issuecomment-2112482840).
 * __How do I set up my own Umami instance?__
   * Miracle Onyenma published a simple guide in his blog. [Check it out](https://miracleio.me/blog/set-up-analytics-for-your-nuxt-3-app-with-umami).
 * __Should I sponsor this project?__
