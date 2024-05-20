@@ -178,6 +178,12 @@ You can pass a string as the event name, or an object containing a `name` proper
 </button>
 ```
 
+### Prevent tracking yourself
+
+To prevent tracking yourself, add the key `umami.disabled` to your browser's localStorage. Set the value to 1.
+
+See: [Umami Docs](https://umami.is/docs/track-events#prevent-tracking-yourself).
+
 ## FAQS and Quirks
 
 * __I don't see errors in live sites...__
