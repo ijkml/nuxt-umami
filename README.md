@@ -83,10 +83,7 @@ defineNuxtConfig({
 
 #### Environment Variables
 
-> [!NOTE]
-> Available in `^2.1.0` and takes precedence over `appConfig`.
-
-You can provide the `host` and `id` config (only) as environment variables. Simply add `NUXT_PUBLIC_UMAMI_HOST` and `NUXT_PUBLIC_UMAMI_ID` to your `.env` file, and that's it.
+You can provide the `host` and `id` config (only) as environment variables. Simply add `NUXT_PUBLIC_UMAMI_HOST` and `NUXT_PUBLIC_UMAMI_ID` to your `.env` file, and that's it. Please note that provided env variables override `appConfig`.
 
 ```sh
 NUXT_PUBLIC_UMAMI_HOST="https://domain.tld"
@@ -163,8 +160,7 @@ umTrackView().then(({ ok }) => console.log(ok));
 
 ### Vue Directive
 
-> [!NOTE]
-> Available from `^2.5.0`. Add `useDirective: true` to your config.
+To use directive `v-umami`, add `useDirective: true` to your config.
 
 You can pass a string as the event name, or an object containing a `name` property (required, this is the event name). Every other property will be passed on as event data.
 
