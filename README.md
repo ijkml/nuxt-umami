@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/npm/l/nuxt-umami?style=flat-square)](/LICENSE)
 [![Sponsor](https://img.shields.io/badge/Sponsor-21262d?style=flat-square&logo=github&logoColor=db61a2)](https://github.com/sponsors/ijkml)
 
-Integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites / applications.
+Integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites/applications.
 
 ## Features
 
@@ -134,7 +134,9 @@ function complexCalc() {
 
 ## Usage
 
-Two functions are auto-imported, `umTrackView()` and `umTrackEvent()`. Use them however and wherever you like. These functions work even in `<script setup>` without the `onMounted` hook. The `v-umami` directive can be enabled in the config.
+Two functions are auto-imported, `umTrackView()` and `umTrackEvent()`. Use them freely. Please note that in `<script setup>`, these functions might fail silently. Use the `onMounted` hook or call them on user interaction.
+
+The `v-umami` directive can be enabled [in the config](#vue-directive).
 
 ### Available Methods
 
