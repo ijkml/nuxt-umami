@@ -9,18 +9,14 @@ Integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites / app
 
 ## Features
 
-- 📖 Open Source
-- ✨ SSR Support, of course
+- 📖 Open source
+- ✨ SSR support, of course
 - ➖ No extra script, no loading delay
 - 😜 Escapes ad & script blockers
 - 💯 Simple, feature complete, extensive config
 - ✅ Typescript, JSDocs, auto completion
 - ✅ Auto imported, available (almsot) everywhere
 - ✅ Easy debuggin' (one `console.log` at a time)
-
-> [!IMPORTANT]
-> Nuxt Umami v2 uses features that are only available in **Nuxt 3** (Nuxt Layers).
-> Check out [Nuxt Umami v1](https://github.com/ijkml/nuxt-umami/tree/v1) for Nuxt 2 compat.
 
 ## Setup
 
