@@ -1,5 +1,7 @@
 import type { ModuleOptions } from './internal/types';
 
+import { defineAppConfig } from 'nuxt/app';
+
 export default defineAppConfig({
 });
 

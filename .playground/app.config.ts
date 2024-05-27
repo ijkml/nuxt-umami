@@ -1,3 +1,5 @@
+import { defineAppConfig } from 'nuxt/app';
+
 export default defineAppConfig({
   umami: {
     host: 'https://savory.vercel.app/',

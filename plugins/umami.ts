@@ -2,6 +2,8 @@ import { directive } from '../internal/directive';
 import { umConfig } from '../internal/utils';
 import { umTrackView } from '../utils/umami';
 
+import { defineNuxtPlugin } from 'nuxt/app';
+
 let autoTrackEnabled = false;
 
 export default defineNuxtPlugin({
