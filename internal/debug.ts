@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import type { PreflightResult } from './types';
 
 type FunctionErrs = 'collect' | 'directive' | 'event-name';
@@ -24,10 +25,9 @@ const warnings: Record<ErrorId, ErrorObj> = {
 
 function debug(id: ErrorId, raw?: any) {
   const { level, text } = warnings[id];
-  // eslint-disable-next-line no-console
   console[level](`[UMAMI]: ${text}`, '\n');
-  // eslint-disable-next-line no-console
-  raw && (console[level](raw));
+  if (raw)
+    console[level](raw);
 }
 
 export { debug };

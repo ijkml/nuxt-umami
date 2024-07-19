@@ -18,7 +18,7 @@ function isValidHost(host: unknown): host is string {
     const url = new URL(host);
     return isValidString(url.host) && ['http:', 'https:'].includes(url.protocol);
   }
-  catch (error) {
+  catch {
     return false;
   }
 }
