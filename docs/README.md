@@ -9,12 +9,12 @@ Integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites/appli
 
 ## Features
 
-- 📖 Open source
+- 📖 [Open source](https://github.com/ijkml/nuxt-umami)
 - ✨ SSR support, of course
 - ➖ No extra script, no loading delay
-- 😜 Escapes ad & script blockers
-- 💯 Simple, feature complete, extensive config
-- ✅ Typescript, JSDocs, auto completion
+- 😜 Escapes ad/script blockers
+- 💯 Simple, feature complete
+- ✅ Typescript & auto completion
 - ✅ Auto imported, available (almsot) everywhere
 - ✅ Easy debuggin' (one `console.log` at a time)
 
@@ -29,11 +29,11 @@ Integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites/appli
 Install using your favorite package manager...
 
 ```bash
-pnpm add nuxt-umami #pnpm
+pnpm add nuxt-umami
 ```
 
 ```bash
-npm install nuxt-umami #npm
+npm install nuxt-umami
 ```
 
 Then add `nuxt-umami` to your `extends` array in `nuxt.config`:
@@ -201,7 +201,7 @@ See: [Umami Docs](https://umami.is/docs/track-events#prevent-tracking-yourself).
 * __How do I set up my own Umami instance?__
   * Miracle Onyenma published a simple guide in his blog. [Check it out](https://miracleio.me/blog/set-up-analytics-for-your-nuxt-3-app-with-umami).
 * __Should I sponsor this project?__
-  * Absolutely, you can do that here: https://github.com/sponsors/ijkml.
+  * Absolutely, [you can do that here](https://github.com/sponsors/ijkml).
 
 ## Issues, Bugs, Ideas?
 
