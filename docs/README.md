@@ -1,15 +1,15 @@
-# Nuxt Umami
-
-[![npm](https://img.shields.io/npm/v/nuxt-umami?style=flat-square)](https://www.npmjs.com/package/nuxt-umami/)
-[![Downloads](https://img.shields.io/npm/dt/nuxt-umami.svg?style=flat-square)](https://www.npmjs.com/package/nuxt-umami)
-[![License](https://img.shields.io/npm/l/nuxt-umami?style=flat-square)](/LICENSE)
-[![Sponsor](https://img.shields.io/badge/Sponsor-21262d?style=flat-square&logo=github&logoColor=db61a2)](https://github.com/sponsors/ijkml)
+## Nuxt Umami
 
 Integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites/applications.
 
+[![npm](https://img.shields.io/npm/v/nuxt-umami?style=flat-square)](https://www.npmjs.com/package/nuxt-umami/)
+[![Downloads](https://img.shields.io/npm/dt/nuxt-umami.svg?style=flat-square)](https://www.npmjs.com/package/nuxt-umami)
+[![License](https://img.shields.io/npm/l/nuxt-umami?style=flat-square)](https://github.com/ijkml/nuxt-umami/blob/main/LICENSE)
+[![Sponsor](https://img.shields.io/badge/Sponsor-21262d?style=flat-square&logo=github&logoColor=db61a2)](https://github.com/sponsors/ijkml)
+
 ## Features
 
-- 📖 [Open source](https://github.com/ijkml/nuxt-umami)
+- 📖 Open source
 - ✨ SSR support, of course
 - ➖ No extra script, no loading delay
 - 😜 Escapes ad/script blockers
@@ -32,11 +32,7 @@ Install using your favorite package manager...
 pnpm add nuxt-umami
 ```
 
-```bash
-npm install nuxt-umami
-```
-
-Then add `nuxt-umami` to your `extends` array in `nuxt.config`:
+Then add `nuxt-umami` to the `extends` array in `nuxt.config`:
 
 ```ts
 defineNuxtConfig({
@@ -58,7 +54,7 @@ You can provide configuration options using the `app.config.ts` file or `appConf
 
 #### `app.config.ts` file
 
-(recommended for readability and ease of update)
+(recommended: easier to read and update)
 
 ```ts
 export default defineAppConfig({
@@ -90,11 +86,7 @@ NUXT_PUBLIC_UMAMI_HOST="https://domain.tld"
 NUXT_PUBLIC_UMAMI_ID="abc123-456def-ghi789"
 ```
 
-### Step 3:
-
-<details>
-<summary>Use it</summary>
-<p>
+### Step 3: Use it
 
 ```vue
 <script setup>
@@ -114,9 +106,6 @@ function complexCalc() {
   </button>
 </template>
 ```
-
-</p>
-</details>
 
 ## Configuration
 
