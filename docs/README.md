@@ -122,14 +122,14 @@ function complexCalc() {
 
 | option          | type                      | description                                                                                                                    | required | default     |
 | --------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | -------- | ----------- |
-| host            | `string`                  | Your Umami endpoint. This is where your script is hosted. Eg: `https://ijkml.xyz/`.                                            | yes      | `''`        |
+| host            | `string`                  | Your Umami endpoint. This is where your script is hosted. Eg: `https://ijkml.dev/`.                                            | yes      | `''`        |
 | id              | `string`                  | Unique website-id provided by Umami.                                                                                           | yes      | `''`        |
 | domains         | `string \| Array<string>` | Limit tracker to specific domains by providing an array or comma-separated list (without 'http'). Leave blank for all domains. | no       | `undefined` |
 | autoTrack       | `boolean`                 | Option to automatically track page views.                                                                                      | no       | `true`      |
 | ignoreLocalhost | `boolean`                 | Option to prevent tracking on localhost.                                                                                       | no       | `false`     |
 | customEndpoint  | `string`                  | Set a custom `COLLECT_API_ENDPOINT`. See [Docs](https://umami.is/docs/environment-variables).                                  | no       | `undefined` |
 | version         | `1 \| 2`                  | Umami version                                                                                                                  | no       | `1`         |
-| useDirective    | `boolean`                 | Option to enable the `v-umami` directive. See below.                                                                           | no       | `false`     |
+| useDirective    | `boolean`                 | Option to enable the `v-umami` directive. [See below](#vue-directive).                                                         | no       | `false`     |
 | debug           | `boolean`                 | Option to enable error logs (in production), useful for testing in prod :)                                                     | no       | `false`     |
 
 ## Usage
@@ -217,4 +217,4 @@ Thank you!
 
 <hr />
 
-[MIT](./LICENSE) License © 2024 [ML](https://github.com/ijkml/)
+MIT License ©2024 [ML](https://github.com/ijkml/)
