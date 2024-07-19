@@ -9,7 +9,10 @@
   "sponsor": {
     "url": "https://github.com/sponsors/ijkml/"
   },
-  "repository": "https://github.com/ijkml/nuxt-umami/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ijkml/nuxt-umami.git"
+  },
   "keywords": [
     "nuxt",
     "umami",
