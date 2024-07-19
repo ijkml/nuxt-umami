@@ -1,4 +1,5 @@
 export default defineNuxtConfig({
+  compatibilityDate: '2024-07-19',
   appConfig: {
     umami: {
       id: '',
