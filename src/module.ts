@@ -19,20 +19,16 @@ export default defineNuxtModule<ModuleOptions>({
   setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url);
 
-    const _pathToUtils = resolve('./runtime/utils');
-    const _pathToLogger = resolve('./runtime/logger');
-    const _pathToTypes = resolve('./types');
-
     const pathTo = {
-      utils: _pathToUtils,
-      types: _pathToTypes,
-      logger: _pathToLogger,
+      utils: resolve('./runtime/utils'),
+      logger: resolve('./runtime/logger'),
+      types: resolve('./types'),
     } as const;
 
     const runtimeConfig = nuxt.options.runtimeConfig;
 
-    const envHost = import.meta.env.NUXT_UMAMI_HOST;
-    const envId = import.meta.env.NUXT_UMAMI_ID;
+    const envHost = process.env.NUXT_UMAMI_HOST;
+    const envId = process.env.NUXT_UMAMI_ID;
 
     const {
       enabled,
@@ -109,16 +105,17 @@ export default defineNuxtModule<ModuleOptions>({
 
     // generate utils template
     addTemplate({
-      getContents: () => generateTemplate({
+      getContents: generateTemplate,
+      filename: 'umami.config.mjs',
+      write: true,
+      options: {
         mode: moduleMode,
         config: {
           ...publicConfig,
-          logErrors: import.meta.env.NODE_ENV === 'development' || logErrors,
+          logErrors: process.env.NODE_ENV === 'development' || logErrors,
         },
         path: pathTo,
-      }),
-      filename: 'umami.config.mjs',
-      write: true,
+      },
     });
 
     // add composables
@@ -133,7 +130,7 @@ export default defineNuxtModule<ModuleOptions>({
     // add auto-track & directive plugin
     addPlugin({
       name: 'nuxt-umami',
-      src: resolve('./runtime/plugin.ts'),
+      src: resolve('./runtime/plugin'),
       mode: 'all',
     });
   },

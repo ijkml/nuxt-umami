@@ -7,16 +7,18 @@ const collectFns: Record<ModuleMode, string> = {
 };
 
 interface TemplateOptions {
-  mode: ModuleMode;
-  config: UmPublicConfig & { logErrors: boolean };
-  path: {
-    utils: string;
-    types: string;
-    logger: string;
+  options: {
+    mode: ModuleMode;
+    config: UmPublicConfig & { logErrors: boolean };
+    path: {
+      utils: string;
+      types: string;
+      logger: string;
+    };
   };
 };
 
-function generateTemplate({ mode, config: { logErrors, ...config }, path }: TemplateOptions) {
+function generateTemplate({ options: { mode, config: { logErrors, ...config }, path } }: TemplateOptions) {
   return `// template-generated
 import { ofetch } from 'ofetch';
 import { ${logErrors ? 'logger' : 'fauxLogger'} as $logger } from "${path.logger}";
