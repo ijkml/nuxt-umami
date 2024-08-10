@@ -1,13 +1,4 @@
-import { createResolver } from '@nuxt/kit';
 import type { ModuleMode, UmPublicConfig } from './types';
-
-const { resolve } = createResolver(import.meta.url);
-
-const pathTo = {
-  utils: resolve('./runtime/utils.ts'),
-  types: resolve('./types.ts'),
-  logger: resolve('./runtime/logger.ts'),
-} as const;
 
 const collectFns: Record<ModuleMode, string> = {
   faux: 'fauxCollect',
@@ -17,19 +8,23 @@ const collectFns: Record<ModuleMode, string> = {
 
 interface TemplateOptions {
   mode: ModuleMode;
-  logErrors: boolean;
-  config: UmPublicConfig;
+  config: UmPublicConfig & { logErrors: boolean };
+  path: {
+    utils: string;
+    types: string;
+    logger: string;
+  };
 };
 
-function generateTemplate({ mode, logErrors, config }: TemplateOptions) {
+function generateTemplate({ mode, config: { logErrors, ...config }, path }: TemplateOptions) {
   return `// template-generated
 import { ofetch } from 'ofetch';
-import { ${logErrors ? 'logger' : 'fauxLogger'} as $logger } from "${pathTo.logger}";
+import { ${logErrors ? 'logger' : 'fauxLogger'} as $logger } from "${path.logger}";
 
 /**
- * @typedef {import("${pathTo.types}").FetchFn} FetchFn
+ * @typedef {import("${path.types}").FetchFn} FetchFn
  * 
- * @typedef {import("${pathTo.types}").UmPublicConfig} UmPublicConfig
+ * @typedef {import("${path.types}").UmPublicConfig} UmPublicConfig
  */
 
 export const logger = $logger;

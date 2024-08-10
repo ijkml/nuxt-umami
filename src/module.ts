@@ -18,6 +18,17 @@ export default defineNuxtModule<ModuleOptions>({
   },
   setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url);
+
+    const _pathToUtils = resolve('./runtime/utils');
+    const _pathToLogger = resolve('./runtime/logger');
+    const _pathToTypes = resolve('./types');
+
+    const pathTo = {
+      utils: _pathToUtils,
+      types: _pathToTypes,
+      logger: _pathToLogger,
+    } as const;
+
     const runtimeConfig = nuxt.options.runtimeConfig;
 
     const envHost = import.meta.env.NUXT_UMAMI_HOST;
@@ -100,8 +111,11 @@ export default defineNuxtModule<ModuleOptions>({
     addTemplate({
       getContents: () => generateTemplate({
         mode: moduleMode,
-        config: publicConfig,
-        logErrors: import.meta.env.NODE_ENV === 'development' || logErrors,
+        config: {
+          ...publicConfig,
+          logErrors: import.meta.env.NODE_ENV === 'development' || logErrors,
+        },
+        path: pathTo,
       }),
       filename: 'umami.config.mjs',
       write: true,
