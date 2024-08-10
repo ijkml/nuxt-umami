@@ -1,6 +1,6 @@
 import type { Directive } from 'vue';
-import { helloDebugger } from '../internal/utils';
-import { umTrackEvent } from '../utils/umami';
+import { umTrackEvent } from './composables';
+import { logger } from '#build/umami.config.mjs';
 
 // "savory" is a fun synonym for umami, why?
 // 1. dodge script blockers
@@ -33,7 +33,7 @@ async function setAttributes(el: HTMLElement, value: BindingValue) {
       [name, data] = [vName, vData];
     }
     catch {
-      helloDebugger.value('err-directive', `Provided ${typeof value}: ${value}`);
+      logger('directive', `Provided ${typeof value}: ${value}`);
     }
   }
 
@@ -48,7 +48,9 @@ function getAttributes(el: HTMLElement) {
   try {
     data = JSON.parse(el.dataset[ATTR_DATA] || '');
   }
-  catch {}
+  catch {
+    // fail silently
+  }
 
   return { name, data };
 }

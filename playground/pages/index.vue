@@ -5,5 +5,5 @@ useHead({ title });
 </script>
 
 <template>
-  <Heading :title="title" />
+  <h2>{{ title }}</h2>
 </template>

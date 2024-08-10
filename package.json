@@ -1,9 +1,9 @@
 {
   "name": "nuxt-umami",
   "type": "module",
-  "version": "2.6.4",
+  "version": "3.0.0-alpha.1",
   "description": "Integrate Umami Analytics into Nuxt",
-  "author": "ML <me.mlaure@gmail.com>",
+  "author": "Moses Laurence <me@ijkml.dev>",
   "license": "MIT",
   "homepage": "https://ijkml.github.io/nuxt-umami/",
   "sponsor": {
@@ -13,42 +13,44 @@
     "type": "git",
     "url": "git+https://github.com/ijkml/nuxt-umami.git"
   },
-  "keywords": [
-    "nuxt",
-    "umami",
-    "analytics",
-    "tracking",
-    "nuxt-umami",
-    "nuxt layer",
-    "nuxt module",
-    "nuxt plugin"
-  ],
-  "main": "./nuxt.config.ts",
+  "packageManager": "pnpm@9.7.0",
+  "exports": {
+    ".": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/module.mjs",
+      "require": "./dist/module.cjs"
+    }
+  },
+  "main": "./dist/module.cjs",
+  "types": "./dist/types.d.ts",
   "files": [
-    "app.config.ts",
-    "app.vue",
-    "internal/",
-    "middleware/",
-    "nuxt.config.ts",
-    "plugins/",
-    "utils/"
+    "dist"
   ],
   "scripts": {
-    "dev": "nuxi prepare & nuxi dev .playground",
-    "build": "nuxi build .playground",
-    "generate": "nuxi generate .playground",
-    "preview": "nuxi preview .playground",
+    "prepack": "nuxt-module-build build",
+    "dev": "nuxi dev playground",
+    "dev:build": "nuxi build playground",
+    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
+    "up": "npm run dev:prepare && npm run dev",
+    "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish --tag module && git push --follow-tags",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "release": "bumpp --commit --push --tag && npm publish --access public",
-    "release:beta": "bumpp prerelease --commit --push --no-tag && npm publish --access public --tag beta"
+    "test": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "@nuxt/kit": "^3.12.4",
+    "request-ip": "^3.3.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.23.0",
-    "@types/node": "^20.14.11",
-    "bumpp": "^9.4.1",
-    "eslint": "^9.7.0",
+    "@nuxt/eslint-config": "^0.5.0",
+    "@nuxt/module-builder": "^0.8.1",
+    "@nuxt/schema": "^3.12.4",
+    "@types/node": "^22.2.0",
+    "@types/request-ip": "^0.0.41",
+    "changelogen": "^0.5.5",
+    "eslint": "^9.8.0",
     "nuxt": "^3.12.4",
-    "typescript": "^5.5.3"
+    "typescript": "latest",
+    "vue-tsc": "^2.0.29"
   }
 }

@@ -13,21 +13,13 @@ Integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites/appli
 
 ## ✨ Get started
 
-1. Install
+Install and add to Nuxt with one command
 
 ```bash
-pnpm add nuxt-umami
+npx nuxi module add nuxt-umami@module
 ```
 
-2. Add to Nuxt
-
-```ts
-defineNuxtConfig({
-  extends: ['nuxt-umami']
-});
-```
-
-## 📖 Usage, Config, FAQs
+## 📖 Config options, Usage, and FAQs
 
 [Read the full documentation.](https://ijkml.github.io/nuxt-umami/)
 
