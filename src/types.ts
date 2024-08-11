@@ -46,7 +46,7 @@ interface ModuleOptions {
   /**
    * Exclude query/search params from tracked urls
    *
-   * false: `/page/link?search=22&filter=asc`
+   * false: `/page/link?search=product-abc&filter=asc`
    *
    * true: `/page/link`
    *

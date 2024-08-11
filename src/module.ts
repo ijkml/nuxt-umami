@@ -26,9 +26,10 @@ export default defineNuxtModule<ModuleOptions>({
     } as const;
 
     const runtimeConfig = nuxt.options.runtimeConfig;
+    const ENV = process.env;
 
-    const envHost = process.env.NUXT_UMAMI_HOST;
-    const envId = process.env.NUXT_UMAMI_ID;
+    const envHost = ENV.NUXT_UMAMI_HOST || ENV.NUXT_PUBLIC_UMAMI_HOST;
+    const envId = ENV.NUXT_UMAMI_ID || ENV.NUXT_PUBLIC_UMAMI_ID;
 
     const {
       enabled,
@@ -110,6 +111,7 @@ export default defineNuxtModule<ModuleOptions>({
       write: true,
       options: {
         mode: moduleMode,
+        // TODO: decouple
         config: {
           ...publicConfig,
           logErrors: process.env.NODE_ENV === 'development' || logErrors,
