@@ -57,7 +57,7 @@ const { endpoint, website, enabled } = config;
  */
 export async function collect(load) {${
   mode === 'direct'
-  ? `
+    ? `
   const { type, payload } = load;
 
   return ofetch(endpoint, {
@@ -70,8 +70,8 @@ export async function collect(load) {${
     .then(handleSuccess)
     .catch(handleError);
 }`
-   : mode === 'proxy'
-   ? `
+    : mode === 'proxy'
+      ? `
   return ofetch('/api/savory', {
     method: 'POST',
     body: { ...load, cache },
@@ -79,7 +79,7 @@ export async function collect(load) {${
     .then(handleSuccess)
     .catch(handleError);
    `
-: `
+      : `
   const payload = load.payload;
 
   if (enabled) {
