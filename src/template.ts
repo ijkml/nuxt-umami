@@ -1,11 +1,5 @@
 import type { ModuleMode, UmPublicConfig } from './types';
 
-const collectFns: Record<ModuleMode, string> = {
-  faux: 'fauxCollect',
-  proxy: 'proxyCollect',
-  direct: 'directCollect',
-};
-
 interface TemplateOptions {
   options: {
     mode: ModuleMode;
@@ -56,34 +50,14 @@ function handleSuccess(response) {
   return { ok: true };
 }
 
-async function _${collectFns.proxy}(load) {
-  return ofetch('/api/savory', {
-    method: 'POST',
-    body: { ...load, cache },
-  })
-    .then(handleSuccess)
-    .catch(handleError);
-}
+const { endpoint, website, enabled } = config;
 
-async function _${collectFns.faux}(load) {
-  const { endpoint, website, enabled } = config;
-  const payload = load.payload;
-
-  if (enabled) {
-    if (!endpoint)
-      logger('endpoint', payload);
-    if (!website)
-      logger('id', payload);
-
-    return Promise.resolve({ ok: false });
-  }
-    
-  logger('enabled', payload);
-  return Promise.resolve({ ok: true });
-}
-
-async function _${collectFns.direct}(load) {
-  const { endpoint, website } = config;
+/**
+ * @type FetchFn 
+ */
+export async function collect(load) {${
+  mode === 'direct'
+  ? `
   const { type, payload } = load;
 
   return ofetch(endpoint, {
@@ -95,12 +69,31 @@ async function _${collectFns.direct}(load) {
   })
     .then(handleSuccess)
     .catch(handleError);
-}
+}`
+   : mode === 'proxy'
+   ? `
+  return ofetch('/api/savory', {
+    method: 'POST',
+    body: { ...load, cache },
+  })
+    .then(handleSuccess)
+    .catch(handleError);
+   `
+: `
+  const payload = load.payload;
 
-/**
- * @type FetchFn 
- */
-export const collect = _${collectFns[mode]};
+  if (enabled) {
+    if (!endpoint)
+      logger('endpoint', payload);
+    if (!website)
+      logger('id', payload);
+
+    return Promise.resolve({ ok: false });
+  }
+    
+  logger('enabled');
+  return Promise.resolve({ ok: true });
+`}}
 `;
 }
 
