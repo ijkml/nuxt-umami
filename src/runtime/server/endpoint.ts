@@ -1,14 +1,14 @@
 import { createError, readValidatedBody, defineEventHandler, getHeaders } from 'h3';
 import { getClientIp } from 'request-ip';
 import { ofetch } from 'ofetch';
-import { parseCollectBody } from '../utils';
+import { parseEventBody } from '../utils';
 import { useRuntimeConfig } from '#imports';
 
 export default defineEventHandler(async (event) => {
   // validate body
   const result = await readValidatedBody(
     event,
-    body => parseCollectBody(body),
+    body => parseEventBody(body),
   );
 
   // invalid data, throw error
@@ -60,7 +60,7 @@ export default defineEventHandler(async (event) => {
     });
   }
   catch (error) {
-    let code = 502; // bad getway; 418: teapot
+    let code = 502; // bad gateway
     let message = 'Unknown error.';
 
     if (error instanceof Error) {

@@ -1,4 +1,4 @@
-interface ModuleOptions {
+type ModuleOptions = Partial<{
   /**
    * Your umami endpoint. This is where you would
    * normally load the script from.
@@ -6,14 +6,14 @@ interface ModuleOptions {
    * @required true
    * @example 'https://ijkml.xyz/'
    */
-  host?: string;
+  host: string;
   /**
    * Unique identifier provided by Umami
    *
    * @required true
    * @example `3c255b6d-678a-42dd-8074-272ee5b78484`
    */
-  id?: string;
+  id: string;
   /**
    * Configure the tracker to only run on specific domains.
    * Provide an array or comma delimited list of domains (without 'http').
@@ -23,26 +23,26 @@ interface ModuleOptions {
    * @example ['mywebsite.com', 'mywebsite2.com']
    * @default undefined
    */
-  domains?: string | string[] | null;
+  domains: string[] | null;
   /**
    * Option to automatically track page views.
    *
    * @default true
    */
-  autoTrack?: boolean;
+  autoTrack: boolean;
   /**
    * Whether or not to track during development (localhost).
    *
    * @default false
    */
-  ignoreLocalhost?: boolean;
+  ignoreLocalhost: boolean;
   /**
    * Self-hosted Umami lets you set a COLLECT_API_ENDPOINT, which is:
    * - `/api/collect` by default in Umami v1
    * - `/api/send` by default in Umami v2.
    * See Umami [Docs](https://umami.is/docs/environment-variables).
    */
-  customEndpoint?: string | null;
+  customEndpoint: string | null;
   /**
    * Exclude query/search params from tracked urls
    *
@@ -52,32 +52,32 @@ interface ModuleOptions {
    *
    * @default false
    */
-  excludeQueryParams?: boolean;
+  excludeQueryParams: boolean;
   /**
    * Enable `v-umami` directive
    *
    * @default false
    */
-  useDirective?: boolean;
+  useDirective: boolean;
   /**
    * Enable warning and error logs in production
    *
    * @default false
    */
-  logErrors?: boolean;
+  logErrors: boolean;
   /**
    * API proxy mode (see docs)
    *
    * @default false
    */
-  proxy?: false | 'direct' | 'cloak';
+  proxy: false | 'direct' | 'cloak';
   /**
    * Whether to enable the module
    *
    * @default true
    */
-  enabled?: boolean;
-}
+  enabled: boolean;
+}>;
 
 interface NormalizedModuleOptions extends Required<ModuleOptions> {
   domains: Array<string> | null;
@@ -104,6 +104,8 @@ type ModuleMode = 'faux' | 'proxy' | 'direct';
 
 type EventData = Record<string, string | number | boolean> | null;
 
+type PayloadTypes = ['event', 'identify'];
+
 interface StaticPayload {
   screen: string;
   language: string;
@@ -121,9 +123,13 @@ interface EventPayload extends ViewPayload {
   data?: Record<string, unknown>;
 };
 
+interface IdentifyPayload extends ViewPayload {
+  data?: Record<string, unknown>;
+}
+
 interface ServerPayload {
   cache?: string;
-  type: string;
+  type: PayloadTypes[number];
   payload: ViewPayload | EventPayload;
 };
 
@@ -141,7 +147,11 @@ export type {
   UmPrivateConfig,
   ModuleMode,
   FetchFn,
-  EventPayload,
+  PayloadTypes,
   ViewPayload,
+  EventPayload,
+  IdentifyPayload,
   ServerPayload,
 };
+
+// TODO: domain should be array only

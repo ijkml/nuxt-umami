@@ -1,10 +1,6 @@
 import type {
-  EventPayload,
-  FetchResult,
-  ModuleOptions,
-  NormalizedModuleOptions,
-  ServerPayload,
-  ViewPayload,
+  EventPayload, PayloadTypes, ServerPayload, ViewPayload,
+  FetchResult, ModuleOptions, NormalizedModuleOptions,
 } from '../types';
 
 function earlyPromise(ok: boolean): FetchResult {
@@ -19,6 +15,10 @@ function isRecord(value: unknown, optional = false): value is Record<string, unk
 
 function isValidString(value: unknown): value is string {
   return typeof value === 'string' && value.trim() !== '';
+}
+
+function includes<T extends U, U>(arr: ReadonlyArray<T>, el: U): el is T {
+  return arr.includes(el as T);
 }
 
 function normalizeConfig(options: ModuleOptions = {}): NormalizedModuleOptions {
@@ -40,12 +40,9 @@ function normalizeConfig(options: ModuleOptions = {}): NormalizedModuleOptions {
     host: isValidString(host) && URL.canParse(host) ? host.trim() : '',
     id: isValidString(id) ? id.trim() : '',
     domains: (function () {
-      let res = null;
       if (Array.isArray(domains) && domains.length)
-        res = domains.filter(isValidString).map(d => d.trim());
-      else if (isValidString(domains))
-        res = domains.split(',').filter(isValidString).map(d => d.trim());
-      return res ? Array.from(new Set(res)) : null;
+        return Array.from(domains.filter(isValidString).map(d => d.trim()));
+      return null;
     })(),
     customEndpoint: (function () {
       const customEP = isValidString(customEndpoint) ? customEndpoint.trim() : '';
@@ -94,14 +91,14 @@ function flattenObject(obj?: Record<string, unknown> | null, prefix = '') {
   }
 }
 
-const _propsValidator = {
+const validatorFns = {
   nonempty: isValidString,
   string: (value: unknown) => typeof value === 'string',
   data: (value: unknown) => isRecord(value, true),
   skip: () => true,
 } as const;
 
-type PropertyValidator = keyof typeof _propsValidator;
+type PropertyValidator = keyof typeof validatorFns;
 type Payload = ViewPayload & EventPayload;
 
 const _payloadProps: Record<keyof Payload, PropertyValidator> = {
@@ -112,9 +109,10 @@ const _payloadProps: Record<keyof Payload, PropertyValidator> = {
   referrer: 'string',
   title: 'string',
   name: 'skip', // optional, 'nonempty' in EventPayload
-  data: 'skip', // optional, 'data' in EventPayload
+  data: 'skip', // optional, 'data' in EventPayload & IdentifyPayload
 } as const;
 
+const _payloadType: PayloadTypes = ['event', 'identify'];
 const _bodyProps: Array<keyof ServerPayload> = ['cache', 'payload', 'type'];
 
 function isValidPayload(obj: object): obj is Payload {
@@ -131,15 +129,15 @@ function isValidPayload(obj: object): obj is Payload {
   ];
 
   if (objKeys.includes('name')) {
-    // is event payload, update validators
+    // is EventPayload, update validators
     validatorKeys.push('name');
     validators.name = 'nonempty';
+  }
 
-    // optional data is present, update validators
-    if (objKeys.includes('data')) {
-      validatorKeys.push('data');
-      validators.data = 'data';
-    }
+  // optional data is present, update validators
+  if (objKeys.includes('data')) {
+    validatorKeys.push('data');
+    validators.data = 'data';
   }
 
   // check: all keys are present, no more, no less
@@ -150,7 +148,7 @@ function isValidPayload(obj: object): obj is Payload {
 
   // run each value against its validator
   for (const key in obj) {
-    const fn = _propsValidator[validators[key as keyof Payload]];
+    const fn = validatorFns[validators[key as keyof Payload]];
     const value = obj[key];
     if (fn(value))
       continue;
@@ -163,7 +161,7 @@ type ValidatePayloadReturn =
   | { success: true; output: ServerPayload }
   | { success: false; output: unknown };
 
-function parseCollectBody(body: unknown): ValidatePayloadReturn {
+function parseEventBody(body: unknown): ValidatePayloadReturn {
   const error = {
     success: false,
     output: body,
@@ -182,6 +180,9 @@ function parseCollectBody(body: unknown): ValidatePayloadReturn {
 
   const { payload, cache, type } = body;
 
+  if (!includes(_payloadType, type))
+    return error;
+
   // check: body.payload is valid
   if (!isValidPayload(payload))
     return error;
@@ -197,5 +198,5 @@ export {
   isValidString,
   flattenObject,
   normalizeConfig,
-  parseCollectBody,
+  parseEventBody,
 };
