@@ -21,7 +21,7 @@ npx nuxi module add nuxt-umami@module
 
 ## 📖 Config options, Usage, and FAQs
 
-[Read the full documentation.](https://ijkml.github.io/nuxt-umami/)
+[Read the full documentation.](https://umami.nuxt.dev/)
 
 <hr />
 
