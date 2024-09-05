@@ -12,6 +12,45 @@ interface TemplateOptions {
   };
 };
 
+const fn_faux = `const payload = load.payload;
+
+  if (enabled) {
+    if (!endpoint)
+      logger('endpoint', payload);
+    if (!website)
+      logger('id', payload);
+
+    return Promise.resolve({ ok: false });
+  }
+    
+  logger('enabled');
+  return Promise.resolve({ ok: true });
+`;
+
+const fn_proxy = `return ofetch('/api/savory', {
+    method: 'POST',
+    body: { ...load, cache },
+  })
+    .then(handleSuccess)
+    .catch(handleError);
+`;
+
+const fn_direct = `const { type, payload } = load;
+
+  return ofetch(endpoint, {
+    method: 'POST',
+    headers: {
+      ...(cache && { 'x-umami-cache': cache }),
+    },
+    body: { type, payload: { ...payload, website } },
+  })
+    .then(handleSuccess)
+    .catch(handleError);
+  }
+`;
+
+const collectFn: Record<`fn_${ModuleMode}`, string> = { fn_direct, fn_faux, fn_proxy };
+
 function generateTemplate({ options: { mode, config: { logErrors, ...config }, path } }: TemplateOptions) {
   return `// template-generated
 import { ofetch } from 'ofetch';
@@ -54,46 +93,12 @@ const { endpoint, website, enabled } = config;
 
 /**
  * @type FetchFn 
+ * 
+ * @variation ${mode}
  */
-export async function collect(load) {${
-  mode === 'direct'
-    ? `
-  const { type, payload } = load;
-
-  return ofetch(endpoint, {
-    method: 'POST',
-    headers: {
-      ...(cache && { 'x-umami-cache': cache }),
-    },
-    body: { type, payload: { ...payload, website } },
-  })
-    .then(handleSuccess)
-    .catch(handleError);
-}`
-    : mode === 'proxy'
-      ? `
-  return ofetch('/api/savory', {
-    method: 'POST',
-    body: { ...load, cache },
-  })
-    .then(handleSuccess)
-    .catch(handleError);
-   `
-      : `
-  const payload = load.payload;
-
-  if (enabled) {
-    if (!endpoint)
-      logger('endpoint', payload);
-    if (!website)
-      logger('id', payload);
-
-    return Promise.resolve({ ok: false });
-  }
-    
-  logger('enabled');
-  return Promise.resolve({ ok: true });
-`}}
+export async function collect(load) {
+  ${collectFn[`fn_${mode}`]}
+}
 `;
 }
 
