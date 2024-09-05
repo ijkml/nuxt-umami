@@ -1,5 +1,5 @@
 import type {
-  StaticPayload, EventPayload, ViewPayload,
+  StaticPayload, EventPayload, ViewPayload, IdentifyPayload,
   PreflightResult, EventData, FetchResult,
 } from '../types';
 import { earlyPromise, flattenObject, isValidString } from './utils';
@@ -139,4 +139,36 @@ function umTrackEvent(eventName: string, eventData?: EventData): FetchResult {
   });
 }
 
-export { umTrackEvent, umTrackView };
+/**
+ * Save data about the current session.
+ *
+ * Umami now supports saving session data, and
+ * it works very similarly to custom event data.
+ * @see [v2.13.0 release](https://github.com/umami-software/umami/releases/tag/v2.13.0)
+ *
+ * @param sessionData data for this session, provide an object in the format
+ * `{key: value}`, where `key` = `string`, `value` = `string | number | boolean`.
+ */
+function umIdentify(sessionData?: EventData): FetchResult {
+  const check = runPreflight();
+
+  if (check === 'ssr')
+    return earlyPromise(false);
+
+  if (check !== true) {
+    logger(check);
+    return earlyPromise(false);
+  }
+
+  const data = flattenObject(sessionData);
+
+  return collect({
+    type: 'identify',
+    payload: {
+      ...getPayload(),
+      ...(data && { data }),
+    } satisfies IdentifyPayload,
+  });
+}
+
+export { umTrackEvent, umTrackView, umIdentify };
