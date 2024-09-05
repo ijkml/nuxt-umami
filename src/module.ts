@@ -25,6 +25,10 @@ export default defineNuxtModule<ModuleOptions>({
       types: resolve('./types'),
     } as const;
 
+    // TODO: transpile?
+    // const runtimeDir = resolve('./runtime')
+    // nuxt.options.build.transpile.push(runtimeDir)
+
     const runtimeConfig = nuxt.options.runtimeConfig;
     const ENV = process.env;
 
@@ -56,27 +60,28 @@ export default defineNuxtModule<ModuleOptions>({
 
     let moduleMode: ModuleMode = 'faux';
 
-    // TODO: proxy mode fallback based on `nuxt.options.ssr`
-
-    // module is enabled && endpoint/id has no errors
     if (enabled && endpoint && id) {
-      if (proxy === 'cloak') {
-        // proxy mode: cloak; add API route
-        moduleMode = 'proxy';
-        addServerHandler({
-          route: '/api/savory',
-          handler: resolve('./runtime/server/endpoint'),
-        });
-        privateConfig.endpoint = endpoint;
-        privateConfig.website = id;
-      }
-      else if (proxy === 'direct') {
-        // proxy mode: direct; add proxy rule
-        moduleMode = 'direct';
-        publicConfig.endpoint = '/api/savory';
-        publicConfig.website = id;
-        nuxt.options.routeRules ||= {};
-        nuxt.options.routeRules['/api/savory'] = { proxy: endpoint };
+      // module is enabled && endpoint/id has no errors
+      if (nuxt.options.ssr) {
+        // ssr is enabled, requests can be proxied
+        if (proxy === 'cloak') {
+          // proxy mode: cloak; add API route
+          moduleMode = 'proxy';
+          addServerHandler({
+            route: '/api/savory',
+            handler: resolve('./runtime/server/endpoint'),
+          });
+          privateConfig.endpoint = endpoint;
+          privateConfig.website = id;
+        }
+        else if (proxy === 'direct') {
+          // proxy mode: direct; add proxy rule
+          moduleMode = 'direct';
+          publicConfig.endpoint = '/api/savory';
+          publicConfig.website = id;
+          nuxt.options.routeRules ||= {};
+          nuxt.options.routeRules['/api/savory'] = { proxy: endpoint };
+        }
       }
       else {
         // proxy mode: none;
@@ -121,7 +126,7 @@ export default defineNuxtModule<ModuleOptions>({
     });
 
     // add composables
-    addImports(['umTrackEvent', 'umTrackView'].map((name) => {
+    addImports(['umTrackEvent', 'umTrackView', 'umIdentify'].map((name) => {
       return {
         name,
         as: name,
