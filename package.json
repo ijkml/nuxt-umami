@@ -32,10 +32,10 @@
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
     "up": "npm run dev:prepare && npm run dev",
-    "release": "npm run lint && npm run test && npm run prepack && bumpp && npm publish --tag module && git push --follow-tags",
+    "release": "npm run test && npm run prepack && bumpp && npm publish --tag module",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
+    "test": "vue-tsc --noEmit && npm run lint && cd playground && vue-tsc --noEmit"
   },
   "dependencies": {
     "@nuxt/kit": "^3.13.1",

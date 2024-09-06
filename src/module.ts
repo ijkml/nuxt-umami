@@ -142,3 +142,7 @@ export default defineNuxtModule<ModuleOptions>({
     });
   },
 });
+
+// TODO:
+// - show announcement to v2 users.
+// - move to latest tag

@@ -153,5 +153,3 @@ export type {
   IdentifyPayload,
   ServerPayload,
 };
-
-// TODO: domain should be array only
