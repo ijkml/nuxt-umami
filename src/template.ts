@@ -24,30 +24,24 @@ const fn_faux = `const payload = load.payload;
   }
     
   logger('enabled');
-  return Promise.resolve({ ok: true });
-`;
+  return Promise.resolve({ ok: true });`;
 
 const fn_proxy = `return ofetch('/api/savory', {
     method: 'POST',
     body: { ...load, cache },
   })
     .then(handleSuccess)
-    .catch(handleError);
-`;
+    .catch(handleError);`;
 
 const fn_direct = `const { type, payload } = load;
 
   return ofetch(endpoint, {
     method: 'POST',
-    headers: {
-      ...(cache && { 'x-umami-cache': cache }),
-    },
+    headers: { ...(cache && { 'x-umami-cache': cache }) },
     body: { type, payload: { ...payload, website } },
   })
     .then(handleSuccess)
-    .catch(handleError);
-  }
-`;
+    .catch(handleError);`;
 
 const collectFn: Record<`fn_${ModuleMode}`, string> = { fn_direct, fn_faux, fn_proxy };
 
@@ -69,6 +63,7 @@ export const logger = $logger;
 */
 export const config = ${JSON.stringify(config, null, 2)};
 
+const { endpoint, website, enabled } = config;
 let cache = '';
 
 function handleError(err) {
@@ -88,8 +83,6 @@ function handleSuccess(response) {
   cache = typeof response === 'string' ? response : '';
   return { ok: true };
 }
-
-const { endpoint, website, enabled } = config;
 
 /**
  * @type FetchFn 
