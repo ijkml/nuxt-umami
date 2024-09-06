@@ -5,7 +5,7 @@
   "description": "Integrate Umami Analytics into Nuxt",
   "author": "ML <me.mlaure@gmail.com>",
   "license": "MIT",
-  "homepage": "https://ijkml.github.io/nuxt-umami/",
+  "homepage": "https://umami.nuxt.dev/",
   "sponsor": {
     "url": "https://github.com/sponsors/ijkml/"
   },

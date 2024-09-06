@@ -7,15 +7,19 @@
 
 Integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites/applications.
 
+> **Hey...**
+> 
+> Still here? v3 is out, simpler and better. [Read the announcement.](https://umami.nuxt.dev/v2-upgrade-guide)
+
 ## 🚀 Try it online
 
-<a href="https://stackblitz.com/edit/nuxt-umami"><img src="https://developer.stackblitz.com/img/open_in_stackblitz.svg" alt="Open in StackBlitz"></a>
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/edit/nuxt-umami)
 
 ## ✨ Get started
 
 1. Install
 
-```bash
+```sh
 pnpm add nuxt-umami
 ```
 
@@ -29,7 +33,7 @@ defineNuxtConfig({
 
 ## 📖 Usage, Config, FAQs
 
-[Read the full documentation.](https://ijkml.github.io/nuxt-umami/)
+[Read the full documentation.](https://umami.nuxt.dev/v2)
 
 <hr />
 
