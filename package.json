@@ -1,7 +1,7 @@
 {
   "name": "nuxt-umami",
   "type": "module",
-  "version": "3.0.0-beta.4",
+  "version": "3.0.0-beta.5",
   "description": "Integrate Umami Analytics into Nuxt",
   "author": "Moses Laurence <me@ijkml.dev>",
   "license": "MIT",
