@@ -3,7 +3,7 @@ import {
   createResolver, defineNuxtModule,
 } from '@nuxt/kit';
 import { name, version } from '../package.json';
-import type { ModuleMode, ModuleOptions, UmPublicConfig } from './types';
+import type { ModuleMode, ModuleOptions, NormalizedModuleOptions, UmPublicConfig } from './types';
 import { isValidString, normalizeConfig } from './runtime/utils';
 import { generateTemplate } from './template';
 
@@ -58,15 +58,16 @@ export default defineNuxtModule<ModuleOptions>({
 
     const privateConfig = { endpoint: '', website: '', domains };
 
-    let moduleMode: ModuleMode = 'faux';
+    let mode: ModuleMode = 'faux';
+    const proxyOpts: Array<NormalizedModuleOptions['proxy']> = ['direct', 'cloak'];
 
     if (enabled && endpoint && id) {
-      // module is enabled && endpoint/id has no errors
-      if (nuxt.options.ssr) {
-        // ssr is enabled, requests can be proxied
+      // ^ module is enabled && endpoint/id has no errors
+      if (proxyOpts.includes(proxy) && nuxt.options.ssr) {
+        // ^ ssr is enabled, requests can be proxied
         if (proxy === 'cloak') {
-          // proxy mode: cloak; add API route
-          moduleMode = 'proxy';
+          // ^ proxy mode: cloak; add API route
+          mode = 'proxy';
           addServerHandler({
             route: '/api/savory',
             handler: resolve('./runtime/server/endpoint'),
@@ -75,8 +76,8 @@ export default defineNuxtModule<ModuleOptions>({
           privateConfig.website = id;
         }
         else if (proxy === 'direct') {
-          // proxy mode: direct; add proxy rule
-          moduleMode = 'direct';
+          // ^ proxy mode: direct; add proxy rule
+          mode = 'direct';
           publicConfig.endpoint = '/api/savory';
           publicConfig.website = id;
           nuxt.options.routeRules ||= {};
@@ -84,14 +85,14 @@ export default defineNuxtModule<ModuleOptions>({
         }
       }
       else {
-        // proxy mode: none;
-        moduleMode = 'direct';
+        // ^ proxy mode: none; or ssr is disabled
+        mode = 'direct';
         publicConfig.endpoint = endpoint;
         publicConfig.website = id;
       }
     }
     else {
-      // module is disabled || host/id has errors
+      // ^ module is disabled || host/id has errors
       if (!id)
         console.warn('[umami] id is missing or incorrectly configured. Check module config.');
       if (!endpoint) {
@@ -115,8 +116,7 @@ export default defineNuxtModule<ModuleOptions>({
       filename: 'umami.config.mjs',
       write: true,
       options: {
-        mode: moduleMode,
-        // TODO: decouple
+        mode,
         config: {
           ...publicConfig,
           logErrors: process.env.NODE_ENV === 'development' || logErrors,
