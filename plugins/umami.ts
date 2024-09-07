@@ -27,5 +27,11 @@ export default defineNuxtPlugin({
       // to wait for the update to finish, to capture title
       // https://github.com/nuxt/nuxt/blob/3dbe7ce3482dac7c7ca06eb5a2eee23a7fcad2ac/packages/nuxt/src/head/runtime/plugins/unhead.ts#L35
     },
+    'app:beforeMount': function () {
+      console.info(
+        `%cNEW VERSION AVAILABLE: Nuxt Umami v3! 🚀\nGet the latest features and improvements.\nCheck the announcement: https://umami.nuxt.dev/v2-upgrade-guide.`,
+        'color: #bada55; font-weight: 500;',
+      );
+    },
   },
 });
