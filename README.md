@@ -8,7 +8,7 @@
 Integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites/applications.
 
 > **Hey...**
-> 
+>
 > Still here? v3 is out, simpler and better. [Read the announcement](https://umami.nuxt.dev/v2-upgrade-guide).
 >
 > [Switch to v3 branch.](https://github.com/ijkml/nuxt-umami/tree/module)

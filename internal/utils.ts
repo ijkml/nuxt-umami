@@ -1,10 +1,10 @@
+import { debug } from './debug';
 import type {
   FetchResult,
   PartialPayload,
   PreflightResult,
   ServerPayload,
 } from './types';
-import { debug } from './debug';
 
 function isValidString(str: unknown): str is string {
   return typeof str === 'string' && str.trim() !== '';
@@ -169,4 +169,4 @@ async function collect(load: ServerPayload): FetchResult {
     });
 }
 
-export { collect, umConfig, preflight, getPayload, earlyPromise, isValidString, helloDebugger };
+export { collect, earlyPromise, getPayload, helloDebugger, isValidString, preflight, umConfig };

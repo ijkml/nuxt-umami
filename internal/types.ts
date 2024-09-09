@@ -106,12 +106,12 @@ type FetchResult = Promise<{ ok: boolean }>;
 
 export type {
   EventData,
-  PartialPayload,
   EventPayload,
-  ViewPayload,
-  PayloadType,
-  ServerPayload,
-  PreflightResult,
   FetchResult,
   ModuleOptions,
+  PartialPayload,
+  PayloadType,
+  PreflightResult,
+  ServerPayload,
+  ViewPayload,
 };
