@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const title = 'Nuxt Umami PG';
+const title = `Page - ${useRoute().params.id || 'other'}`;
 
 useHead({ title });
 </script>

@@ -3,4 +3,5 @@ export default defineNuxtConfig({
   typescript: {
     includeWorkspace: true,
   },
+  css: ['./reset.css'],
 });
