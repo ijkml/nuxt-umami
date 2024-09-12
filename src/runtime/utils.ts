@@ -34,6 +34,7 @@ function normalizeConfig(options: ModuleOptions = {}): NormalizedModuleOptions {
     excludeQueryParams = false,
     logErrors = false,
     enabled = true,
+    trailingSlash = 'any',
   } = options;
 
   return {
@@ -56,6 +57,14 @@ function normalizeConfig(options: ModuleOptions = {}): NormalizedModuleOptions {
       if (isValidString(proxy) && ['direct', 'cloak'].includes(proxy.trim()))
         return proxy.trim() as typeof proxy;
       return false;
+    })(),
+    trailingSlash: (function () {
+      if (
+        isValidString(trailingSlash)
+        && ['always', 'never'].includes(trailingSlash.trim())
+      )
+        return trailingSlash.trim() as typeof trailingSlash;
+      return 'any';
     })(),
     ignoreLocalhost: ignoreLocalhost === true,
     autoTrack: autoTrack !== false,

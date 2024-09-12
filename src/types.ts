@@ -1,5 +1,11 @@
 type ModuleOptions = Partial<{
   /**
+   * Whether to enable the module
+   *
+   * @default true
+   */
+  enabled: boolean;
+  /**
    * Your umami endpoint. This is where you would
    * normally load the script from.
    *
@@ -72,11 +78,11 @@ type ModuleOptions = Partial<{
    */
   proxy: false | 'direct' | 'cloak';
   /**
-   * Whether to enable the module
+   * Consistent trailing slash
    *
-   * @default true
+   * @default 'any'
    */
-  enabled: boolean;
+  trailingSlash: 'any' | 'always' | 'never';
 }>;
 
 interface NormalizedModuleOptions extends Required<ModuleOptions> {
@@ -135,6 +141,7 @@ interface ServerPayload {
 
 type FetchResult = Promise<{ ok: boolean }>;
 type FetchFn = (load: ServerPayload) => FetchResult;
+type BuildPathUrlFn = () => string;
 
 export type {
   PreflightResult,
@@ -147,6 +154,7 @@ export type {
   UmPrivateConfig,
   ModuleMode,
   FetchFn,
+  BuildPathUrlFn,
   PayloadTypes,
   ViewPayload,
   EventPayload,
