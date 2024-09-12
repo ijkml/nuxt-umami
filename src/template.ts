@@ -45,13 +45,17 @@ const fn_direct = `const { type, payload } = load;
 
 const collectFn: Record<`fn_${ModuleMode}`, string> = { fn_direct, fn_faux, fn_proxy };
 
-function generateTemplate({ options: { mode, config: { logErrors, ...config }, path } }: TemplateOptions) {
+function generateTemplate({
+  options: { mode, path, config: { logErrors, ...config } },
+}: TemplateOptions) {
   return `// template-generated
 import { ofetch } from 'ofetch';
 import { ${logErrors ? 'logger' : 'fauxLogger'} as $logger } from "${path.logger}";
 
 /**
  * @typedef {import("${path.types}").FetchFn} FetchFn
+ * 
+ * @typedef {import("${path.types}").BuildPathUrlFn} BuildPathUrlFn
  * 
  * @typedef {import("${path.types}").UmPublicConfig} UmPublicConfig
  */
@@ -82,6 +86,21 @@ function handleError(err) {
 function handleSuccess(response) {
   cache = typeof response === 'string' ? response : '';
   return { ok: true };
+}
+
+/**
+ * @type BuildPathUrlFn
+ */
+export function buildPathUrl() {
+  const { pathname, search } = new URL(window.location.href);
+
+  const path = ${config.trailingSlash === 'always'
+    ? `pathname.endsWith('/') ? pathname : pathname + '/'`
+    : config.trailingSlash === 'never'
+      ? `pathname.endsWith('/') ? pathname.slice(0, -1) : pathname`
+      : 'pathname'};
+
+  return ${config.excludeQueryParams ? 'path' : 'path + search'};
 }
 
 /**

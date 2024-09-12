@@ -3,10 +3,11 @@ import type {
   PreflightResult, EventData, FetchResult,
 } from '../types';
 import { earlyPromise, flattenObject, isValidString } from './utils';
-import { collect, config, logger } from '#build/umami.config.mjs';
+import { buildPathUrl, collect, config, logger } from '#build/umami.config.mjs';
 
 let configChecks: PreflightResult | undefined;
 let staticPayload: StaticPayload | undefined;
+let queryRef: string | undefined;
 
 function runPreflight(): PreflightResult {
   if (typeof window === 'undefined')
@@ -54,18 +55,21 @@ function getStaticPayload(): StaticPayload {
   return staticPayload;
 }
 
+function getQueryRef(): string {
+  if (typeof queryRef === 'string')
+    return queryRef;
+
+  const params = new URL(window.location.href).searchParams;
+  queryRef = params.get('referrer') || params.get('ref') || '';
+
+  return queryRef;
+}
+
 function getPayload(): ViewPayload {
   const { referrer, title } = window.document;
-  const pageUrl = new URL(window.location.href);
 
-  const ref = referrer
-    || pageUrl.searchParams.get('referrer')
-    || pageUrl.searchParams.get('ref')
-    || '';
-
-  const url = config.excludeQueryParams
-    ? pageUrl.pathname
-    : pageUrl.pathname + pageUrl.search;
+  const ref = referrer || getQueryRef();
+  const url = buildPathUrl();
 
   return {
     ...getStaticPayload(),
