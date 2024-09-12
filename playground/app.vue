@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const shareUrl = 'https://savory.vercel.app/share/j2f1spIBFqHJKsXv/Nuxt%20Umami';
+const { shareUrl } = useAppConfig();
 
 function testView() {
   umTrackView().then(({ ok }) => {

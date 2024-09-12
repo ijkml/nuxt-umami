@@ -3,10 +3,11 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-08-08',
 
   modules: ['../src/module'],
+
   umami: {
     enabled: true,
-    host: 'https://savory.vercel.app/',
-    id: '84cc2d28-8689-4df0-b575-2202e34a75aa',
+    host: 'https://savory.ijkml.dev/',
+    id: '94c6eb8c-646d-41ff-8b5b-a924ce2b4111',
     ignoreLocalhost: false,
     autoTrack: true,
     useDirective: true,
@@ -14,7 +15,12 @@ export default defineNuxtConfig({
     logErrors: true,
     domains: null,
     excludeQueryParams: false,
+    trailingSlash: 'always',
     proxy: 'cloak',
+  },
+
+  appConfig: {
+    shareUrl: 'https://savory.ijkml.dev/share/xj2RHnDuAD8khsui/localhost',
   },
 
   css: ['@/assets/reset.css'],
