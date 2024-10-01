@@ -13,7 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/ijkml/nuxt-umami.git"
   },
-  "packageManager": "pnpm@9.10.0",
+  "packageManager": "pnpm@9.11.0",
   "exports": {
     ".": {
       "types": "./dist/types.d.ts",
@@ -32,25 +32,25 @@
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
     "up": "npm run dev:prepare && npm run dev",
-    "release": "npm run test && npm run prepack && bumpp && npm publish --tag module",
+    "release": "npm run test && npm run prepack && bumpp && npm publish",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "vue-tsc --noEmit && npm run lint && cd playground && vue-tsc --noEmit"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.13.1",
+    "@nuxt/kit": "^3.13.2",
     "request-ip": "^3.3.0"
   },
   "devDependencies": {
     "@nuxt/eslint-config": "^0.5.7",
     "@nuxt/module-builder": "^0.8.4",
-    "@nuxt/schema": "^3.13.1",
-    "@types/node": "^22.5.4",
+    "@nuxt/schema": "^3.13.2",
+    "@types/node": "^22.7.4",
     "@types/request-ip": "^0.0.41",
-    "bumpp": "^9.5.2",
-    "eslint": "^9.10.0",
-    "nuxt": "^3.13.1",
-    "typescript": "latest",
+    "bumpp": "^9.6.1",
+    "eslint": "^9.11.1",
+    "nuxt": "^3.13.2",
+    "typescript": "^5.6.2",
     "vue-tsc": "^2.1.6"
   }
 }
