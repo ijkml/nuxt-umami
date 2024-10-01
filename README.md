@@ -20,7 +20,7 @@ Integrate [**Umami Analytics**](https://umami.is/) into your Nuxt websites/appli
 1. Install
 
 ```sh
-pnpm add nuxt-umami
+pnpm add nuxt-umami@v2
 ```
 
 2. Add to Nuxt
