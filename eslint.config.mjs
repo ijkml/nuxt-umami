@@ -1,21 +1,11 @@
-// @ts-check
-import { createConfigForNuxt } from '@nuxt/eslint-config/flat';
+import antfu from '@antfu/eslint-config';
 
-// Run `npx @eslint/config-inspector` to inspect the resolved config interactively
-export default createConfigForNuxt({
-  features: {
-    // Rules for module authors
-    tooling: {
-
-    },
-    // Rules for formatting
-    stylistic: {
-      semi: true,
-    },
+export default antfu({
+  stylistic: {
+    semi: true,
   },
-  dirs: {
-    src: [
-      './playground',
-    ],
+  rules: {
+    'no-console': 'off',
+    'node/prefer-global/process': 'off',
   },
 });

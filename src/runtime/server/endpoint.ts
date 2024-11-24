@@ -1,8 +1,8 @@
-import { createError, readValidatedBody, defineEventHandler, getHeaders } from 'h3';
-import { getClientIp } from 'request-ip';
-import { ofetch } from 'ofetch';
-import { parseEventBody } from '../utils';
 import { useRuntimeConfig } from '#imports';
+import { createError, defineEventHandler, getHeaders, readValidatedBody } from 'h3';
+import { ofetch } from 'ofetch';
+import { getClientIp } from 'request-ip';
+import { parseEventBody } from '../utils';
 
 export default defineEventHandler(async (event) => {
   // validate body

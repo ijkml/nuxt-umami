@@ -1,9 +1,13 @@
+import type { ModuleMode, ModuleOptions, NormalizedModuleOptions, UmPublicConfig } from './types';
 import {
-  addImports, addPlugin, addTemplate, addServerHandler,
-  createResolver, defineNuxtModule,
+  addImports,
+  addPlugin,
+  addServerHandler,
+  addTemplate,
+  createResolver,
+  defineNuxtModule,
 } from '@nuxt/kit';
 import { name, version } from '../package.json';
-import type { ModuleMode, ModuleOptions, NormalizedModuleOptions, UmPublicConfig } from './types';
 import { isValidString, normalizeConfig } from './runtime/utils';
 import { generateTemplate } from './template';
 
@@ -37,8 +41,12 @@ export default defineNuxtModule<ModuleOptions>({
 
     const {
       enabled,
-      host, id, customEndpoint,
-      domains, proxy, logErrors,
+      host,
+      id,
+      customEndpoint,
+      domains,
+      proxy,
+      logErrors,
       ...runtimeOptions
     } = normalizeConfig({
       ...options,
@@ -143,7 +151,3 @@ export default defineNuxtModule<ModuleOptions>({
     });
   },
 });
-
-// TODO:
-// - show announcement to v2 users.
-// - move to latest tag

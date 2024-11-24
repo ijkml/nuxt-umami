@@ -1,7 +1,7 @@
-import { umTrackView } from './composables';
-import { directive } from './directive';
 import { defineNuxtPlugin } from '#app';
 import { config } from '#build/umami.config.mjs';
+import { umTrackView } from './composables';
+import { directive } from './directive';
 
 const { useDirective, autoTrack } = config;
 
