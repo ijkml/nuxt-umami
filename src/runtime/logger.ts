@@ -30,4 +30,4 @@ function logger(id: PreflightErrId, raw?: unknown) {
 
 function fauxLogger(..._args: Parameters<typeof logger>) {}
 
-export { logger, fauxLogger };
+export { fauxLogger, logger };

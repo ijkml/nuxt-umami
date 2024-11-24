@@ -1,9 +1,14 @@
 import type {
-  StaticPayload, EventPayload, ViewPayload, IdentifyPayload,
-  PreflightResult, EventData, FetchResult,
+  EventData,
+  EventPayload,
+  FetchResult,
+  IdentifyPayload,
+  PreflightResult,
+  StaticPayload,
+  ViewPayload,
 } from '../types';
-import { earlyPromise, flattenObject, isValidString } from './utils';
 import { buildPathUrl, collect, config, logger } from '#build/umami.config.mjs';
+import { earlyPromise, flattenObject, isValidString } from './utils';
 
 let configChecks: PreflightResult | undefined;
 let staticPayload: StaticPayload | undefined;
@@ -175,4 +180,4 @@ function umIdentify(sessionData?: EventData): FetchResult {
   });
 }
 
-export { umTrackEvent, umTrackView, umIdentify };
+export { umIdentify, umTrackEvent, umTrackView };
