@@ -38,6 +38,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     const envHost = ENV.NUXT_UMAMI_HOST || ENV.NUXT_PUBLIC_UMAMI_HOST;
     const envId = ENV.NUXT_UMAMI_ID || ENV.NUXT_PUBLIC_UMAMI_ID;
+    const envTag = ENV.NUXT_UMAMI_TAG || ENV.NUXT_PUBLIC_UMAMI_TAG;
 
     const {
       enabled,
@@ -52,6 +53,7 @@ export default defineNuxtModule<ModuleOptions>({
       ...options,
       ...(isValidString(envId) && { id: envId }),
       ...(isValidString(envHost) && { host: envHost }),
+      ...(isValidString(envTag) && { tag: envTag }),
     });
 
     const endpoint = host ? new URL(host).origin + (customEndpoint || '/api/send') : '';

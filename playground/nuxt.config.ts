@@ -17,6 +17,7 @@ export default defineNuxtConfig({
     excludeQueryParams: false,
     trailingSlash: 'always',
     proxy: 'cloak',
+    tag: 'gondor',
   },
 
   appConfig: {
