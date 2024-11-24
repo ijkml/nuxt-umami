@@ -1,6 +1,11 @@
 import type {
-  EventPayload, PayloadTypes, ServerPayload, ViewPayload,
-  FetchResult, ModuleOptions, NormalizedModuleOptions,
+  EventPayload,
+  FetchResult,
+  ModuleOptions,
+  NormalizedModuleOptions,
+  PayloadTypes,
+  ServerPayload,
+  ViewPayload,
 } from '../types';
 
 function earlyPromise(ok: boolean): FetchResult {
@@ -35,6 +40,7 @@ function normalizeConfig(options: ModuleOptions = {}): NormalizedModuleOptions {
     logErrors = false,
     enabled = true,
     trailingSlash = 'any',
+    tag = undefined,
   } = options;
 
   return {
@@ -62,10 +68,12 @@ function normalizeConfig(options: ModuleOptions = {}): NormalizedModuleOptions {
       if (
         isValidString(trailingSlash)
         && ['always', 'never'].includes(trailingSlash.trim())
-      )
+      ) {
         return trailingSlash.trim() as typeof trailingSlash;
+      }
       return 'any';
     })(),
+    tag: isValidString(tag) ? tag.trim() : null,
     ignoreLocalhost: ignoreLocalhost === true,
     autoTrack: autoTrack !== false,
     useDirective: useDirective === true,
@@ -117,6 +125,7 @@ const _payloadProps: Record<keyof Payload, PropertyValidator> = {
   url: 'nonempty',
   referrer: 'string',
   title: 'string',
+  tag: 'skip', // optional property
   name: 'skip', // optional, 'nonempty' in EventPayload
   data: 'skip', // optional, 'data' in EventPayload & IdentifyPayload
 } as const;
@@ -133,8 +142,12 @@ function isValidPayload(obj: object): obj is Payload {
   const validators: typeof _payloadProps = { ..._payloadProps };
 
   const validatorKeys: Array<keyof Payload> = [
-    'hostname', 'language', 'screen',
-    'url', 'referrer', 'title',
+    'hostname',
+    'language',
+    'screen',
+    'url',
+    'referrer',
+    'title',
   ];
 
   if (objKeys.includes('name')) {
@@ -149,11 +162,19 @@ function isValidPayload(obj: object): obj is Payload {
     validators.data = 'data';
   }
 
+  // optional property is present, update validators
+  if (objKeys.includes('tag')) {
+    validatorKeys.push('tag');
+    validators.tag = 'string';
+  }
+
   // check: all keys are present, no more, no less
   if (
     objKeys.length !== validatorKeys.length
     || !validatorKeys.every(k => objKeys.includes(k))
-  ) return false;
+  ) {
+    return false;
+  }
 
   // run each value against its validator
   for (const key in obj) {
@@ -185,7 +206,9 @@ function parseEventBody(body: unknown): ValidatePayloadReturn {
     'type' in body && isValidString(body.type)
     && 'cache' in body && typeof body.cache === 'string'
     && 'payload' in body && isRecord(body.payload)
-  )) return error;
+  )) {
+    return error;
+  }
 
   const { payload, cache, type } = body;
 
@@ -204,8 +227,8 @@ function parseEventBody(body: unknown): ValidatePayloadReturn {
 
 export {
   earlyPromise,
-  isValidString,
   flattenObject,
+  isValidString,
   normalizeConfig,
   parseEventBody,
 };
