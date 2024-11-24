@@ -97,13 +97,14 @@ export default defineNuxtModule<ModuleOptions>({
         console.warn('[umami] id is missing or incorrectly configured. Check module config.');
       if (!endpoint) {
         console.warn(
-          '[umami] Your API endpoint is missing or incorrectly configured.',
-          'Check `host` & `customEndpoint` in module config.',
+          '[umami] Your API endpoint is missing or incorrectly configured. Check `host` and/or `customEndpoint` in module config.',
         );
       }
 
-      console.info(`[umami] Currently running in test mode ${
-        enabled ? 'due to incorrect/missing options.' : 'because module is disabled.'
+      console.info(`[umami] ${
+        enabled
+          ? 'Currently running in test mode due to incorrect/missing options.'
+          : 'Umami is disabled.'
       }`);
     }
 
