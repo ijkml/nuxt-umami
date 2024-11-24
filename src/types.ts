@@ -161,7 +161,7 @@ type CurrencyCode = Uppercase<`${_Letter}${_Letter}${_Letter}`>;
 
 export type {
   BuildPathUrlFn,
-  CurrencyCode
+  CurrencyCode,
   EventData,
   EventPayload,
   FetchFn,
