@@ -52,7 +52,7 @@ function getStaticPayload(): StaticPayload {
     navigator: { language },
   } = window;
 
-  const { tag } = config;
+  const tag = window.localStorage.getItem('umami.tag') || config.tag;
 
   staticPayload = {
     hostname,

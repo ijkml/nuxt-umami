@@ -53,7 +53,7 @@ type ModuleOptions = Partial<{
   /**
    * Use Umami tags for A/B testing or to group events.
    *
-   * See [Umami Docs](https://umami.is/docs/tags).
+   * See [Documentation](https://umami.nuxt.dev/api/configuration#umami-tag).
    */
   tag: string | null;
   /**
