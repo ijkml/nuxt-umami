@@ -1,7 +1,7 @@
 {
   "name": "nuxt-umami",
   "type": "module",
-  "version": "3.0.2",
+  "version": "3.1.0",
   "packageManager": "pnpm@9.14.4",
   "description": "Integrate Umami Analytics into Nuxt",
   "author": "Moses Laurence <me@ijkml.dev>",
