@@ -83,6 +83,18 @@ onMounted(() => {
       </div>
 
       <div class="deck">
+        <button @click="umTrackRevenue('buy-course', 49.95, 'USD')">
+          Buy course: $49.95
+        </button>
+        <button @click="umTrackRevenue('buy-premium', 199.99, 'EUR')">
+          Buy premium: £199.99
+        </button>
+        <button @click="umTrackRevenue('buy-coffee', 20, 'YEN')">
+          Buy coffee: ¥20
+        </button>
+      </div>
+
+      <div class="deck">
         <NuxtLink to="/">
           Homepage
         </NuxtLink>
