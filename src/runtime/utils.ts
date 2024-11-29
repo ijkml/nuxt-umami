@@ -40,6 +40,7 @@ function normalizeConfig(options: ModuleOptions = {}): NormalizedModuleOptions {
     logErrors = false,
     enabled = true,
     trailingSlash = 'any',
+    tag = undefined,
   } = options;
 
   return {
@@ -72,6 +73,7 @@ function normalizeConfig(options: ModuleOptions = {}): NormalizedModuleOptions {
       }
       return 'any';
     })(),
+    tag: isValidString(tag) ? tag.trim() : null,
     ignoreLocalhost: ignoreLocalhost === true,
     autoTrack: autoTrack !== false,
     useDirective: useDirective === true,
@@ -123,6 +125,7 @@ const _payloadProps: Record<keyof Payload, PropertyValidator> = {
   url: 'nonempty',
   referrer: 'string',
   title: 'string',
+  tag: 'skip', // optional property
   name: 'skip', // optional, 'nonempty' in EventPayload
   data: 'skip', // optional, 'data' in EventPayload & IdentifyPayload
 } as const;
@@ -157,6 +160,12 @@ function isValidPayload(obj: object): obj is Payload {
   if (objKeys.includes('data')) {
     validatorKeys.push('data');
     validators.data = 'data';
+  }
+
+  // optional property is present, update validators
+  if (objKeys.includes('tag')) {
+    validatorKeys.push('tag');
+    validators.tag = 'string';
   }
 
   // check: all keys are present, no more, no less

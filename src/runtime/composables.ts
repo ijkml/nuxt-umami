@@ -1,4 +1,5 @@
 import type {
+  CurrencyCode,
   EventData,
   EventPayload,
   FetchResult,
@@ -51,10 +52,13 @@ function getStaticPayload(): StaticPayload {
     navigator: { language },
   } = window;
 
+  const tag = window.localStorage.getItem('umami.tag') || config.tag;
+
   staticPayload = {
     hostname,
     language,
     screen: `${width}x${height}`,
+    ...(tag ? { tag } : null),
   };
 
   return staticPayload;
@@ -180,4 +184,40 @@ function umIdentify(sessionData?: EventData): FetchResult {
   });
 }
 
-export { umIdentify, umTrackEvent, umTrackView };
+/**
+ * Tracks financial performance
+ * @see [Umami Docs](https://umami.is/docs/reports/report-revenue)
+ *
+ * @param eventName [revenue] event name
+ * @param revenue revenue / amount
+ * @param currency currency code (defaults to USD)
+ * ([ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#List_of_ISO_4217_currency_codes))
+ */
+function umTrackRevenue(
+  eventName: string,
+  revenue: number,
+  currency: CurrencyCode = 'USD',
+): FetchResult {
+  const $rev = typeof revenue === 'number' ? revenue : Number(revenue);
+
+  if (Number.isNaN($rev) || !Number.isFinite(revenue)) {
+    // if you ever run into troubles with isFinite (or not),
+    // please buy me a coffee ;) bmc.link/ijkml
+    logger('revenue', revenue);
+    return earlyPromise(false);
+  }
+
+  let $cur: string | null = null;
+
+  if (typeof currency === 'string' && /^[A-Z]{3}$/i.test(currency.trim()))
+    $cur = currency.trim();
+  else
+    logger('currency', `Got: ${currency}`);
+
+  return umTrackEvent(eventName, {
+    revenue: $rev,
+    ...($cur ? { currency: $cur } : null),
+  });
+}
+
+export { umIdentify, umTrackEvent, umTrackRevenue, umTrackView };

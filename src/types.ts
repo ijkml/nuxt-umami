@@ -11,6 +11,7 @@ type ModuleOptions = Partial<{
    *
    * @required true
    * @example 'https://ijkml.xyz/'
+   * @see [How to find?](https://umami.nuxt.dev/api/configuration#finding-config-options).
    */
   host: string;
   /**
@@ -46,9 +47,15 @@ type ModuleOptions = Partial<{
    * Self-hosted Umami lets you set a COLLECT_API_ENDPOINT, which is:
    * - `/api/collect` by default in Umami v1
    * - `/api/send` by default in Umami v2.
-   * See Umami [Docs](https://umami.is/docs/environment-variables).
+   * See [Umami Docs](https://umami.is/docs/environment-variables).
    */
   customEndpoint: string | null;
+  /**
+   * Use Umami tags for A/B testing or to group events.
+   *
+   * See [Documentation](https://umami.nuxt.dev/api/configuration#umami-tag).
+   */
+  tag: string | null;
   /**
    * Exclude query/search params from tracked urls
    *
@@ -72,7 +79,9 @@ type ModuleOptions = Partial<{
    */
   logErrors: boolean;
   /**
-   * API proxy mode (see docs)
+   * API proxy mode
+   *
+   * @see [Documentation](https://umami.nuxt.dev/api/configuration#proxy-mode).
    *
    * @default false
    */
@@ -116,6 +125,7 @@ interface StaticPayload {
   screen: string;
   language: string;
   hostname: string;
+  tag?: string;
 }
 
 interface ViewPayload extends StaticPayload {
@@ -143,8 +153,15 @@ type FetchResult = Promise<{ ok: boolean }>;
 type FetchFn = (load: ServerPayload) => FetchResult;
 type BuildPathUrlFn = () => string;
 
+type _Letter = `${'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H'
+| 'I' | 'J' | 'K' | 'M' | 'L' | 'N' | 'O' | 'P' | 'Q' | 'R' | 'S'
+| 'T' | 'U' | 'V' | 'W' | 'X' | 'Y' | 'Z'}`;
+
+type CurrencyCode = Uppercase<`${_Letter}${_Letter}${_Letter}`>;
+
 export type {
   BuildPathUrlFn,
+  CurrencyCode,
   EventData,
   EventPayload,
   FetchFn,
