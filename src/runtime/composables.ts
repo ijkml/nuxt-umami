@@ -52,7 +52,7 @@ function getStaticPayload(): StaticPayload {
     navigator: { language },
   } = window;
 
-  const tag = window.localStorage.getItem('umami.tag') || config.tag;
+  const { tag } = config;
 
   staticPayload = {
     hostname,
@@ -79,9 +79,11 @@ function getPayload(): ViewPayload {
 
   const ref = referrer || getQueryRef();
   const url = buildPathUrl();
+  const tag = window.localStorage.getItem('umami.tag');
 
   return {
     ...getStaticPayload(),
+    ...(tag ? { tag } : null),
     url: encodeURI(url),
     referrer: encodeURI(ref),
     title: encodeURIComponent(title),
