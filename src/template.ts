@@ -39,6 +39,7 @@ const fn_direct = `const { type, payload } = load;
     method: 'POST',
     headers: { ...(cache && { 'x-umami-cache': cache }) },
     body: { type, payload: { ...payload, website } },
+    credentials: 'omit',
   })
     .then(handleSuccess)
     .catch(handleError);`;
