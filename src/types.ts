@@ -57,16 +57,6 @@ type ModuleOptions = Partial<{
    */
   tag: string | null;
   /**
-   * Exclude query/search params from tracked urls
-   *
-   * false: `/page/link?search=product-abc&filter=asc`
-   *
-   * true: `/page/link`
-   *
-   * @default false
-   */
-  excludeQueryParams: boolean;
-  /**
    * Enable `v-umami` directive
    *
    * @default false
@@ -90,14 +80,65 @@ type ModuleOptions = Partial<{
    * Consistent trailing slash
    *
    * @default 'any'
+   * @deprecated use `urlOptions` (DOCX)
    */
   trailingSlash: 'any' | 'always' | 'never';
+  /**
+   * Exclude query/search params from tracked urls
+   *
+   * false: `/page/link?search=product-abc&filter=asc`
+   *
+   * true: `/page/link`
+   *
+   * @default false
+   * @deprecated use `urlOptions` (DOCX)
+   */
+  excludeQueryParams: boolean;
+  /**
+   * Configure how urls are sent to the server
+   */
+  urlOptions?: Partial<{
+  /**
+   * Enforce consistent trailing slash
+   *
+   * @default 'any'
+   */
+    trailingSlash: 'any' | 'always' | 'never';
+    /**
+     * Exclude query/search params from tracked urls
+     *
+     * false: `/page/link?search=product-abc&filter=asc`
+     *
+     * true: `/page/link`
+     *
+     * @default false
+     */
+    excludeSearch: boolean;
+    /**
+     * Exclude hash from tracked urls
+     *
+     * false: `/page/link#contact`
+     *
+     * true: `/page/link`
+     *
+     * @default false
+     */
+    excludeHash: boolean;
+  }>;
 }>;
 
-interface NormalizedModuleOptions extends Required<ModuleOptions> {
+interface _NormalizedOpts extends Required<ModuleOptions> {
   domains: Array<string> | null;
   customEndpoint: `/${string}` | null;
+  urlOptions: Required<Required<ModuleOptions>['urlOptions']>;
 }
+
+type NormalizedModuleOptions = Prettify<
+  Omit<
+    _NormalizedOpts,
+    'excludeQueryParams' | 'trailingSlash'
+  >
+>;
 
 type _PublicConfig = Omit<
   NormalizedModuleOptions,
@@ -158,6 +199,10 @@ type _Letter = `${'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H'
 | 'T' | 'U' | 'V' | 'W' | 'X' | 'Y' | 'Z'}`;
 
 type CurrencyCode = Uppercase<`${_Letter}${_Letter}${_Letter}`>;
+
+type Prettify<T> = {
+  [K in keyof T]: T[K];
+} & {};
 
 export type {
   BuildPathUrlFn,

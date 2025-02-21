@@ -93,15 +93,21 @@ function handleSuccess(response) {
  * @type BuildPathUrlFn
  */
 export function buildPathUrl() {
-  const { pathname, search } = new URL(window.location.href);
+  // ${config.urlOptions}
 
-  const path = ${config.trailingSlash === 'always'
-    ? `pathname.endsWith('/') ? pathname : pathname + '/'`
-    : config.trailingSlash === 'never'
-      ? `pathname.endsWith('/') ? pathname.slice(0, -1) : pathname`
-      : 'pathname'};
+  const url = new URL(window.location.href);
+  const path = url.pathname;
 
-  return ${config.excludeQueryParams ? 'path' : 'path + search'};
+  ${config.urlOptions.excludeHash && `url.hash = '';`}
+  ${config.urlOptions.excludeSearch && `url.search = '';`}
+
+  url.pathname = ${config.urlOptions.trailingSlash === 'always'
+    ? `path.endsWith('/') ? path : path + '/'`
+    : config.urlOptions.trailingSlash === 'never'
+      ? `path.endsWith('/') ? path.slice(0, -1) : path`
+      : `path`};
+
+  return url.toString();
 }
 
 /**
