@@ -57,6 +57,7 @@ export default defineEventHandler(async (event) => {
           ...(!import.meta.dev && { ip }),
         },
       },
+      credentials: 'omit',
     });
   }
   catch (error) {
