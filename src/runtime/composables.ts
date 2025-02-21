@@ -76,17 +76,18 @@ function getQueryRef(): string {
 
 function getPayload(): ViewPayload {
   const { referrer, title } = window.document;
+  const origin = window.location.origin;
 
-  const ref = referrer || getQueryRef();
   const url = buildPathUrl();
   const tag = window.localStorage.getItem('umami.tag');
+  const ref = referrer && !referrer.startsWith(origin) ? referrer : getQueryRef();
 
   return {
     ...getStaticPayload(),
     ...(tag ? { tag } : null),
-    url: encodeURI(url),
-    referrer: encodeURI(ref),
-    title: encodeURIComponent(title),
+    url,
+    title,
+    referrer: ref,
   };
 };
 
