@@ -109,9 +109,10 @@ onMounted(() => {
           :to="{
             query: { text: 'pro-max', sort: 'rating' },
             path: `page-${+($route.params.id || 0) + 1}`,
+            hash: '#hashtag',
           }"
         >
-          Next + Search
+          Search + Hash
         </NuxtLink>
       </div>
 

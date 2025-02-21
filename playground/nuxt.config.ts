@@ -14,10 +14,13 @@ export default defineNuxtConfig({
     customEndpoint: null,
     logErrors: true,
     domains: null,
-    excludeQueryParams: false,
-    trailingSlash: 'always',
     proxy: 'cloak',
     tag: 'gondor',
+    urlOptions: {
+      excludeHash: false,
+      excludeSearch: false,
+      trailingSlash: 'always',
+    },
   },
 
   appConfig: {
