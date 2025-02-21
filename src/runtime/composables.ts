@@ -76,9 +76,9 @@ function getQueryRef(): string {
 
 function getPayload(): ViewPayload {
   const { referrer, title } = window.document;
-  const origin = window.location.origin;
+  const { origin, href } = window.location;
 
-  const url = buildPathUrl();
+  const url = buildPathUrl(href);
   const tag = window.localStorage.getItem('umami.tag');
   const ref = referrer && !referrer.startsWith(origin) ? referrer : getQueryRef();
 
@@ -95,10 +95,10 @@ function getPayload(): ViewPayload {
  * Track page views
  *
  * Both params are optional and will be automatically inferred
- * @param url page being tracked, eg `/about`, `/contact?by=phone#office`
+ * @param path url being tracked, eg `/about`, `/contact?by=phone#office`
  * @param referrer page referrer, `document.referrer`
  */
-function umTrackView(url?: string, referrer?: string): FetchResult {
+function umTrackView(path?: string, referrer?: string): FetchResult {
   const check = runPreflight();
 
   if (check === 'ssr')
@@ -109,12 +109,14 @@ function umTrackView(url?: string, referrer?: string): FetchResult {
     return earlyPromise(false);
   }
 
+  const url = buildPathUrl(isValidString(path) ? path : null);
+
   return collect({
     type: 'event',
     payload: {
       ...getPayload(),
-      ...(isValidString(referrer) && { referrer: encodeURI(referrer) }),
-      ...(isValidString(url) && { url: encodeURI(url) }),
+      ...(isValidString(url) && { url }),
+      ...(isValidString(referrer) && { referrer }),
     } satisfies ViewPayload,
   });
 }

@@ -192,7 +192,7 @@ interface ServerPayload {
 
 type FetchResult = Promise<{ ok: boolean }>;
 type FetchFn = (load: ServerPayload) => FetchResult;
-type BuildPathUrlFn = () => string;
+type BuildPathUrlFn = (loc: string | null) => string;
 
 type _Letter = `${'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H'
 | 'I' | 'J' | 'K' | 'M' | 'L' | 'N' | 'O' | 'P' | 'Q' | 'R' | 'S'

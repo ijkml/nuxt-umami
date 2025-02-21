@@ -92,22 +92,27 @@ function handleSuccess(response) {
 /**
  * @type BuildPathUrlFn
  */
-export function buildPathUrl() {
-  // ${config.urlOptions}
+export function buildPathUrl(loc) {
+  try {
+    if (loc === null)
+      throw new Error('null value');
 
-  const url = new URL(window.location.href);
-  const path = url.pathname;
-
-  ${config.urlOptions.excludeHash && `url.hash = '';`}
-  ${config.urlOptions.excludeSearch && `url.search = '';`}
-
-  url.pathname = ${config.urlOptions.trailingSlash === 'always'
-    ? `path.endsWith('/') ? path : path + '/'`
-    : config.urlOptions.trailingSlash === 'never'
-      ? `path.endsWith('/') ? path.slice(0, -1) : path`
-      : `path`};
-
-  return url.toString();
+    const url = new URL(loc, window.location.href);
+    const path = url.pathname;
+  
+    ${config.urlOptions.excludeHash && `url.hash = '';`}
+    ${config.urlOptions.excludeSearch && `url.search = '';`}
+  
+    url.pathname = ${config.urlOptions.trailingSlash === 'always'
+      ? `path.endsWith('/') ? path : path + '/'`
+      : config.urlOptions.trailingSlash === 'never'
+        ? `path.endsWith('/') ? path.slice(0, -1) : path`
+        : `path`};
+  
+    return url.toString();
+  } catch {
+    return '';
+  }
 }
 
 /**
