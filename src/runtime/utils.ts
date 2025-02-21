@@ -36,11 +36,12 @@ function normalizeConfig(options: ModuleOptions = {}): NormalizedModuleOptions {
     ignoreLocalhost = false,
     autoTrack = true,
     useDirective = false,
-    excludeQueryParams = false,
     logErrors = false,
     enabled = true,
-    trailingSlash = 'any',
     tag = undefined,
+    excludeQueryParams = false,
+    trailingSlash = 'any',
+    urlOptions,
   } = options;
 
   return {
@@ -64,20 +65,22 @@ function normalizeConfig(options: ModuleOptions = {}): NormalizedModuleOptions {
         return proxy.trim() as typeof proxy;
       return false;
     })(),
-    trailingSlash: (function () {
-      if (
-        isValidString(trailingSlash)
-        && ['always', 'never'].includes(trailingSlash.trim())
-      ) {
-        return trailingSlash.trim() as typeof trailingSlash;
-      }
-      return 'any';
-    })(),
+    urlOptions: {
+      trailingSlash: (function () {
+        const opt = urlOptions?.trailingSlash ?? trailingSlash;
+
+        if (isValidString(opt) && ['always', 'never'].includes(opt.trim()))
+          return opt.trim() as typeof opt;
+
+        return 'any' as typeof opt;
+      })(),
+      excludeSearch: (urlOptions?.excludeSearch ?? excludeQueryParams) === true,
+      excludeHash: urlOptions?.excludeHash === true,
+    },
     tag: isValidString(tag) ? tag.trim() : null,
     ignoreLocalhost: ignoreLocalhost === true,
     autoTrack: autoTrack !== false,
     useDirective: useDirective === true,
-    excludeQueryParams: excludeQueryParams === true,
     logErrors: logErrors === true,
     enabled: enabled !== false,
   };
