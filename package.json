@@ -2,7 +2,7 @@
   "name": "nuxt-umami",
   "type": "module",
   "version": "3.1.1",
-  "packageManager": "pnpm@9.14.4",
+  "packageManager": "pnpm@10.4.1",
   "description": "Integrate Umami Analytics into Nuxt",
   "author": "Moses Laurence <me@ijkml.dev>",
   "license": "MIT",
@@ -38,27 +38,20 @@
     "test": "vue-tsc --noEmit && npm run lint && cd playground && vue-tsc --noEmit"
   },
   "dependencies": {
-    "@nuxt/kit": "3.13.2",
+    "@nuxt/kit": "^3.15.4",
     "request-ip": "^3.3.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^3.11.2",
-    "@nuxt/module-builder": "0.8.4",
-    "@nuxt/schema": "3.13.2",
-    "@types/node": "^22.10.1",
-    "@types/request-ip": "^0.0.41",
-    "bumpp": "^9.8.1",
-    "eslint": "^9.15.0",
-    "nuxt": "3.13.2",
-    "typescript": "5.6.2",
-    "vue-tsc": "2.1.6"
-  },
-  "_unpinnedDependencies": {
-    "@nuxt/kit": "^3.14.1592",
+    "@antfu/eslint-config": "^4.3.0",
+    "@nuxt/kit": "^3.15.4",
     "@nuxt/module-builder": "^0.8.4",
-    "@nuxt/schema": "^3.14.1592",
-    "nuxt": "^3.14.1592",
-    "typescript": "^5.7.2",
-    "vue-tsc": "^2.1.10"
+    "@nuxt/schema": "^3.15.4",
+    "@types/node": "^22.13.4",
+    "@types/request-ip": "^0.0.41",
+    "bumpp": "^10.0.3",
+    "eslint": "^9.20.1",
+    "nuxt": "^3.15.4",
+    "typescript": "~5.6.0",
+    "vue-tsc": "^2.2.2"
   }
 }
