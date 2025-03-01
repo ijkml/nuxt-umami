@@ -127,6 +127,8 @@ type ModuleOptions = Partial<{
   }>;
 }>;
 
+// !IMPORTANT: Sync with example.ts
+
 interface _NormalizedOpts extends Required<ModuleOptions> {
   domains: Array<string> | null;
   customEndpoint: `/${string}` | null;
