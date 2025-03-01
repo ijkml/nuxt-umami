@@ -1,4 +1,5 @@
-import type { ModuleMode, ModuleOptions, NormalizedModuleOptions, UmPublicConfig } from './types';
+import type { ModuleOptions } from './options';
+import type { ModuleMode, NormalizedModuleOptions, UmPublicConfig } from './types';
 import {
   addImports,
   addPlugin,

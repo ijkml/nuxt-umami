@@ -1,4 +1,4 @@
-import type { ModuleOptions } from './types';
+import type { ModuleOptions } from './options';
 
 interface StubbedConfig {
   modules: Array<string>;

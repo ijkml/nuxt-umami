@@ -1,7 +1,7 @@
+import type { ModuleOptions } from '../options';
 import type {
   EventPayload,
   FetchResult,
-  ModuleOptions,
   NormalizedModuleOptions,
   PayloadTypes,
   ServerPayload,
