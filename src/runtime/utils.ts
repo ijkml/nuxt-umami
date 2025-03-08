@@ -54,9 +54,9 @@ function normalizeConfig(options: ModuleOptions = {}): NormalizedModuleOptions {
     })(),
     customEndpoint: (function () {
       const customEP = isValidString(customEndpoint) ? customEndpoint.trim() : '';
-      return (customEP && customEP !== '/')
+      return customEP && customEP !== '/'
         ? customEP.startsWith('/')
-          ? customEP as `/${string}`
+          ? (customEP as `/${string}`)
           : `/${customEP}`
         : null;
     })(),
@@ -93,11 +93,7 @@ function flattenObject(obj?: Record<string, unknown> | null, prefix = '') {
 
     return Object.keys(obj).reduce((acc: Record<string, unknown>, k) => {
       const pre = prefix.length ? `${prefix}.` : '';
-      if (
-        typeof obj[k] === 'object'
-        && obj[k] !== null
-        && Object.keys(obj[k]).length > 0
-      ) {
+      if (typeof obj[k] === 'object' && obj[k] !== null && Object.keys(obj[k]).length > 0) {
         Object.assign(acc, flattenObject(obj[k] as Record<string, unknown>, pre + k));
       }
       else {
@@ -131,6 +127,7 @@ const _payloadProps: Record<keyof Payload, PropertyValidator> = {
   tag: 'skip', // optional property
   name: 'skip', // optional, 'nonempty' in EventPayload
   data: 'skip', // optional, 'data' in EventPayload & IdentifyPayload
+  website: 'skip', // optional property to overwrite website during runtime
 } as const;
 
 const _payloadType: PayloadTypes = ['event', 'identify'];
@@ -144,14 +141,7 @@ function isValidPayload(obj: object): obj is Payload {
 
   const validators: typeof _payloadProps = { ..._payloadProps };
 
-  const validatorKeys: Array<keyof Payload> = [
-    'hostname',
-    'language',
-    'screen',
-    'url',
-    'referrer',
-    'title',
-  ];
+  const validatorKeys: Array<keyof Payload> = ['hostname', 'language', 'screen', 'url', 'referrer', 'title'];
 
   if (objKeys.includes('name')) {
     // is EventPayload, update validators
@@ -171,11 +161,14 @@ function isValidPayload(obj: object): obj is Payload {
     validators.tag = 'string';
   }
 
+  // optional property is present, update validators
+  if (objKeys.includes('website')) {
+    validatorKeys.push('website');
+    validators.tag = 'string';
+  }
+
   // check: all keys are present, no more, no less
-  if (
-    objKeys.length !== validatorKeys.length
-    || !validatorKeys.every(k => objKeys.includes(k))
-  ) {
+  if (objKeys.length !== validatorKeys.length || !validatorKeys.every(k => objKeys.includes(k))) {
     return false;
   }
 
@@ -190,9 +183,7 @@ function isValidPayload(obj: object): obj is Payload {
   return true;
 }
 
-type ValidatePayloadReturn =
-  | { success: true; output: ServerPayload }
-  | { success: false; output: unknown };
+type ValidatePayloadReturn = { success: true; output: ServerPayload } | { success: false; output: unknown };
 
 function parseEventBody(body: unknown): ValidatePayloadReturn {
   const error = {
@@ -205,11 +196,16 @@ function parseEventBody(body: unknown): ValidatePayloadReturn {
     return error;
 
   // check: top-level properties
-  if (!(
-    'type' in body && isValidString(body.type)
-    && 'cache' in body && typeof body.cache === 'string'
-    && 'payload' in body && isRecord(body.payload)
-  )) {
+  if (
+    !(
+      'type' in body
+      && isValidString(body.type)
+      && 'cache' in body
+      && typeof body.cache === 'string'
+      && 'payload' in body
+      && isRecord(body.payload)
+    )
+  ) {
     return error;
   }
 
@@ -228,10 +224,4 @@ function parseEventBody(body: unknown): ValidatePayloadReturn {
   };
 }
 
-export {
-  earlyPromise,
-  flattenObject,
-  isValidString,
-  normalizeConfig,
-  parseEventBody,
-};
+export { earlyPromise, flattenObject, isValidString, normalizeConfig, parseEventBody };

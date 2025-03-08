@@ -48,6 +48,7 @@ interface ViewPayload extends StaticPayload {
   url: string;
   title: string;
   referrer: string;
+  website?: string;
 };
 
 interface EventPayload extends ViewPayload {

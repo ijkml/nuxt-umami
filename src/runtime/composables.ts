@@ -40,7 +40,7 @@ function runPreflight(): PreflightResult {
   })();
 
   return configChecks;
-};
+}
 
 function getStaticPayload(): StaticPayload {
   if (staticPayload)
@@ -88,8 +88,11 @@ function getPayload(): ViewPayload {
     url,
     title,
     referrer: ref,
+    ...{
+      website: config.website?.length ? config.website : undefined,
+    },
   };
-};
+}
 
 /**
  * Track page views
@@ -198,11 +201,7 @@ function umIdentify(sessionData?: EventData): FetchResult {
  * @param currency currency code (defaults to USD)
  * ([ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#List_of_ISO_4217_currency_codes))
  */
-function umTrackRevenue(
-  eventName: string,
-  revenue: number,
-  currency: CurrencyCode = 'USD',
-): FetchResult {
+function umTrackRevenue(eventName: string, revenue: number, currency: CurrencyCode = 'USD'): FetchResult {
   const $rev = typeof revenue === 'number' ? revenue : Number(revenue);
 
   if (Number.isNaN($rev) || !Number.isFinite(revenue)) {
@@ -216,8 +215,7 @@ function umTrackRevenue(
 
   if (typeof currency === 'string' && /^[A-Z]{3}$/i.test(currency.trim()))
     $cur = currency.trim();
-  else
-    logger('currency', `Got: ${currency}`);
+  else logger('currency', `Got: ${currency}`);
 
   return umTrackEvent(eventName, {
     revenue: $rev,
@@ -225,4 +223,18 @@ function umTrackRevenue(
   });
 }
 
-export { umIdentify, umTrackEvent, umTrackRevenue, umTrackView };
+/**
+ * Request and alter the tracker configuration
+ */
+function umConfig() {
+  return {
+    ...config,
+    ...{
+      setId(w: string) {
+        config.website = w;
+      },
+    },
+  };
+}
+
+export { umConfig, umIdentify, umTrackEvent, umTrackRevenue, umTrackView };

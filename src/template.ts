@@ -38,7 +38,7 @@ const fn_direct = `const { type, payload } = load;
   return ofetch(endpoint, {
     method: 'POST',
     headers: { ...(cache && { 'x-umami-cache': cache }) },
-    body: { type, payload: { ...payload, website } },
+    body: { type, payload: { website, ...payload } },
     credentials: 'omit',
   })
     .then(handleSuccess)

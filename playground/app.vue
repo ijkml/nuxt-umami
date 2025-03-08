@@ -11,12 +11,21 @@ function testEvent() {
   umTrackEvent('event-test-2', { type: 'click', position: 'left' });
 }
 
+function testEventWithCustomId() {
+  umConfig().setId('00000000-0000-0000-0000-000000000000');
+  testEvent();
+  umConfig().setId('');
+}
+
 const tt = ref('TT');
 const tc = ref(0);
 
 const directiveBtns = computed(() => [
   { text: 'Test Directive 1', action: 'test-directive' },
-  { text: `Test Directive ${tc.value}`, action: { name: 'Reactive Action', id: tt.value } },
+  {
+    text: `Test Directive ${tc.value}`,
+    action: { name: 'Reactive Action', id: tt.value },
+  },
 ]);
 
 function updateRefs() {
@@ -44,10 +53,7 @@ onMounted(() => {
 
 <template>
   <div class="page-root">
-    <main
-      id="main"
-      class="page-container"
-    >
+    <main id="main" class="page-container">
       <h1>Nuxt Umami</h1>
 
       <NuxtLayout>
@@ -61,20 +67,14 @@ onMounted(() => {
         <button @click="testView">
           Run trackView
         </button>
-        <a
-          :href="shareUrl"
-          target="_blank"
-          rel="noopener noreferrer"
-          @click="seePreview"
-        >See Preview</a>
+        <button @click="testEventWithCustomId">
+          Run trackEvent with changed Id (runtime)
+        </button>
+        <a :href="shareUrl" target="_blank" rel="noopener noreferrer" @click="seePreview">See Preview</a>
       </div>
 
       <div class="deck">
-        <button
-          v-for="btn in directiveBtns"
-          :key="btn.text"
-          v-umami="btn.action"
-        >
+        <button v-for="btn in directiveBtns" :key="btn.text" v-umami="btn.action">
           {{ btn.text }}
         </button>
         <button @click="updateRefs">
@@ -98,11 +98,7 @@ onMounted(() => {
         <NuxtLink to="/">
           Homepage
         </NuxtLink>
-        <NuxtLink
-          v-for="i in 3"
-          :key="i"
-          :to="`/page-${i}`"
-        >
+        <NuxtLink v-for="i in 3" :key="i" :to="`/page-${i}`">
           Page {{ i }}
         </NuxtLink>
         <NuxtLink
@@ -118,12 +114,7 @@ onMounted(() => {
 
       <div class="deck">
         <div>
-          <input
-            id="umami-disabled"
-            v-model="localStorageToggle"
-            name="umami-disabled"
-            type="checkbox"
-          >
+          <input id="umami-disabled" v-model="localStorageToggle" name="umami-disabled" type="checkbox">
           <label for="umami-disabled">Disable Umami via localStorage</label>
         </div>
       </div>
