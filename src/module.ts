@@ -74,8 +74,8 @@ export default defineNuxtModule<ModuleOptions>({
 
     if (enabled && endpoint && id) {
       // ^ module is enabled && endpoint/id has no errors
-      if (proxyOpts.includes(proxy) && nuxt.options.ssr) {
-        // ^ ssr is enabled, requests can be proxied
+      if (proxyOpts.includes(proxy)) {
+        // ^ proxy is enabled, requests can be proxied
         if (proxy === 'cloak') {
           // ^ proxy mode: cloak; add API route
           mode = 'proxy';
