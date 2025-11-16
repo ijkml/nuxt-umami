@@ -1,0 +1,12 @@
+{
+  "name": "nuxt-umami",
+  "version": "3.2.1",
+  "configKey": "umami",
+  "compatibility": {
+    "nuxt": ">=3"
+  },
+  "builder": {
+    "@nuxt/module-builder": "0.8.4",
+    "unbuild": "2.0.0"
+  }
+}
