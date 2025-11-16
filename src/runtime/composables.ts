@@ -14,6 +14,7 @@ import { earlyPromise, flattenObject, isValidString } from './utils';
 let configChecks: PreflightResult | undefined;
 let staticPayload: StaticPayload | undefined;
 let queryRef: string | undefined;
+let identity: string | undefined;
 
 function runPreflight(): PreflightResult {
   if (typeof window === 'undefined')
@@ -88,6 +89,7 @@ function getPayload(): ViewPayload {
     url,
     title,
     referrer: ref,
+    ...(identity ? { id: identity } : null),
   };
 };
 
@@ -195,6 +197,7 @@ function umIdentify(idOrData?: string | EventData, sessionData?: EventData): Fet
   if (typeof idOrData === 'string') {
     // umIdentify(id) or umIdentify(id, data)
     id = idOrData;
+    identity = idOrData; // Store for subsequent events
     data = flattenObject(sessionData);
   } else {
     // umIdentify(data) - backward compatible
