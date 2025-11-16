@@ -158,16 +158,26 @@ function umTrackEvent(eventName: string, eventData?: EventData): FetchResult {
 }
 
 /**
- * Save data about the current session.
+ * Save data about the current session with optional distinct user ID.
  *
- * Umami now supports saving session data, and
- * it works very similarly to custom event data.
+ * Umami supports saving session data and identifying users with a distinct ID.
  * @see [v2.13.0 release](https://github.com/umami-software/umami/releases/tag/v2.13.0)
+ * @see [v2.18.0 distinct IDs](https://github.com/umami-software/umami/releases/tag/v2.18.0)
  *
- * @param sessionData data for this session, provide an object in the format
- * `{key: value}`, where `key` = `string`, `value` = `string | number | boolean`.
+ * @param idOrData distinct user ID (string) or session data object
+ * @param sessionData optional session data when first param is a distinct ID
+ *
+ * @example
+ * // ID only
+ * umIdentify('user@example.com')
+ *
+ * // ID with data
+ * umIdentify('user@example.com', { name: 'John', plan: 'pro' })
+ *
+ * // Data only (backward compatible)
+ * umIdentify({ name: 'John', plan: 'pro' })
  */
-function umIdentify(sessionData?: EventData): FetchResult {
+function umIdentify(idOrData?: string | EventData, sessionData?: EventData): FetchResult {
   const check = runPreflight();
 
   if (check === 'ssr')
@@ -178,12 +188,24 @@ function umIdentify(sessionData?: EventData): FetchResult {
     return earlyPromise(false);
   }
 
-  const data = flattenObject(sessionData);
+  // Parse arguments to support flexible signatures
+  let id: string | undefined;
+  let data: Record<string, unknown> | undefined;
+
+  if (typeof idOrData === 'string') {
+    // umIdentify(id) or umIdentify(id, data)
+    id = idOrData;
+    data = flattenObject(sessionData);
+  } else {
+    // umIdentify(data) - backward compatible
+    data = flattenObject(idOrData);
+  }
 
   return collect({
     type: 'identify',
     payload: {
       ...getPayload(),
+      ...(id && { id }),
       ...(data && { data }),
     } satisfies IdentifyPayload,
   });

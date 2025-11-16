@@ -56,6 +56,7 @@ interface EventPayload extends ViewPayload {
 };
 
 interface IdentifyPayload extends ViewPayload {
+  id?: string;
   data?: Record<string, unknown>;
 }
 
