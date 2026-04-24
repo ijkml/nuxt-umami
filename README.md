@@ -40,43 +40,94 @@ Add to `nuxt.config.ts`:
 export default defineNuxtConfig({
   modules: ['nuxt-umami'],
   umami: {
+    // `host` is the URL of your Umami server (where analytics data is sent to) —
+    // e.g. https://cloud.umami.is or https://analytics.mycompany.com.
+    // It is NOT the URL of the site being tracked.
     host: 'https://your-umami-instance.example.com',
     id: 'your-website-id',
     autoTrack: true,
     // proxy: 'cloak',       // hide your Umami endpoint from the browser
     // useDirective: true,   // enable v-umami directive
     // ignoreLocalhost: true,
-    // domains: ['mysite.com'],
+    // domains: ['mysite.com'],  // allow-list of hostnames the tracker runs on
   },
 });
 ```
 
-The `host` and `id` values above are build-time defaults. To override them at server start
-without rebuilding, use the environment variables described below.
+Key fields:
+
+- **`host`** — the Umami server's origin. Paired with `customEndpoint` (default `/api/send`
+  for Umami v2) to form the URL the tracker POSTs events to.
+- **`id`** — the website ID from your Umami dashboard, attached to every event.
+- **`domains`** — optional allow-list of hostnames (the *tracked* site's hostnames) where
+  the tracker is permitted to run. Leave unset to run everywhere.
+
+The `host` and `id` values above are used at build time as the defaults. Depending on the
+`proxy` mode, some or all of them can also be overridden at **server start** without
+rebuilding — see below.
 
 Full configuration reference: [umami.nuxt.dev/api/configuration](https://umami.nuxt.dev/api/configuration)
 
+### Proxy modes
+
+The `proxy` option picks how tracking requests reach your Umami server, and determines
+which env vars (if any) can change the target at runtime vs. only at build time.
+
+| `proxy`          | How requests flow                                               | Website ID baked into client | Upstream URL baked into |
+|------------------|------------------------------------------------------------------|------------------------------|--------------------------|
+| `false` *(default)* | Browser → Umami directly                                      | yes (public)                 | client bundle (public)   |
+| `'direct'`       | Browser → `/api/savory` → Nuxt `routeRules` proxy → Umami        | yes (public)                 | server at build time *(see below)* |
+| `'cloak'`        | Browser → `/api/savory` → server handler → Umami                 | no (server-only)             | server at runtime        |
+
 ### Environment variables
 
-Config values are stored in Nuxt `runtimeConfig` and can be overridden at **server start**
-(no rebuild required) using these env vars:
+Use the set that matches your `proxy` setting. Values not listed are not overridable at
+runtime in that mode.
+
+**`proxy: false` — direct, no proxy**
+
+The website ID and full endpoint URL are sent to the browser in the public bundle, and
+both are overridable at server start:
 
 ```sh
-# proxy: false or proxy: 'direct'  (public — included in client bundle)
 NUXT_PUBLIC_UMAMI_WEBSITE=your-website-id
 NUXT_PUBLIC_UMAMI_ENDPOINT=https://your-umami-instance.example.com/api/send
-
-# proxy: 'cloak'  (server-only — never exposed to the client)
-NUXT_UMAMI_WEBSITE=your-website-id
-NUXT_UMAMI_ENDPOINT=https://your-umami-instance.example.com/api/send
-
-# Optional — overrides the tag at runtime (all proxy modes)
-NUXT_PUBLIC_UMAMI_TAG=my-tag
 ```
 
-> Note: `NUXT_PUBLIC_UMAMI_ENDPOINT` is the fully-resolved endpoint URL including the
-> path (e.g. `/api/send`). It corresponds to `host` + `customEndpoint` from the module
-> options, not `host` alone.
+`NUXT_PUBLIC_UMAMI_ENDPOINT` is the fully-resolved URL including path. It's equivalent to
+`host` + `customEndpoint` (defaulting to `/api/send` for Umami v2).
+
+**`proxy: 'cloak'` — server-side proxy, endpoint hidden from the browser**
+
+The real Umami URL and website ID live in server-only runtime config and never reach the
+client. Both are overridable at server start:
+
+```sh
+NUXT_UMAMI_WEBSITE=your-website-id
+NUXT_UMAMI_ENDPOINT=https://your-umami-instance.example.com/api/send
+```
+
+The browser always POSTs to `/api/savory` on your own domain; the server handler forwards
+to `NUXT_UMAMI_ENDPOINT`.
+
+**`proxy: 'direct'` — Nuxt `routeRules` proxy (partial runtime override)**
+
+The browser POSTs to `/api/savory`, which Nuxt rewrites to the upstream Umami URL via
+[`routeRules`](https://nuxt.com/docs/guide/concepts/rendering#route-rules). Because
+`routeRules` is resolved at build time, **the upstream URL cannot be changed without a
+rebuild**. Only the website ID is runtime-overridable:
+
+```sh
+NUXT_PUBLIC_UMAMI_WEBSITE=your-website-id
+# NUXT_PUBLIC_UMAMI_ENDPOINT is ignored/harmful in this mode — do not set it.
+# Changing host/customEndpoint requires rebuilding.
+```
+
+**Tag (optional, all modes)**
+
+```sh
+NUXT_PUBLIC_UMAMI_TAG=my-tag
+```
 
 ### Usage
 
@@ -111,7 +162,7 @@ umTrackRevenue('subscription', 49, 'USD');
 | Runtime config typing | `runtimeConfig.umami` is now properly typed via module augmentation |
 | Structured logging | Module setup uses `useLogger` from `@nuxt/kit` instead of `console.warn` |
 | Proxy validator | Body key-count check removed; forward-compatible with Umami API additions |
-| Runtime env vars | Config moved to Nuxt `runtimeConfig`; `NUXT_PUBLIC_UMAMI_*` / `NUXT_UMAMI_*` override at server start, not build time |
+| Runtime env vars | Config moved to Nuxt `runtimeConfig`. `proxy: false` → `NUXT_PUBLIC_UMAMI_WEBSITE`/`_ENDPOINT` override at server start. `proxy: 'cloak'` → `NUXT_UMAMI_WEBSITE`/`_ENDPOINT` do the same, server-only. `proxy: 'direct'` → only `NUXT_PUBLIC_UMAMI_WEBSITE` is runtime-overridable; the upstream URL is baked into `routeRules` at build time. |
 
 ---
 
@@ -145,16 +196,20 @@ Use this prompt when setting up this module in a new project:
 > });
 > ```
 >
-> **Environment variables** — these override the `host`/`id` values above at server start
-> (no rebuild needed). Use the set that matches your `proxy` setting:
+> **Environment variables** — at server start (no rebuild), use the set that matches your
+> `proxy` setting:
 > ```sh
-> # proxy: 'cloak'  (server-only — never exposed to the client)
+> # proxy: false (default) — browser talks to Umami directly
+> NUXT_PUBLIC_UMAMI_WEBSITE=your-website-id
+> NUXT_PUBLIC_UMAMI_ENDPOINT=https://your-umami-instance.example.com/api/send
+>
+> # proxy: 'cloak' — server-only, never exposed to the client
 > NUXT_UMAMI_WEBSITE=your-website-id
 > NUXT_UMAMI_ENDPOINT=https://your-umami-instance.example.com/api/send
 >
-> # proxy: false (default) or proxy: 'direct'  (public — in client bundle)
+> # proxy: 'direct' — only the website ID is runtime-overridable;
+> # the upstream URL is baked into Nuxt routeRules at build time.
 > NUXT_PUBLIC_UMAMI_WEBSITE=your-website-id
-> NUXT_PUBLIC_UMAMI_ENDPOINT=https://your-umami-instance.example.com/api/send
 > ```
 >
 > **Auto-imported composables** (no imports needed in `<script setup>`):
