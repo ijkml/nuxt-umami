@@ -17,7 +17,7 @@ Priority 1 — Critical bug fixes
 Priority 2 — Nuxt v4 compatibility
 
 - [x] 2.1 Update peer dependency versions — commit `6df923b`
-- [ ] 2.2 Investigate `page:loading:end` as replacement for setTimeout hack — plugin still uses `setTimeout(..., 250)` with a note that Nuxt bug #26535 is unresolved
+- [x] 2.2 Replace setTimeout hack with `page:loading:end` — Nuxt #26535 fixed by PR #29009, shipped in v3.15.2 / v4.0.0 (covered by our `>=3.15.4` peer dep)
 - [x] 2.3 Type the `_proxyUmConfig` runtime config key properly — commit `b3eebb4` (renamed to `umami`)
 - [x] 2.4 Replace `console.warn`/`console.info` with `useLogger` — commit `e0f354c`
 - [x] 2.5 Update `meta.compatibility` declaration — commit `6df923b`
