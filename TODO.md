@@ -6,6 +6,39 @@
 
 ---
 
+## Progress checklist
+
+Priority 1 — Critical bug fixes
+
+- [x] 1.1 Merge PR #143: `umIdentify` distinct user ID support — commit `c1c94a0`
+- [x] 1.2 Fix double `umTrackView` with nested `<NuxtPage>` — commit `83969be`
+- [x] 1.3 Fix `queryRef` not resetting on SPA navigation — commit `b667f4d`
+
+Priority 2 — Nuxt v4 compatibility
+
+- [x] 2.1 Update peer dependency versions — commit `6df923b`
+- [ ] 2.2 Investigate `page:loading:end` as replacement for setTimeout hack — plugin still uses `setTimeout(..., 250)` with a note that Nuxt bug #26535 is unresolved
+- [x] 2.3 Type the `_proxyUmConfig` runtime config key properly — commit `b3eebb4` (renamed to `umami`)
+- [x] 2.4 Replace `console.warn`/`console.info` with `useLogger` — commit `e0f354c`
+- [x] 2.5 Update `meta.compatibility` declaration — commit `6df923b`
+- [ ] 2.6 Migrate playground to Nuxt v4 `app/` directory structure — `playground/` still has top-level `app.vue`, `compatibilityDate` still `'2024-08-08'`
+
+Priority 3 — Runtime config for multi-tenant SaaS (Issue #132)
+
+- [x] Move `id`/`host` into `runtimeConfig` so `NUXT_(PUBLIC_)UMAMI_*` env vars override at server start — commit `be46242`
+
+Priority 4 — Feature improvements
+
+- [ ] 4.1 Support relative `host` path for same-origin proxy (Issue #144) — `module.ts:65` still does unconditional `new URL(host).origin`
+- [x] 4.2 Forward client IP in `cloak` proxy (Issue #137) — commit `6dd3545`
+- [x] 4.3 Add event name length validation (50-char limit) — commit `998e1e1`
+- [x] 4.4 Fix `currency` regex case-insensitive flag — commit `1f8561d`
+- [x] 4.5 Fix `CurrencyCode` type — missing letter `I` — commit `d7a14b8`
+- [x] 4.6 Make proxy body validator forward-compatible — commit `e716f62`
+- [ ] 4.7 Add `doNotTrack` browser setting support — no option or preflight check exists yet
+
+---
+
 ## Priority 1 — Critical Bug Fixes
 
 ### 1.1 Merge PR #143: `umIdentify` distinct user ID support
