@@ -1,6 +1,6 @@
 import type { Directive } from 'vue';
+import { logger } from '#build/umami.config.mjs';
 import { umTrackEvent } from './composables';
-import { logger } from './logger';
 
 // "savory" is a fun synonym for umami, why?
 // 1. dodge script blockers

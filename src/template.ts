@@ -61,6 +61,8 @@ import { ofetch } from 'ofetch';
 import { useRuntimeConfig } from '#imports';
 import { ${logErrors ? 'logger' : 'fauxLogger'} as logger } from "${path.logger}";
 
+export { logger };
+
 /**
  * @typedef {import("${path.types}").FetchFn} FetchFn
  * 

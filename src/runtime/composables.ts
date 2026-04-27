@@ -8,9 +8,8 @@ import type {
   StaticPayload,
   ViewPayload,
 } from '../types';
-import { buildPathUrl, collect } from '#build/umami.config.mjs';
+import { buildPathUrl, collect, logger } from '#build/umami.config.mjs';
 import { useRuntimeConfig } from '#imports';
-import { logger } from './logger';
 import { earlyPromise, flattenObject, isValidString } from './utils';
 
 let configChecks: PreflightResult | undefined;
