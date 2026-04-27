@@ -63,6 +63,13 @@ type ModuleOptions = Partial<{
    */
   useDirective: boolean;
   /**
+   * Collect Core Web Vitals (LCP, FCP, CLS, INP, TTFB) and report them to Umami.
+   * Requires Umami v3.1.0 or later.
+   *
+   * @default false
+   */
+  performance: boolean;
+  /**
    * Enable warning and error logs in production
    *
    * @default false

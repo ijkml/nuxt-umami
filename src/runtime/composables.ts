@@ -4,6 +4,7 @@ import type {
   EventPayload,
   FetchResult,
   IdentifyPayload,
+  PerformancePayload,
   PreflightResult,
   StaticPayload,
   ViewPayload,
@@ -105,6 +106,7 @@ function getPayload(): ViewPayload {
     url,
     title,
     referrer: ref,
+    ...(identity ? { id: identity } : null),
   };
 };
 
@@ -284,4 +286,107 @@ function umTrackRevenue(
   });
 }
 
-export { umIdentify, umTrackEvent, umTrackRevenue, umTrackView };
+function startPerformanceTracking(): () => void {
+  if (typeof window === 'undefined' || typeof PerformanceObserver === 'undefined')
+    return () => {};
+
+  if (runPreflight() !== true)
+    return () => {};
+
+  const t0 = performance.now();
+  let flushed = false;
+  const metrics = { ttfb: 0, fcp: 0, lcp: 0, cls: 0, inp: 0 };
+
+  // TTFB from Navigation Timing API
+  const [nav] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
+  if (nav) {
+    const activationStart = (nav as PerformanceNavigationTiming & { activationStart?: number }).activationStart ?? 0;
+    metrics.ttfb = Math.max(nav.responseStart - activationStart, 0);
+  }
+
+  const observers: PerformanceObserver[] = [];
+
+  function observe(type: string, cb: PerformanceObserverCallback, extra?: Record<string, unknown>) {
+    try {
+      const obs = new PerformanceObserver(cb);
+      obs.observe({ type, buffered: true, ...extra } as PerformanceObserverInit);
+      observers.push(obs);
+    }
+    catch { /* entry type unsupported in this browser */ }
+  }
+
+  observe('paint', (list) => {
+    const entry = list.getEntriesByName('first-contentful-paint')[0];
+    if (entry)
+      metrics.fcp = entry.startTime;
+  });
+
+  observe('largest-contentful-paint', (list) => {
+    const entries = list.getEntries();
+    if (entries.length)
+      metrics.lcp = entries.at(-1)!.startTime;
+  });
+
+  let clsSession = 0;
+  let clsSessionStart = -1;
+  observe('layout-shift', (list) => {
+    for (const e of list.getEntries() as (PerformanceEntry & { hadRecentInput: boolean; value: number })[]) {
+      if (e.hadRecentInput)
+        continue;
+      if (clsSessionStart >= 0 && e.startTime - clsSessionStart < 1000)
+        clsSession += e.value;
+      else
+        clsSession = e.value;
+      clsSessionStart = e.startTime;
+      if (clsSession > metrics.cls)
+        metrics.cls = clsSession;
+    }
+  });
+
+  observe('event', (list) => {
+    for (const e of list.getEntries()) {
+      if (e.duration > metrics.inp)
+        metrics.inp = e.duration;
+    }
+  }, { durationThreshold: 40 });
+
+  let timer: ReturnType<typeof setTimeout>;
+
+  function onHide() {
+    if (document.visibilityState === 'hidden')
+      flush();
+  }
+
+  function flush() {
+    if (flushed)
+      return;
+    flushed = true;
+    clearTimeout(timer);
+    document.removeEventListener('visibilitychange', onHide);
+    for (const obs of observers) {
+      try {
+        obs.disconnect();
+      }
+      catch {}
+    }
+
+    collect({
+      type: 'performance',
+      payload: {
+        ...getPayload(),
+        ttfb: metrics.ttfb,
+        fcp: metrics.fcp,
+        lcp: metrics.lcp,
+        cls: metrics.cls,
+        inp: metrics.inp,
+        duration: Math.round(performance.now() - t0),
+      } satisfies PerformancePayload,
+    });
+  }
+
+  timer = setTimeout(flush, 10_000);
+  document.addEventListener('visibilitychange', onHide);
+  return flush;
+}
+
+export { startPerformanceTracking, umIdentify, umTrackEvent, umTrackRevenue, umTrackView };

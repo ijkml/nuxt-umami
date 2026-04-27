@@ -39,7 +39,7 @@ type ModuleMode = 'faux' | 'proxy' | 'direct';
 
 type EventData = Record<string, string | number | boolean> | null;
 
-type PayloadTypes = ['event', 'identify'];
+type PayloadTypes = ['event', 'identify', 'performance'];
 
 interface StaticPayload {
   screen: string;
@@ -67,10 +67,19 @@ interface IdentifyPayload extends ViewPayload {
   data?: Record<string, unknown>;
 }
 
+interface PerformancePayload extends ViewPayload {
+  ttfb: number;
+  fcp: number;
+  lcp: number;
+  cls: number;
+  inp: number;
+  duration: number;
+}
+
 interface ServerPayload {
   cache?: string;
   type: PayloadTypes[number];
-  payload: ViewPayload | EventPayload;
+  payload: ViewPayload | EventPayload | PerformancePayload;
 };
 
 type FetchResult = Promise<{ ok: boolean }>;
@@ -107,6 +116,7 @@ export type {
   ModuleMode,
   NormalizedModuleOptions,
   PayloadTypes,
+  PerformancePayload,
   PreflightResult,
   ServerPayload,
   StaticPayload,

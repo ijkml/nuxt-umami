@@ -1,0 +1,51 @@
+import { logger } from "#build/umami.config.mjs";
+import { umTrackEvent } from "./composables.js";
+const ATTR_NAME = "savoryName";
+const ATTR_DATA = "savoryData";
+async function setAttributes(el, value) {
+  let name = "";
+  let data = "";
+  if (typeof value === "string") {
+    name = value;
+  } else {
+    try {
+      if (typeof value !== "object" || value === null || Array.isArray(value))
+        throw new TypeError(typeof value);
+      const { name: vName = "", ...rawData } = value;
+      const vData = Object.keys(rawData).length > 0 ? JSON.stringify(rawData) : "";
+      [name, data] = [vName, vData];
+    } catch {
+      logger("directive", `Provided ${typeof value}: ${value}`);
+    }
+  }
+  const attr = el.dataset;
+  [attr[ATTR_NAME], attr[ATTR_DATA]] = [name, data];
+}
+function getAttributes(el) {
+  const name = el.dataset[ATTR_NAME] || "";
+  let data = null;
+  try {
+    data = JSON.parse(el.dataset[ATTR_DATA] || "");
+  } catch {
+  }
+  return { name, data };
+}
+function eventHandler(el) {
+  return () => {
+    const { name, data } = getAttributes(el);
+    umTrackEvent(name, data);
+  };
+}
+const directive = {
+  mounted(el, { value }) {
+    setAttributes(el, value);
+    el.addEventListener("click", eventHandler(el), { passive: true });
+  },
+  updated(el, { value }) {
+    setAttributes(el, value);
+  },
+  beforeUnmount(el) {
+    el.removeEventListener("click", eventHandler(el));
+  }
+};
+export { directive };

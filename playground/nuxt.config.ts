@@ -25,6 +25,7 @@ export default defineNuxtConfig({
       excludeSearch: false,
       trailingSlash: 'always',
     },
+    performance: true,
   },
 
   appConfig: {

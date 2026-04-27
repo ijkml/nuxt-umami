@@ -1,15 +1,18 @@
 import { defineNuxtPlugin, useRuntimeConfig } from '#app';
-import { umTrackView } from './composables';
+import { startPerformanceTracking, umTrackView } from './composables';
 import { directive } from './directive';
 
 export default defineNuxtPlugin({
   name: 'umami-tracker',
   parallel: true,
   async setup(nuxtApp) {
-    const { useDirective, autoTrack } = useRuntimeConfig().public.umami;
+    const { useDirective, autoTrack, performance } = useRuntimeConfig().public.umami;
 
     if (useDirective)
       nuxtApp.vueApp.directive('umami', directive);
+
+    if (performance)
+      startPerformanceTracking();
 
     if (autoTrack) {
       // `page:loading:end` fires once per navigation after async data and
