@@ -1,4 +1,4 @@
-import { defineNuxtPlugin, useRouter, useRuntimeConfig } from '#app';
+import { defineNuxtPlugin, useRuntimeConfig } from '#app';
 import { startPerformanceTracking, umTrackView } from './composables';
 import { directive } from './directive';
 
@@ -15,37 +15,13 @@ export default defineNuxtPlugin({
       startPerformanceTracking();
 
     if (autoTrack) {
-      // Track the last path we fired a pageview for so that apps using nested
-      // <NuxtPage> components (which cause `page:finish` to fire multiple times
-      // per navigation) only record a single pageview per route change.
-      let lastTrackedPath: string | undefined;
-      let pendingTimer: ReturnType<typeof setTimeout> | undefined;
-
-      const router = useRouter();
-
-      nuxtApp.hook('page:finish', () => {
-        const currentPath = router.currentRoute.value.fullPath;
-
-        if (currentPath === lastTrackedPath)
-          return;
-
-        // Debounce: if multiple `page:finish` events fire in rapid succession
-        // for the same navigation (e.g. nested layouts), only track once.
-        clearTimeout(pendingTimer);
-        pendingTimer = setTimeout(() => {
-          // Re-check in case another navigation started while we were waiting.
-          const path = router.currentRoute.value.fullPath;
-          if (path === lastTrackedPath)
-            return;
-          lastTrackedPath = path;
-          umTrackView();
-
-          // NOTE: The setTimeout is a workaround for `useHead()` updating the
-          // page title asynchronously via the same `page:finish` hook. Without
-          // it we'd capture the previous page's title.
-          // `page:loading:end` would be cleaner but fired twice until Nuxt
-          // bug #26535 is resolved.
-        }, 250);
+      // `page:loading:end` fires once per navigation after async data and
+      // `useHead()` have settled, so the document title is correct and we
+      // don't need to dedupe nested-<NuxtPage> double-fires. Requires the
+      // fix from Nuxt PR #29009 (shipped in v3.15.2 / v4.0.0); our peer
+      // dep `>=3.15.4` guarantees it.
+      nuxtApp.hook('page:loading:end', () => {
+        umTrackView();
       });
     }
   },
