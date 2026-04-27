@@ -21,7 +21,7 @@ Priority 2 — Nuxt v4 compatibility
 - [x] 2.3 Type the `_proxyUmConfig` runtime config key properly — commit `b3eebb4` (renamed to `umami`)
 - [x] 2.4 Replace `console.warn`/`console.info` with `useLogger` — commit `e0f354c`
 - [x] 2.5 Update `meta.compatibility` declaration — commit `6df923b`
-- [ ] 2.6 Migrate playground to Nuxt v4 `app/` directory structure — `playground/` still has top-level `app.vue`, `compatibilityDate` still `'2024-08-08'`
+- [x] 2.6 Migrate playground to Nuxt v4 `app/` directory structure — files moved into `playground/app/`, `compatibilityDate` bumped, `future.compatibilityVersion: 4` opt-in
 
 Priority 3 — Runtime config for multi-tenant SaaS (Issue #132)
 

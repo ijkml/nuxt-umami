@@ -1,6 +1,10 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  compatibilityDate: '2024-08-08',
+  compatibilityDate: '2026-04-24',
+
+  // Opt in to Nuxt v4 defaults (notably `srcDir: 'app/'`) while we're
+  // still on the v3.15+ peer-dep floor. Flag is a no-op under Nuxt v4.
+  future: { compatibilityVersion: 4 },
 
   modules: ['../src/module'],
 
